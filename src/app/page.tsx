@@ -51,9 +51,18 @@ const etapes = [
 ]
 
 const villes = [
-  "Saint-Omer", "Arras", "Boulogne-sur-Mer",
-  "Béthune", "Calais", "Hazebrouck",
-  "Aire-sur-la-Lys", "Fruges", "Lumbres",
+  { nom: "Lens",             slug: "lens" },
+  { nom: "Hénin-Beaumont",   slug: "henin-beaumont" },
+  { nom: "Béthune",          slug: "bethune" },
+  { nom: "Arras",            slug: "arras" },
+  { nom: "Lille",            slug: "lille" },
+  { nom: "Boulogne-sur-Mer", slug: "boulogne-sur-mer" },
+  { nom: "Berck",            slug: "berck" },
+  { nom: "Hazebrouck",       slug: "hazebrouck" },
+  { nom: "Saint-Omer",       slug: null },
+  { nom: "Calais",           slug: null },
+  { nom: "Aire-sur-la-Lys",  slug: null },
+  { nom: "Fruges",           slug: null },
 ]
 
 const temoignages = [
@@ -304,15 +313,26 @@ export default function Home() {
                 environnantes :
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-                {villes.map((v) => (
-                  <div
-                    key={v}
-                    className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100"
-                  >
-                    <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
-                    <span className="text-[#0F2C5E] text-sm font-medium">{v}</span>
-                  </div>
-                ))}
+                {villes.map((v) =>
+                  v.slug ? (
+                    <Link
+                      key={v.nom}
+                      href={`/zones-intervention/${v.slug}`}
+                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100 hover:border-[#F97316]/40 hover:bg-orange-50/40 transition-colors group"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
+                      <span className="text-[#0F2C5E] text-sm font-medium group-hover:text-[#F97316] transition-colors">{v.nom}</span>
+                    </Link>
+                  ) : (
+                    <div
+                      key={v.nom}
+                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
+                      <span className="text-[#0F2C5E] text-sm font-medium">{v.nom}</span>
+                    </div>
+                  )
+                )}
               </div>
               <p className="text-sm text-gray-400 italic mb-6">
                 Votre ville n&apos;est pas listée ? Contactez-nous, nous étudions chaque demande.

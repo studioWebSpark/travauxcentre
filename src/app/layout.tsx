@@ -35,6 +35,14 @@ export const metadata: Metadata = {
     "devis travaux gratuit",
     "rénovation intérieure nord",
     "artisan longuenesse",
+    "travaux lens",
+    "rénovation hénin-beaumont",
+    "artisan béthune",
+    "entreprise travaux arras",
+    "rénovation lille métropole",
+    "travaux boulogne-sur-mer",
+    "artisan berck",
+    "travaux hazebrouck",
   ],
   openGraph: {
     type: "website",
@@ -78,6 +86,7 @@ const jsonLd = {
   areaServed: [
     "Longuenesse", "Saint-Omer", "Arras", "Boulogne-sur-Mer",
     "Béthune", "Calais", "Lille", "Hazebrouck", "Aire-sur-la-Lys",
+    "Lens", "Hénin-Beaumont", "Berck", "Liévin", "Bruay-la-Buissière",
   ],
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "18:00" },
