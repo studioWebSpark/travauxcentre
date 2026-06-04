@@ -86,7 +86,7 @@ export default function DevisPage() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
         {/* Header */}
         <div className="text-center mb-10">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-2">Gratuit & Sans engagement</p>
+          <p className="text-[#6B7280] font-semibold text-sm uppercase tracking-widest mb-2">Gratuit & Sans engagement</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Demander un Devis
           </h1>
@@ -238,7 +238,7 @@ export default function DevisPage() {
                 <button type="button" onClick={() => setStep(2)} className="flex-1 border border-gray-200 text-gray-600 font-semibold py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
                   ← Modifier
                 </button>
-                <button type="submit" disabled={loading} className="flex-[2] bg-[#F97316] text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-60">
+                <button type="submit" disabled={loading} className="flex-[2] bg-[#6B7280] text-white font-semibold py-3.5 rounded-xl hover:bg-gray-600 transition-colors disabled:opacity-60">
                   {loading ? "Envoi en cours…" : "Envoyer ma demande"}
                 </button>
               </div>

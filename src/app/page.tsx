@@ -93,18 +93,18 @@ export default function Home() {
           }}
         />
         {/* Orange accent blob */}
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#F97316]/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#6B7280]/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0F2C5E]/40 rounded-full blur-3xl" />
 
         <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-5xl mx-auto">
           <Badge variant="ghost" className="mb-8 gap-2 text-sm px-5 py-2 border-white/20">
-            <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-[#6B7280] animate-pulse" />
             Artisans certifiés RGE — Garantie décennale
           </Badge>
 
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
             Vos Travaux,{" "}
-            <span className="text-[#F97316] italic">Notre Expertise</span>
+            <span className="text-[#6B7280] italic">Notre Expertise</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
@@ -114,7 +114,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-orange-900/30 text-base">
+            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-gray-900/30 text-base">
               <Link href="/devis">
                 Demander un Devis Gratuit
                 <ArrowRight className="w-5 h-5" />
@@ -129,7 +129,7 @@ export default function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {stats.map((s) => (
               <div key={s.label} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-4">
-                <p className="text-2xl font-bold text-[#F97316]">{s.value}</p>
+                <p className="text-2xl font-bold text-[#6B7280]">{s.value}</p>
                 <p className="text-xs text-slate-400 mt-1">{s.label}</p>
               </div>
             ))}
@@ -145,7 +145,7 @@ export default function Home() {
       <section className="py-24 bg-[#F8F7F4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+            <Badge variant="outline" className="mb-4 text-[#6B7280] border-[#6B7280]/30">
               Ce que nous faisons
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
@@ -162,16 +162,16 @@ export default function Home() {
               const Icon = s.icon
               return (
                 <Link key={s.title} href={s.href} className="group">
-                  <Card className="h-full hover:shadow-lg hover:border-[#F97316]/25 hover:-translate-y-1 transition-all duration-300">
+                  <Card className="h-full hover:shadow-lg hover:border-[#6B7280]/25 hover:-translate-y-1 transition-all duration-300">
                     <CardHeader>
-                      <div className="w-14 h-14 rounded-xl bg-[#0F2C5E]/5 flex items-center justify-center text-[#0F2C5E] mb-4 group-hover:bg-[#F97316] group-hover:text-white transition-colors duration-300">
+                      <div className="w-14 h-14 rounded-xl bg-[#0F2C5E]/5 flex items-center justify-center text-[#0F2C5E] mb-4 group-hover:bg-[#6B7280] group-hover:text-white transition-colors duration-300">
                         <Icon className="w-7 h-7" />
                       </div>
                       <CardTitle>{s.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription className="mb-5">{s.desc}</CardDescription>
-                      <span className="text-[#F97316] text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-[#6B7280] text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                         En savoir plus <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
@@ -188,7 +188,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="reveal">
-              <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+              <Badge variant="outline" className="mb-4 text-[#6B7280] border-[#6B7280]/30">
                 Pourquoi nous choisir
               </Badge>
               <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E] mb-6">
@@ -233,7 +233,7 @@ export default function Home() {
       <section className="py-24 bg-[#0F2C5E] relative overflow-hidden">
         {/* decorative blobs */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/3 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F97316]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#6B7280]/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
@@ -251,7 +251,7 @@ export default function Home() {
                 {i < etapes.length - 1 && (
                   <div className="hidden lg:block absolute top-7 left-[65%] right-0 h-px bg-white/15" />
                 )}
-                <div className="w-14 h-14 bg-[#F97316] rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-5 relative z-10 shadow-lg shadow-orange-900/30">
+                <div className="w-14 h-14 bg-[#6B7280] rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-5 relative z-10 shadow-lg shadow-gray-900/30">
                   {e.num}
                 </div>
                 <h3 className="font-bold text-white text-lg mb-3">{e.title}</h3>
@@ -266,7 +266,7 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+            <Badge variant="outline" className="mb-4 text-[#6B7280] border-[#6B7280]/30">
               Zone géographique
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
@@ -318,17 +318,17 @@ export default function Home() {
                     <Link
                       key={v.nom}
                       href={`/zones-intervention/${v.slug}`}
-                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100 hover:border-[#F97316]/40 hover:bg-orange-50/40 transition-colors group"
+                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100 hover:border-[#6B7280]/40 hover:bg-gray-50/40 transition-colors group"
                     >
-                      <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
-                      <span className="text-[#0F2C5E] text-sm font-medium group-hover:text-[#F97316] transition-colors">{v.nom}</span>
+                      <MapPin className="w-3.5 h-3.5 text-[#6B7280] shrink-0" />
+                      <span className="text-[#0F2C5E] text-sm font-medium group-hover:text-[#6B7280] transition-colors">{v.nom}</span>
                     </Link>
                   ) : (
                     <div
                       key={v.nom}
                       className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100"
                     >
-                      <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
+                      <MapPin className="w-3.5 h-3.5 text-[#6B7280] shrink-0" />
                       <span className="text-[#0F2C5E] text-sm font-medium">{v.nom}</span>
                     </div>
                   )
@@ -352,7 +352,7 @@ export default function Home() {
       <section className="py-24 bg-[#F8F7F4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+            <Badge variant="outline" className="mb-4 text-[#6B7280] border-[#6B7280]/30">
               Avis clients
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
@@ -364,7 +364,7 @@ export default function Home() {
             {temoignages.map((t) => (
               <Card key={t.nom} className="hover:shadow-md transition-shadow duration-300">
                 <CardContent className="pt-7">
-                  <div className="flex text-[#F97316] mb-4 gap-0.5">
+                  <div className="flex text-[#6B7280] mb-4 gap-0.5">
                     {Array.from({ length: t.note }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
@@ -395,11 +395,11 @@ export default function Home() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%23fff'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%23fff'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F97316]/5 rounded-full blur-3xl" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6B7280]/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
           <Badge variant="ghost" className="mb-6 border-white/20">
-            <Zap className="w-3.5 h-3.5 text-[#F97316]" />
+            <Zap className="w-3.5 h-3.5 text-[#6B7280]" />
             Démarrez votre projet
           </Badge>
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
@@ -411,7 +411,7 @@ export default function Home() {
             <strong className="text-white">48h</strong>, sans engagement.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-orange-900/30 text-base">
+            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-gray-900/30 text-base">
               <Link href="/rendez-vous">
                 <Calendar className="w-5 h-5" />
                 Prendre Rendez-vous

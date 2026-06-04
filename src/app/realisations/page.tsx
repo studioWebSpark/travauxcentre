@@ -26,7 +26,7 @@ export default function RealisationsPage() {
       {/* Hero */}
       <div className="bg-[#0F2C5E] py-16 mb-14">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center text-white">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Nos chantiers</p>
+          <p className="text-[#6B7280] font-semibold text-sm uppercase tracking-widest mb-3">Nos chantiers</p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Nos Réalisations
           </h1>
@@ -57,7 +57,7 @@ export default function RealisationsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
                   </svg>
                 </div>
-                <span className="absolute top-3 right-3 bg-[#F97316] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{r.cat}</span>
+                <span className="absolute top-3 right-3 bg-[#6B7280] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{r.cat}</span>
                 <span className="absolute bottom-3 left-3 bg-black/30 text-white text-xs px-2 py-1 rounded-md backdrop-blur-sm">Photo à venir</span>
               </div>
               <div className="p-5">
@@ -83,7 +83,7 @@ export default function RealisationsPage() {
             Votre projet sera notre prochaine réalisation
           </h2>
           <p className="text-gray-600 mb-8">Contactez-nous pour un devis gratuit sous 48h.</p>
-          <Link href="/devis" className="inline-flex bg-[#F97316] text-white font-semibold px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors">
+          <Link href="/devis" className="inline-flex bg-[#6B7280] text-white font-semibold px-8 py-4 rounded-xl hover:bg-gray-600 transition-colors">
             Demander un devis gratuit
           </Link>
         </div>

@@ -71,7 +71,7 @@ export default function RendezVousPage() {
     <div className="pt-24 pb-16 bg-[#F8F7F4] min-h-screen">
       <div className="max-w-xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-10">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-2">Gratuit & Sans engagement</p>
+          <p className="text-[#6B7280] font-semibold text-sm uppercase tracking-widest mb-2">Gratuit & Sans engagement</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Prendre Rendez-vous
           </h1>
@@ -113,7 +113,7 @@ export default function RendezVousPage() {
               <textarea value={form.message} onChange={set("message")} rows={3} placeholder="Précisez votre demande..." className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] resize-none" />
             </div>
 
-            <button type="submit" disabled={loading} className="w-full bg-[#F97316] text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-60 mt-2">
+            <button type="submit" disabled={loading} className="w-full bg-[#6B7280] text-white font-semibold py-3.5 rounded-xl hover:bg-gray-600 transition-colors disabled:opacity-60 mt-2">
               {loading ? "Envoi en cours…" : "Confirmer ma demande"}
             </button>
           </form>

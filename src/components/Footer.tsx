@@ -41,11 +41,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-lg bg-[#F97316] flex items-center justify-center">
+              <div className="w-9 h-9 rounded-lg bg-[#6B7280] flex items-center justify-center">
                 <HardHat className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-bold">
-                Travaux<span className="text-[#F97316]">Centre</span>
+                Travaux<span className="text-[#6B7280]">Centre</span>
               </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
@@ -58,7 +58,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-white/8 hover:bg-[#F97316] transition-colors flex items-center justify-center"
+                  className="w-9 h-9 rounded-lg bg-white/8 hover:bg-[#6B7280] transition-colors flex items-center justify-center"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">{svg}</svg>
                 </a>
@@ -76,7 +76,7 @@ export default function Footer() {
                 <li key={s.href}>
                   <Link
                     href={s.href}
-                    className="text-slate-400 text-sm hover:text-[#F97316] transition-colors"
+                    className="text-slate-400 text-sm hover:text-[#6B7280] transition-colors"
                   >
                     {s.label}
                   </Link>
@@ -95,7 +95,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-slate-400 text-sm hover:text-[#F97316] transition-colors"
+                    className="text-slate-400 text-sm hover:text-[#6B7280] transition-colors"
                   >
                     {l.label}
                   </Link>
@@ -115,7 +115,7 @@ export default function Footer() {
                 {
                   icon: Phone,
                   content: (
-                    <a href="tel:+33300000000" className="hover:text-[#F97316] transition-colors">
+                    <a href="tel:+33300000000" className="hover:text-[#6B7280] transition-colors">
                       03 XX XX XX XX
                     </a>
                   ),
@@ -123,7 +123,7 @@ export default function Footer() {
                 {
                   icon: Mail,
                   content: (
-                    <a href="mailto:contact@travauxcentre.fr" className="hover:text-[#F97316] transition-colors">
+                    <a href="mailto:contact@travauxcentre.fr" className="hover:text-[#6B7280] transition-colors">
                       contact@travauxcentre.fr
                     </a>
                   ),
@@ -131,7 +131,7 @@ export default function Footer() {
                 { icon: Clock, content: "Lun – Ven : 8h – 18h" },
               ].map(({ icon: Icon, content }, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400">
-                  <Icon className="w-4 h-4 mt-0.5 text-[#F97316] shrink-0" />
+                  <Icon className="w-4 h-4 mt-0.5 text-[#6B7280] shrink-0" />
                   <span>{content}</span>
                 </li>
               ))}
