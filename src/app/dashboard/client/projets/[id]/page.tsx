@@ -1,7 +1,7 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/Badge"
+import { Badge } from "@/components/ui/status-badge"
 import { DevisActions } from "@/components/client/DevisActions"
 import Link from "next/link"
 

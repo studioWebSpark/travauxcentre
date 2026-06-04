@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 
-export default function SignUp() {
+function SignUpForm() {
   const router       = useRouter()
   const searchParams = useSearchParams()
   const initialRole  = searchParams.get("role") === "ARTISAN" ? "ARTISAN"
@@ -179,5 +179,13 @@ export default function SignUp() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center" />}>
+      <SignUpForm />
+    </Suspense>
   )
 }

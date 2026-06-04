@@ -1,9 +1,24 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-navy:   #0F2C5E;
-  --color-orange: #F97316;
-  --color-cream:  #F8F7F4;
+  --color-navy:        #0F2C5E;
+  --color-orange:      #F97316;
+  --color-cream:       #F8F7F4;
+
+  /* shadcn design tokens */
+  --color-background:  #ffffff;
+  --color-foreground:  #1a1a1a;
+  --color-card:        #ffffff;
+  --color-card-foreground: #1a1a1a;
+  --color-border:      #e5e7eb;
+  --color-input:       #e5e7eb;
+  --color-ring:        #0F2C5E;
+  --color-muted:       #f3f4f6;
+  --color-muted-foreground: #6b7280;
+  --color-accent:      #F97316;
+  --color-accent-foreground: #ffffff;
+
+  --radius: 0.75rem;
 }
 
 html {
@@ -16,7 +31,7 @@ body {
   background: #ffffff;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   font-family: "Playfair Display", serif;
 }
 

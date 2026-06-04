@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 
-export default function SignIn() {
+function SignInForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get("callbackUrl") ?? "/dashboard/artisan"
@@ -32,7 +32,6 @@ export default function SignIn() {
       return
     }
 
-    // Redirect based on role
     const meRes = await fetch("/api/me")
     const me    = await meRes.json()
     const dest  = me.role === "ARTISAN" ? "/dashboard/artisan" : "/dashboard/client"
@@ -42,10 +41,9 @@ export default function SignIn() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        {/* Logo */}
         <div className="text-center mb-8">
-          <span className="text-3xl font-bold text-blue-600">Travaux</span>
-          <span className="text-3xl font-bold text-gray-800">Centre</span>
+          <span className="text-3xl font-bold text-[#0F2C5E]">Travaux</span>
+          <span className="text-3xl font-bold text-[#F97316]">Centre</span>
           <p className="text-gray-500 mt-2 text-sm">Connectez-vous à votre espace</p>
         </div>
 
@@ -61,7 +59,7 @@ export default function SignIn() {
                 autoComplete="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]"
                 placeholder="vous@exemple.fr"
               />
             </div>
@@ -74,7 +72,7 @@ export default function SignIn() {
                 autoComplete="current-password"
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]"
                 placeholder="••••••••"
               />
             </div>
@@ -86,7 +84,7 @@ export default function SignIn() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-xl transition-colors"
+              className="w-full bg-[#0F2C5E] hover:bg-[#1a3f7a] disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors"
             >
               {loading ? "Connexion..." : "Se connecter"}
             </button>
@@ -94,12 +92,20 @@ export default function SignIn() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Pas encore de compte ?{" "}
-            <Link href="/auth/signup" className="text-blue-600 font-medium hover:underline">
+            <Link href="/auth/signup" className="text-[#F97316] font-medium hover:underline">
               Créer un compte
             </Link>
           </p>
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SignIn() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center" />}>
+      <SignInForm />
+    </Suspense>
   )
 }
