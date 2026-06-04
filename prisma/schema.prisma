@@ -8,21 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ─── NextAuth.js required models ───────────────────────────────────────────
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  role          Role      @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  accounts Account[]
-  sessions Session[]
-}
+// ─── NextAuth.js ─────────────────────────────────────────────────────────────
 
 model Account {
   userId            String
@@ -58,9 +44,258 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-// ─── Enums ─────────────────────────────────────────────────────────────────
+// ─── Utilisateurs ────────────────────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts       Account[]
+  sessions       Session[]
+  clientProfile  ClientProfile?
+  artisanProfile ArtisanProfile?
+  messagesSent   Message[]       @relation("expediteur")
+  messagesRecus  Message[]       @relation("destinataire")
+}
+
+model ClientProfile {
+  id        String  @id @default(cuid())
+  userId    String  @unique
+  telephone String?
+  adresse   String?
+  ville     String?
+  codePostal String?
+
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projets Projet[]
+  avis    Avis[]
+}
+
+model ArtisanProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  siret       String?
+  description String?
+  telephone   String?
+  adresse     String?
+  ville       String?
+  codePostal  String?
+  rayon       Int      @default(30) // km autour de sa position
+  disponible  Boolean  @default(true)
+  note        Float    @default(0)
+  nbAvis      Int      @default(0)
+  verifie     Boolean  @default(false)
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  specialites  Specialite[]
+  devis        Devis[]
+  chantiers    Chantier[]
+  avis         Avis[]
+}
+
+// ─── Mise en relation ────────────────────────────────────────────────────────
+
+model Projet {
+  id          String       @id @default(cuid())
+  clientId    String
+  titre       String
+  description String
+  categorie   Categorie
+  adresse     String
+  ville       String
+  codePostal  String
+  budgetMin   Float?
+  budgetMax   Float?
+  dateDebut   DateTime?
+  dateFin     DateTime?
+  statut      StatutProjet @default(OUVERT)
+  photos      String[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  devis    Devis[]
+  chantier Chantier?
+  messages Message[]
+}
+
+model Devis {
+  id          String       @id @default(cuid())
+  projetId    String
+  artisanId   String
+  montant     Float
+  description String
+  dureeJours  Int
+  statut      StatutDevis  @default(EN_ATTENTE)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  projet   Projet         @relation(fields: [projetId], references: [id], onDelete: Cascade)
+  artisan  ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  chantier Chantier?
+
+  @@unique([projetId, artisanId])
+}
+
+model Avis {
+  id          String   @id @default(cuid())
+  clientId    String
+  artisanId   String
+  chantierId  String   @unique
+  note        Int      // 1 à 5
+  commentaire String?
+  createdAt   DateTime @default(now())
+
+  client   ClientProfile  @relation(fields: [clientId], references: [id])
+  artisan  ArtisanProfile @relation(fields: [artisanId], references: [id])
+  chantier Chantier       @relation(fields: [chantierId], references: [id])
+}
+
+// ─── Gestion de chantier ─────────────────────────────────────────────────────
+
+model Chantier {
+  id         String        @id @default(cuid())
+  projetId   String        @unique
+  devisId    String        @unique
+  artisanId  String
+  statut     StatutChantier @default(PLANIFIE)
+  dateDebut  DateTime?
+  dateFin    DateTime?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  projet    Projet         @relation(fields: [projetId], references: [id])
+  devis     Devis          @relation(fields: [devisId], references: [id])
+  artisan   ArtisanProfile @relation(fields: [artisanId], references: [id])
+  taches    Tache[]
+  rapports  Rapport[]
+  documents Document[]
+  avis      Avis?
+}
+
+model Tache {
+  id           String      @id @default(cuid())
+  chantierId   String
+  titre        String
+  description  String?
+  statut       StatutTache @default(A_FAIRE)
+  ordre        Int         @default(0)
+  dateEcheance DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  chantier Chantier @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+model Rapport {
+  id          String   @id @default(cuid())
+  chantierId  String
+  auteurId    String
+  description String
+  photos      String[]
+  createdAt   DateTime @default(now())
+
+  chantier Chantier @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id         String       @id @default(cuid())
+  chantierId String
+  nom        String
+  type       TypeDocument
+  url        String
+  createdAt  DateTime     @default(now())
+
+  chantier Chantier @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+// ─── Messagerie ──────────────────────────────────────────────────────────────
+
+model Message {
+  id             String   @id @default(cuid())
+  expediteurId   String
+  destinataireId String
+  projetId       String?
+  contenu        String
+  lu             Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  expediteur   User    @relation("expediteur", fields: [expediteurId], references: [id])
+  destinataire User    @relation("destinataire", fields: [destinataireId], references: [id])
+  projet       Projet? @relation(fields: [projetId], references: [id])
+}
+
+// ─── Spécialités artisan ─────────────────────────────────────────────────────
+
+model Specialite {
+  id        String    @id @default(cuid())
+  artisanId String
+  categorie Categorie
+
+  artisan ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  @@unique([artisanId, categorie])
+}
+
+// ─── Enums ───────────────────────────────────────────────────────────────────
 
 enum Role {
-  USER
+  CLIENT
+  ARTISAN
   ADMIN
+}
+
+enum Categorie {
+  MACONNERIE
+  PLOMBERIE
+  ELECTRICITE
+  PEINTURE
+  MENUISERIE
+  TOITURE
+  CARRELAGE
+  ISOLATION
+  CHAUFFAGE
+  CLIMATISATION
+  JARDINAGE
+  RENOVATION_GENERALE
+  AUTRE
+}
+
+enum StatutProjet {
+  OUVERT
+  EN_COURS
+  TERMINE
+  ANNULE
+}
+
+enum StatutDevis {
+  EN_ATTENTE
+  ACCEPTE
+  REFUSE
+}
+
+enum StatutChantier {
+  PLANIFIE
+  EN_COURS
+  PAUSE
+  TERMINE
+}
+
+enum StatutTache {
+  A_FAIRE
+  EN_COURS
+  TERMINEE
+}
+
+enum TypeDocument {
+  CONTRAT
+  FACTURE
+  PHOTO
+  AUTRE
 }
