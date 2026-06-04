@@ -11,6 +11,6 @@ export function err(message: string, status = 400) {
 
 export async function requireAuth() {
   const session = await auth()
-  if (!session?.user) return { session: null, response: err("Non authentifié", 401) }
-  return { session, response: null }
+  if (!session?.user?.id) return { session: null, userId: null, response: err("Non authentifié", 401) }
+  return { session, userId: session.user.id as string, response: null }
 }

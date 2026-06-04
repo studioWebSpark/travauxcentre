@@ -5,7 +5,7 @@ type Ctx = { params: Promise<{ id: string }> }
 
 export async function POST(request: Request, { params }: Ctx) {
   const { id: chantierId } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const { description, photos } = await request.json()
@@ -16,14 +16,14 @@ export async function POST(request: Request, { params }: Ctx) {
     include: { artisan: true },
   })
   if (!chantier) return err("Chantier introuvable", 404)
-  if (chantier.artisan.userId !== session!.user.id) return err("Non autorisé", 403)
+  if (chantier.artisan.userId !== userId!) return err("Non autorisé", 403)
 
   const rapport = await prisma.rapport.create({
     data: {
       chantierId,
-      auteurId: session!.user.id,
+      auteurId:    userId!,
       description,
-      photos: photos ?? [],
+      photos:      photos ?? [],
     },
   })
 

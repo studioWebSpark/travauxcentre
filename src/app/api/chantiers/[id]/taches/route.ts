@@ -1,11 +1,12 @@
 import { prisma } from "@/lib/prisma"
 import { ok, err, requireAuth } from "@/lib/api"
+import type { StatutTache } from "@/generated/prisma"
 
 type Ctx = { params: Promise<{ id: string }> }
 
 export async function POST(request: Request, { params }: Ctx) {
   const { id: chantierId } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const { titre, description, dateEcheance, ordre } = await request.json()
@@ -16,7 +17,7 @@ export async function POST(request: Request, { params }: Ctx) {
     include: { artisan: true },
   })
   if (!chantier) return err("Chantier introuvable", 404)
-  if (chantier.artisan.userId !== session!.user.id) return err("Non autorisé", 403)
+  if (chantier.artisan.userId !== userId!) return err("Non autorisé", 403)
 
   const tache = await prisma.tache.create({
     data: {
@@ -33,7 +34,7 @@ export async function POST(request: Request, { params }: Ctx) {
 
 export async function PATCH(request: Request, { params }: Ctx) {
   const { id: chantierId } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const { tacheId, statut } = await request.json()
@@ -44,11 +45,11 @@ export async function PATCH(request: Request, { params }: Ctx) {
     include: { artisan: true },
   })
   if (!chantier) return err("Chantier introuvable", 404)
-  if (chantier.artisan.userId !== session!.user.id) return err("Non autorisé", 403)
+  if (chantier.artisan.userId !== userId!) return err("Non autorisé", 403)
 
   const tache = await prisma.tache.update({
     where: { id: tacheId, chantierId },
-    data: { statut },
+    data: { statut: statut as StatutTache },
   })
 
   return ok(tache)

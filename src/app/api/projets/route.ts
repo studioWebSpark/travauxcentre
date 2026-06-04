@@ -1,16 +1,17 @@
 import { prisma } from "@/lib/prisma"
 import { ok, err, requireAuth } from "@/lib/api"
+import type { Categorie, StatutProjet } from "@/generated/prisma"
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
-  const categorie = searchParams.get("categorie") as string | null
-  const ville = searchParams.get("ville")
-  const statut = searchParams.get("statut") ?? "OUVERT"
+  const categorie = searchParams.get("categorie") as Categorie | null
+  const ville     = searchParams.get("ville")
+  const statut    = (searchParams.get("statut") ?? "OUVERT") as StatutProjet
 
   const projets = await prisma.projet.findMany({
     where: {
-      statut: statut as "OUVERT" | "EN_COURS" | "TERMINE" | "ANNULE",
-      ...(categorie ? { categorie: categorie as never } : {}),
+      statut,
+      ...(categorie ? { categorie } : {}),
       ...(ville ? { ville: { contains: ville, mode: "insensitive" } } : {}),
     },
     include: {
@@ -24,7 +25,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const body = await request.json()
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
   }
 
   const clientProfile = await prisma.clientProfile.findUnique({
-    where: { userId: session!.user.id },
+    where: { userId: userId! },
   })
   if (!clientProfile) return err("Profil client introuvable", 404)
 
@@ -48,10 +49,10 @@ export async function POST(request: Request) {
       adresse,
       ville,
       codePostal: codePostal ?? "",
-      budgetMin: budgetMin ? Number(budgetMin) : null,
-      budgetMax: budgetMax ? Number(budgetMax) : null,
-      dateDebut: dateDebut ? new Date(dateDebut) : null,
-      dateFin: dateFin ? new Date(dateFin) : null,
+      budgetMin:  budgetMin  ? Number(budgetMin)  : null,
+      budgetMax:  budgetMax  ? Number(budgetMax)  : null,
+      dateDebut:  dateDebut  ? new Date(dateDebut) : null,
+      dateFin:    dateFin    ? new Date(dateFin)   : null,
     },
   })
 

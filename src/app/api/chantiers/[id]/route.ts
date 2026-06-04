@@ -5,7 +5,7 @@ type Ctx = { params: Promise<{ id: string }> }
 
 export async function GET(_req: Request, { params }: Ctx) {
   const { id } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const chantier = await prisma.chantier.findUnique({
@@ -14,8 +14,8 @@ export async function GET(_req: Request, { params }: Ctx) {
       projet: { include: { client: { include: { user: { select: { name: true, image: true } } } } } },
       artisan: { include: { user: { select: { name: true, image: true } }, specialites: true } },
       devis: true,
-      taches: { orderBy: { ordre: "asc" } },
-      rapports: { orderBy: { createdAt: "desc" } },
+      taches:    { orderBy: { ordre: "asc" } },
+      rapports:  { orderBy: { createdAt: "desc" } },
       documents: { orderBy: { createdAt: "desc" } },
       avis: true,
     },
@@ -23,10 +23,8 @@ export async function GET(_req: Request, { params }: Ctx) {
 
   if (!chantier) return err("Chantier introuvable", 404)
 
-  const userId = session!.user.id
-  const isClient = chantier.projet.client.userId === userId
-  const isArtisan = chantier.artisan.userId === userId
-
+  const isClient  = chantier.projet.client.userId === userId!
+  const isArtisan = chantier.artisan.userId === userId!
   if (!isClient && !isArtisan) return err("Non autorisé", 403)
 
   return ok(chantier)
@@ -34,7 +32,7 @@ export async function GET(_req: Request, { params }: Ctx) {
 
 export async function PATCH(request: Request, { params }: Ctx) {
   const { id } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const { statut, dateDebut, dateFin } = await request.json()
@@ -45,14 +43,14 @@ export async function PATCH(request: Request, { params }: Ctx) {
   })
 
   if (!chantier) return err("Chantier introuvable", 404)
-  if (chantier.artisan.userId !== session!.user.id) return err("Non autorisé", 403)
+  if (chantier.artisan.userId !== userId!) return err("Non autorisé", 403)
 
   const updated = await prisma.chantier.update({
     where: { id },
     data: {
-      ...(statut ? { statut } : {}),
+      ...(statut    ? { statut }                    : {}),
       ...(dateDebut ? { dateDebut: new Date(dateDebut) } : {}),
-      ...(dateFin ? { dateFin: new Date(dateFin) } : {}),
+      ...(dateFin   ? { dateFin:   new Date(dateFin)   } : {}),
     },
   })
 

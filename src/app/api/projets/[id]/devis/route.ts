@@ -24,7 +24,7 @@ export async function GET(_req: Request, { params }: Ctx) {
 
 export async function POST(request: Request, { params }: Ctx) {
   const { id: projetId } = await params
-  const { session, response } = await requireAuth()
+  const { userId, response } = await requireAuth()
   if (response) return response
 
   const body = await request.json()
@@ -35,7 +35,7 @@ export async function POST(request: Request, { params }: Ctx) {
   }
 
   const artisanProfile = await prisma.artisanProfile.findUnique({
-    where: { userId: session!.user.id },
+    where: { userId: userId! },
   })
   if (!artisanProfile) return err("Profil artisan introuvable", 404)
 
@@ -46,7 +46,7 @@ export async function POST(request: Request, { params }: Ctx) {
     data: {
       projetId,
       artisanId: artisanProfile.id,
-      montant: Number(montant),
+      montant:   Number(montant),
       description,
       dureeJours: Number(dureeJours),
     },
