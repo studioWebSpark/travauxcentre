@@ -2,13 +2,18 @@
 
 import { useState } from "react"
 import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 
 export default function SignUp() {
-  const router = useRouter()
+  const router       = useRouter()
+  const searchParams = useSearchParams()
+  const initialRole  = searchParams.get("role") === "ARTISAN" ? "ARTISAN"
+                     : searchParams.get("role") === "CLIENT"  ? "CLIENT"
+                     : "" as "CLIENT" | "ARTISAN" | ""
+
   const [step, setStep]       = useState<1 | 2>(1)
-  const [role, setRole]       = useState<"CLIENT" | "ARTISAN" | "">("")
+  const [role, setRole]       = useState<"CLIENT" | "ARTISAN" | "">(initialRole)
   const [form, setForm]       = useState({ name: "", email: "", password: "", confirm: "" })
   const [error, setError]     = useState("")
   const [loading, setLoading] = useState(false)
@@ -37,8 +42,11 @@ export default function SignUp() {
     const data = await res.json()
     if (!res.ok) { setError(data.error ?? "Erreur lors de la création du compte"); setLoading(false); return }
 
+    // On utilise le rôle confirmé par le serveur pour la redirection,
+    // ce qui immunise contre toute perte de state React après le signIn
+    const confirmedRole = data.role as string
     await signIn("credentials", { email: form.email, password: form.password, redirect: false })
-    router.push(role === "ARTISAN" ? "/onboarding/artisan" : "/onboarding/client")
+    router.push(confirmedRole === "ARTISAN" ? "/onboarding/artisan" : "/onboarding/client")
   }
 
   return (
@@ -69,12 +77,13 @@ export default function SignUp() {
                 <h1 className="text-xl font-bold text-gray-900 mb-4">Vous êtes…</h1>
                 <div className="grid grid-cols-2 gap-3">
                   {([
-                    { value: "CLIENT",  label: "Un particulier",  icon: "🏠", desc: "Je cherche un artisan pour mes travaux" },
-                    { value: "ARTISAN", label: "Un artisan",       icon: "🔧", desc: "Je propose mes services de travaux" },
+                    { value: "CLIENT",  label: "Un particulier", icon: "🏠", desc: "Je cherche quelqu'un pour mes travaux" },
+                    { value: "ARTISAN", label: "Un artisan",      icon: "🔧", desc: "Je propose mes services de travaux" },
                   ] as const).map(({ value, label, icon, desc }) => (
                     <button
                       key={value}
                       type="button"
+                      data-role={value}
                       onClick={() => setRole(value)}
                       className={`p-4 rounded-xl border-2 text-left transition-all ${
                         role === value
