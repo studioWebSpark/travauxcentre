@@ -16,7 +16,16 @@ module.exports = {
     { loc: "/a-propos",                         priority: 0.7,  changefreq: "monthly" },
     { loc: "/contact",                          priority: 0.8,  changefreq: "monthly" },
     { loc: "/devis",                            priority: 0.95, changefreq: "monthly" },
-    { loc: "/rendez-vous",                      priority: 0.85, changefreq: "monthly" },
+    { loc: "/rendez-vous",                                   priority: 0.85, changefreq: "monthly" },
+    { loc: "/zones-intervention",                            priority: 0.85, changefreq: "monthly" },
+    { loc: "/zones-intervention/lens",                       priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/henin-beaumont",             priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/bethune",                    priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/arras",                      priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/lille",                      priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/boulogne-sur-mer",           priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/berck",                      priority: 0.8,  changefreq: "monthly" },
+    { loc: "/zones-intervention/hazebrouck",                 priority: 0.8,  changefreq: "monthly" },
   ],
   robotsTxtOptions: {
     policies: [

@@ -2,7 +2,7 @@
 
 @theme inline {
   --color-navy:        #0F2C5E;
-  --color-orange:      #F97316;
+  --color-orange:      #6B7280;
   --color-cream:       #F8F7F4;
 
   /* shadcn design tokens */
@@ -15,7 +15,7 @@
   --color-ring:        #0F2C5E;
   --color-muted:       #f3f4f6;
   --color-muted-foreground: #6b7280;
-  --color-accent:      #F97316;
+  --color-accent:      #6B7280;
   --color-accent-foreground: #ffffff;
 
   --radius: 0.75rem;

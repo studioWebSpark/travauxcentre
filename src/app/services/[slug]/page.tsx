@@ -82,15 +82,15 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return (
     <div className="pt-24 pb-16">
       {/* Hero */}
-      <div className="bg-[#0F2C5E] py-16 mb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-white">
-          <Link href="/services" className="inline-flex items-center gap-1 text-slate-400 hover:text-white text-sm mb-6 transition-colors">
+      <div className="bg-white border-b border-gray-100 py-16 mb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <Link href="/services" className="inline-flex items-center gap-1 text-gray-400 hover:text-[#0F2C5E] text-sm mb-6 transition-colors">
             ← Tous les services
           </Link>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3" style={{ fontFamily: "var(--font-playfair), serif" }}>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-3" style={{ fontFamily: "var(--font-playfair), serif" }}>
             {service.title}
           </h1>
-          <p className="text-[#F97316] font-medium">{service.subtitle}</p>
+          <p className="text-gray-400 font-medium">{service.subtitle}</p>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {service.items.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-gray-700 bg-[#F8F7F4] rounded-xl px-4 py-3">
-                    <span className="w-5 h-5 bg-[#F97316] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
+                    <span className="w-5 h-5 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
                     {item}
                   </li>
                 ))}
@@ -133,7 +133,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
               <div className="bg-[#0F2C5E] text-white rounded-3xl p-7">
                 <h3 className="font-bold text-xl mb-3" style={{ fontFamily: "var(--font-playfair), serif" }}>Devis gratuit</h3>
                 <p className="text-slate-300 text-sm mb-6">Obtenez un chiffrage détaillé sous 48h, sans engagement.</p>
-                <Link href="/devis" className="block w-full bg-[#F97316] text-white font-semibold py-3 rounded-xl hover:bg-orange-600 transition-colors text-center">
+                <Link href="/devis" className="block w-full bg-[#0F2C5E] text-white font-semibold py-3 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors text-center">
                   Demander un devis
                 </Link>
               </div>

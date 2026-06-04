@@ -43,7 +43,7 @@ function SignInForm() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <span className="text-3xl font-bold text-[#0F2C5E]">Travaux</span>
-          <span className="text-3xl font-bold text-[#F97316]">Centre</span>
+          <span className="text-3xl font-bold text-[#6B7280]">Centre</span>
           <p className="text-gray-500 mt-2 text-sm">Connectez-vous à votre espace</p>
         </div>
 
@@ -92,7 +92,7 @@ function SignInForm() {
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Pas encore de compte ?{" "}
-            <Link href="/auth/signup" className="text-[#F97316] font-medium hover:underline">
+            <Link href="/auth/signup" className="text-[#6B7280] font-medium hover:underline">
               Créer un compte
             </Link>
           </p>

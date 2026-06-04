@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Check, Phone, Calendar, Shield, Trophy, Star, MapPin, ChevronDown, Building2, Hammer, TreePine, Wrench, Zap } from "lucide-react"
+import { ArrowRight, Check, Phone, Calendar, Shield, Trophy, Star, MapPin, ChevronDown, Building2, Hammer, TreePine, Wrench } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -51,9 +51,18 @@ const etapes = [
 ]
 
 const villes = [
-  "Saint-Omer", "Arras", "Boulogne-sur-Mer",
-  "Béthune", "Calais", "Hazebrouck",
-  "Aire-sur-la-Lys", "Fruges", "Lumbres",
+  { nom: "Lens",             slug: "lens" },
+  { nom: "Hénin-Beaumont",   slug: "henin-beaumont" },
+  { nom: "Béthune",          slug: "bethune" },
+  { nom: "Arras",            slug: "arras" },
+  { nom: "Lille",            slug: "lille" },
+  { nom: "Boulogne-sur-Mer", slug: "boulogne-sur-mer" },
+  { nom: "Berck",            slug: "berck" },
+  { nom: "Hazebrouck",       slug: "hazebrouck" },
+  { nom: "Saint-Omer",       slug: null },
+  { nom: "Calais",           slug: null },
+  { nom: "Aire-sur-la-Lys",  slug: null },
+  { nom: "Fruges",           slug: null },
 ]
 
 const temoignages = [
@@ -73,45 +82,41 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1f42] via-[#0F2C5E] to-[#1a3f7a]" />
-        {/* Subtle grid texture */}
+      <section className="relative min-h-screen flex items-center justify-center bg-white overflow-hidden">
+        {/* Subtle grid */}
         <div
-          className="absolute inset-0 opacity-[0.04]"
+          className="absolute inset-0 opacity-[0.025]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%23fff'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%23fff'/%3E%3C/svg%3E")`,
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%230F2C5E'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%230F2C5E'/%3E%3C/svg%3E")`,
           }}
         />
-        {/* Orange accent blob */}
-        <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-[#F97316]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#0F2C5E]/40 rounded-full blur-3xl" />
 
-        <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-5xl mx-auto">
-          <Badge variant="ghost" className="mb-8 gap-2 text-sm px-5 py-2 border-white/20">
-            <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-            Artisans certifiés RGE — Garantie décennale
-          </Badge>
+        <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
+          {/* Eyebrow */}
+          <div className="mb-8 inline-flex items-center gap-2.5 border border-[#0F2C5E]/15 rounded-full px-5 py-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0F2C5E]/30" />
+            <span className="text-sm text-[#0F2C5E]/50 font-medium tracking-wide">Artisans certifiés RGE — Garantie décennale</span>
+          </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.15] mb-6 tracking-tight text-[#0F2C5E]">
             Vos Travaux,{" "}
-            <span className="text-[#F97316] italic">Notre Expertise</span>
+            <span className="inline-block bg-[#0F2C5E] text-white italic px-5 py-1 rounded-md">Notre Expertise</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
             Entreprise de travaux ancrée à Longuenesse, nous intervenons dans un rayon de{" "}
-            <strong className="text-white">80km</strong> pour tous vos projets de rénovation,
+            <strong className="text-[#0F2C5E]">80km</strong> pour tous vos projets de rénovation,
             maçonnerie et aménagement.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-orange-900/30 text-base">
+            <Button asChild size="lg" variant="default" className="text-base">
               <Link href="/devis">
                 Demander un Devis Gratuit
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline-white" className="text-base">
+            <Button asChild size="lg" variant="outline" className="text-base">
               <Link href="/services">Découvrir nos services</Link>
             </Button>
           </div>
@@ -119,15 +124,15 @@ export default function Home() {
           {/* Stats bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {stats.map((s) => (
-              <div key={s.label} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 py-4">
-                <p className="text-2xl font-bold text-[#F97316]">{s.value}</p>
-                <p className="text-xs text-slate-400 mt-1">{s.label}</p>
+              <div key={s.label} className="border border-[#0F2C5E]/12 rounded-xl px-4 py-4">
+                <p className="text-2xl font-bold text-[#0F2C5E]">{s.value}</p>
+                <p className="text-xs text-gray-400 mt-1">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/40">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-[#0F2C5E]/25">
           <ChevronDown className="w-6 h-6" />
         </div>
       </section>
@@ -136,9 +141,7 @@ export default function Home() {
       <section className="py-24 bg-[#F8F7F4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
-              Ce que nous faisons
-            </Badge>
+            <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#0F2C5E]/40 mb-4">Ce que nous faisons</p>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
               Nos domaines d&apos;expertise
             </h2>
@@ -153,16 +156,16 @@ export default function Home() {
               const Icon = s.icon
               return (
                 <Link key={s.title} href={s.href} className="group">
-                  <Card className="h-full hover:shadow-lg hover:border-[#F97316]/25 hover:-translate-y-1 transition-all duration-300">
+                  <Card className="h-full hover:shadow-md hover:border-[#0F2C5E]/20 hover:-translate-y-1 transition-all duration-300">
                     <CardHeader>
-                      <div className="w-14 h-14 rounded-xl bg-[#0F2C5E]/5 flex items-center justify-center text-[#0F2C5E] mb-4 group-hover:bg-[#F97316] group-hover:text-white transition-colors duration-300">
+                      <div className="w-14 h-14 rounded-xl bg-[#0F2C5E]/5 flex items-center justify-center text-[#0F2C5E] mb-4 group-hover:bg-[#0F2C5E] group-hover:text-white transition-colors duration-300">
                         <Icon className="w-7 h-7" />
                       </div>
                       <CardTitle>{s.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription className="mb-5">{s.desc}</CardDescription>
-                      <span className="text-[#F97316] text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-[#0F2C5E]/60 text-sm font-semibold inline-flex items-center gap-1 group-hover:gap-2 transition-all">
                         En savoir plus <ArrowRight className="w-4 h-4" />
                       </span>
                     </CardContent>
@@ -179,7 +182,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="reveal">
-              <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+              <Badge variant="outline" className="mb-4 text-[#0F2C5E]/50 border-[#0F2C5E]/15">
                 Pourquoi nous choisir
               </Badge>
               <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E] mb-6">
@@ -224,7 +227,7 @@ export default function Home() {
       <section className="py-24 bg-[#0F2C5E] relative overflow-hidden">
         {/* decorative blobs */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-white/3 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F97316]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#6B7280]/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
@@ -242,7 +245,7 @@ export default function Home() {
                 {i < etapes.length - 1 && (
                   <div className="hidden lg:block absolute top-7 left-[65%] right-0 h-px bg-white/15" />
                 )}
-                <div className="w-14 h-14 bg-[#F97316] rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-5 relative z-10 shadow-lg shadow-orange-900/30">
+                <div className="w-14 h-14 border-2 border-white/30 rounded-2xl flex items-center justify-center text-white font-bold text-xl mx-auto mb-5 relative z-10">
                   {e.num}
                 </div>
                 <h3 className="font-bold text-white text-lg mb-3">{e.title}</h3>
@@ -257,7 +260,7 @@ export default function Home() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+            <Badge variant="outline" className="mb-4 text-[#0F2C5E]/50 border-[#0F2C5E]/15">
               Zone géographique
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
@@ -304,15 +307,26 @@ export default function Home() {
                 environnantes :
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-                {villes.map((v) => (
-                  <div
-                    key={v}
-                    className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100"
-                  >
-                    <MapPin className="w-3.5 h-3.5 text-[#F97316] shrink-0" />
-                    <span className="text-[#0F2C5E] text-sm font-medium">{v}</span>
-                  </div>
-                ))}
+                {villes.map((v) =>
+                  v.slug ? (
+                    <Link
+                      key={v.nom}
+                      href={`/zones-intervention/${v.slug}`}
+                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100 hover:border-[#6B7280]/40 hover:bg-gray-50/40 transition-colors group"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-[#6B7280] shrink-0" />
+                      <span className="text-[#0F2C5E] text-sm font-medium group-hover:text-[#6B7280] transition-colors">{v.nom}</span>
+                    </Link>
+                  ) : (
+                    <div
+                      key={v.nom}
+                      className="flex items-center gap-2 bg-[#F8F7F4] rounded-xl px-3 py-2.5 border border-gray-100"
+                    >
+                      <MapPin className="w-3.5 h-3.5 text-[#6B7280] shrink-0" />
+                      <span className="text-[#0F2C5E] text-sm font-medium">{v.nom}</span>
+                    </div>
+                  )
+                )}
               </div>
               <p className="text-sm text-gray-400 italic mb-6">
                 Votre ville n&apos;est pas listée ? Contactez-nous, nous étudions chaque demande.
@@ -332,7 +346,7 @@ export default function Home() {
       <section className="py-24 bg-[#F8F7F4]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 reveal">
-            <Badge variant="outline" className="mb-4 text-[#F97316] border-[#F97316]/30">
+            <Badge variant="outline" className="mb-4 text-[#0F2C5E]/50 border-[#0F2C5E]/15">
               Avis clients
             </Badge>
             <h2 className="text-4xl sm:text-5xl font-bold text-[#0F2C5E]">
@@ -344,7 +358,7 @@ export default function Home() {
             {temoignages.map((t) => (
               <Card key={t.nom} className="hover:shadow-md transition-shadow duration-300">
                 <CardContent className="pt-7">
-                  <div className="flex text-[#F97316] mb-4 gap-0.5">
+                  <div className="flex text-[#6B7280] mb-4 gap-0.5">
                     {Array.from({ length: t.note }).map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-current" />
                     ))}
@@ -375,13 +389,10 @@ export default function Home() {
             backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%23fff'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%23fff'/%3E%3C/svg%3E")`,
           }}
         />
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F97316]/5 rounded-full blur-3xl" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#6B7280]/5 rounded-full blur-3xl" />
 
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
-          <Badge variant="ghost" className="mb-6 border-white/20">
-            <Zap className="w-3.5 h-3.5 text-[#F97316]" />
-            Démarrez votre projet
-          </Badge>
+          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-white/40 mb-6">Démarrez votre projet</p>
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             Prêt à démarrer votre projet ?
           </h2>
@@ -391,7 +402,7 @@ export default function Home() {
             <strong className="text-white">48h</strong>, sans engagement.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="primary" className="shadow-xl shadow-orange-900/30 text-base">
+            <Button asChild size="lg" variant="default" className="text-base bg-white text-[#0F2C5E] hover:bg-white/90">
               <Link href="/rendez-vous">
                 <Calendar className="w-5 h-5" />
                 Prendre Rendez-vous

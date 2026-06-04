@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 
 const nav = [
   { label: "Services",     href: "/services" },
+  { label: "Zones",        href: "/zones-intervention" },
   { label: "Réalisations", href: "/realisations" },
   { label: "À propos",     href: "/a-propos" },
   { label: "Contact",      href: "/contact" },
@@ -47,7 +48,7 @@ export default function Header() {
               scrolled ? "text-[#0F2C5E]" : "text-white"
             )}
           >
-            Travaux<span className="text-[#F97316]">Centre</span>
+            Travaux<span className="text-[#6B7280]">Centre</span>
           </span>
         </Link>
 
@@ -58,7 +59,7 @@ export default function Header() {
               key={item.href}
               href={item.href}
               className={cn(
-                "text-sm font-medium transition-colors hover:text-[#F97316]",
+                "text-sm font-medium transition-colors hover:text-[#6B7280]",
                 scrolled ? "text-gray-600" : "text-white/85"
               )}
             >
@@ -90,7 +91,7 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-gray-700 font-medium px-3 py-2.5 rounded-lg hover:bg-[#F8F7F4] hover:text-[#F97316] transition-colors"
+              className="text-gray-700 font-medium px-3 py-2.5 rounded-lg hover:bg-[#F8F7F4] hover:text-[#6B7280] transition-colors"
               onClick={() => setOpen(false)}
             >
               {item.label}

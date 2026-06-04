@@ -36,7 +36,7 @@ const services = [
     title:  "Second Œuvre",
     desc:   "Électricité, plomberie, isolation — nos techniciens certifiés assurent des installations durables et aux normes.",
     items:  ["Électricité et tableau électrique", "Plomberie et sanitaires", "Isolation thermique (ITE/ITI)", "Isolation acoustique", "Ventilation (VMC)", "Chauffage et climatisation"],
-    color:  "from-orange-500 to-[#0F2C5E]",
+    color:  "from-gray-500 to-[#0F2C5E]",
     seoDesc: "Second œuvre : électricité, plomberie, isolation à Longuenesse",
   },
 ]
@@ -45,15 +45,14 @@ export default function ServicesPage() {
   return (
     <div className="pt-24 pb-16">
       {/* Hero */}
-      <div className="bg-[#0F2C5E] py-16 mb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center text-white">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Ce que nous proposons</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            Tous nos services de travaux
+      <div className="bg-white border-b border-gray-100 py-16 mb-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#0F2C5E]/40 mb-4">Ce que nous proposons</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
+            Tous nos <span className="inline-block bg-[#0F2C5E] text-white px-3 py-1 rounded-sm">services</span> de travaux
           </h1>
-          <p className="text-slate-300 text-lg max-w-2xl mx-auto">
-            De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier
-            du bâtiment avec des artisans qualifiés et certifiés.
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
+            De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment avec des artisans qualifiés et certifiés.
           </p>
         </div>
       </div>
@@ -80,7 +79,7 @@ export default function ServicesPage() {
               <ul className="space-y-2 mb-8">
                 {s.items.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                    <span className="w-5 h-5 bg-[#F97316] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
+                    <span className="w-5 h-5 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
                     {item}
                   </li>
                 ))}
@@ -89,7 +88,7 @@ export default function ServicesPage() {
                 <Link href={`/services/${s.slug}`} className="bg-[#0F2C5E] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm">
                   En savoir plus
                 </Link>
-                <Link href="/devis" className="bg-[#F97316] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-orange-600 transition-colors text-sm">
+                <Link href="/devis" className="bg-[#0F2C5E] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors text-sm">
                   Devis gratuit
                 </Link>
               </div>
@@ -105,7 +104,7 @@ export default function ServicesPage() {
             Votre projet ne rentre pas dans une case ?
           </h2>
           <p className="text-gray-600 mb-8">Contactez-nous pour discuter de votre besoin spécifique. Nous avons l&apos;expertise pour tout type de chantier.</p>
-          <Link href="/devis" className="inline-flex bg-[#F97316] text-white font-semibold px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors">
+          <Link href="/devis" className="inline-flex bg-[#0F2C5E] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors">
             Demander un devis personnalisé
           </Link>
         </div>

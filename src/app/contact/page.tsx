@@ -40,7 +40,7 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-14">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Parlons de votre projet</p>
+          <p className="text-[#6B7280] font-semibold text-sm uppercase tracking-widest mb-3">Parlons de votre projet</p>
           <h1 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Contactez-nous
           </h1>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Message *</label>
                   <textarea value={form.message} onChange={set("message")} required rows={5} placeholder="Décrivez votre demande..." className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] resize-none" />
                 </div>
-                <button type="submit" disabled={loading} className="w-full bg-[#F97316] text-white font-semibold py-3.5 rounded-xl hover:bg-orange-600 transition-colors disabled:opacity-60">
+                <button type="submit" disabled={loading} className="w-full bg-[#6B7280] text-white font-semibold py-3.5 rounded-xl hover:bg-gray-600 transition-colors disabled:opacity-60">
                   {loading ? "Envoi…" : "Envoyer le message"}
                 </button>
               </form>
