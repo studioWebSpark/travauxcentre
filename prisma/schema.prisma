@@ -301,3 +301,35 @@ enum TypeDocument {
   PHOTO
   AUTRE
 }
+
+// ─── Site vitrine — Leads & RDV ──────────────────────────────────────────────
+
+model Lead {
+  id               String   @id @default(cuid())
+  nom              String
+  email            String
+  telephone        String
+  ville            String
+  codePostal       String
+  typeTravaux      String
+  description      String
+  surface          Float?
+  budget           String?
+  dateSouhaitee    String?
+  source           String?
+  hubspotContactId String?
+  hubspotDealId    String?
+  createdAt        DateTime @default(now())
+}
+
+model RendezVous {
+  id               String   @id @default(cuid())
+  nom              String
+  email            String
+  telephone        String
+  typeRdv          String
+  message          String?
+  creneau          String?
+  hubspotTaskId    String?
+  createdAt        DateTime @default(now())
+}

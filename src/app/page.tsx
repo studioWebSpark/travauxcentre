@@ -1,284 +1,247 @@
+import type { Metadata } from "next"
 import Link from "next/link"
-import { prisma } from "@/lib/prisma"
-import { Navbar } from "@/components/landing/Navbar"
 
-// ─── Données statiques ────────────────────────────────────────────────────────
+export const metadata: Metadata = {
+  title: "Travaux Centre | Entreprise de Travaux à Longuenesse et région (80km)",
+}
 
-const categories = [
-  { icon: "🧱", label: "Maçonnerie",         desc: "Murs, fondations, enduits" },
-  { icon: "🔧", label: "Plomberie",           desc: "Sanitaires, chauffage, fuites" },
-  { icon: "⚡", label: "Électricité",         desc: "Installation, mise aux normes" },
-  { icon: "🎨", label: "Peinture",            desc: "Intérieur, extérieur, ravalement" },
-  { icon: "🪚", label: "Menuiserie",          desc: "Portes, fenêtres, parquet" },
-  { icon: "🏠", label: "Toiture",             desc: "Tuiles, zinguerie, isolation" },
-  { icon: "⬜", label: "Carrelage",           desc: "Pose, joint, rénovation" },
-  { icon: "🔥", label: "Chauffage",           desc: "Chaudière, pompe à chaleur" },
-  { icon: "❄️", label: "Climatisation",       desc: "Installation, entretien" },
-  { icon: "🌡️", label: "Isolation",           desc: "Combles, murs, sol" },
-  { icon: "🌿", label: "Jardinage",           desc: "Aménagement, entretien" },
-  { icon: "🏗️", label: "Rénovation générale", desc: "Tous corps d'état" },
-]
+function IconHome()    { return <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 21V12h6v9"/></svg> }
+function IconBrick()   { return <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="4" rx="1" strokeWidth={1.5}/><rect x="2" y="13" width="20" height="4" rx="1" strokeWidth={1.5}/><line x1="7" y1="7" x2="7" y2="11" strokeWidth={1.5}/><line x1="12" y1="13" x2="12" y2="17" strokeWidth={1.5}/></svg> }
+function IconTree()    { return <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 22V12m0 0l-4-4m4 4l4-4M6 12l-2-3h16l-2 3"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9L6 6h12l-2 3"/></svg> }
+function IconWrench()  { return <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> }
+function IconStar()    { return <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> }
+function IconCheck()   { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> }
+function IconPhone()   { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg> }
+function IconCalendar(){ return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" strokeWidth={2}/><line x1="16" y1="2" x2="16" y2="6" strokeWidth={2} strokeLinecap="round"/><line x1="8" y1="2" x2="8" y2="6" strokeWidth={2} strokeLinecap="round"/><line x1="3" y1="10" x2="21" y2="10" strokeWidth={2}/></svg> }
+function IconShield()  { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> }
+function IconTrophy()  { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-2m6 2v-2M12 17v-4m-5.5-7H5a2 2 0 00-2 2v1a5.5 5.5 0 0011 0V8a2 2 0 00-2-2h-1.5m-3 0V4a1 1 0 011-1h2a1 1 0 011 1v2m-4 0h4"/></svg> }
 
-const etapesClient = [
-  { num: "01", titre: "Décrivez votre projet",   desc: "Renseignez le type de travaux, l'adresse et votre budget en quelques minutes." },
-  { num: "02", titre: "Recevez des devis",        desc: "Des artisans qualifiés de votre région vous envoient leurs propositions." },
-  { num: "03", titre: "Choisissez et suivez",     desc: "Acceptez le meilleur devis et suivez l'avancement du chantier en temps réel." },
-]
-
-const etapesArtisan = [
-  { num: "01", titre: "Créez votre profil",       desc: "Renseignez vos spécialités, votre zone et vos certifications." },
-  { num: "02", titre: "Répondez aux projets",      desc: "Parcourez les demandes dans votre secteur et envoyez vos devis." },
-  { num: "03", titre: "Gérez vos chantiers",       desc: "Planifiez les tâches, publiez des rapports d'avancement et fidélisez vos clients." },
+const services = [
+  { icon: <IconHome />,   title: "Rénovation Intérieure",     desc: "Peinture, carrelage, parquet, plâtrerie, faux-plafonds — on transforme vos espaces avec soin et précision.",                                  href: "/services/renovation-interieure" },
+  { icon: <IconBrick />,  title: "Gros Œuvre & Maçonnerie",   desc: "Murs porteurs, fondations, extensions, reprises en sous-œuvre — nos maçons certifiés assurent la solidité de votre bâti.",                     href: "/services/gros-oeuvre" },
+  { icon: <IconTree />,   title: "Aménagement Extérieur",     desc: "Terrasses, allées, clôtures, dallages — on sublime vos extérieurs pour créer des espaces de vie agréables.",                                    href: "/services/amenagement-exterieur" },
+  { icon: <IconWrench />, title: "Second Œuvre",              desc: "Électricité, plomberie, isolation thermique et acoustique — des installations conformes aux normes en vigueur.",                                  href: "/services/second-oeuvre" },
 ]
 
 const avantages = [
-  { icon: "🔒", titre: "Artisans vérifiés",       desc: "Chaque profil artisan est contrôlé : SIRET, assurances et qualifications vérifiés avant activation." },
-  { icon: "💬", titre: "Messagerie intégrée",      desc: "Échangez directement avec les artisans ou vos clients sans quitter la plateforme." },
-  { icon: "📊", titre: "Suivi en temps réel",      desc: "Avancement des tâches, rapports photos et jalons : tout le chantier centralisé en un endroit." },
-  { icon: "⭐", titre: "Avis certifiés",           desc: "Seuls les clients ayant réellement travaillé avec un artisan peuvent laisser un avis." },
-  { icon: "💶", titre: "Devis gratuits",           desc: "Recevez jusqu'à 5 devis sans engagement ni frais cachés. Vous choisissez librement." },
-  { icon: "🛡️", titre: "Paiement sécurisé",        desc: "Vos paiements sont sécurisés et libérés uniquement à la validation des travaux." },
+  { icon: <IconCheck />,    title: "Artisans locaux certifiés RGE", desc: "Nos équipes sont qualifiées et certifiées RGE pour vous garantir des travaux conformes aux normes." },
+  { icon: <IconCalendar />, title: "Devis gratuit sous 48h",        desc: "Nous nous engageons à vous répondre rapidement. Visite sur site et chiffrage entièrement offerts." },
+  { icon: <IconShield />,   title: "Garantie décennale",            desc: "Tous nos travaux sont couverts par notre assurance décennale pour votre tranquillité d'esprit." },
+  { icon: <IconTrophy />,   title: "+150 chantiers réalisés",       desc: "Des dizaines de clients satisfaits dans la région. Notre réputation se construit chantier après chantier." },
 ]
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+const etapes = [
+  { num: "01", title: "Prise de contact",        desc: "Contactez-nous par téléphone, email ou formulaire. On échange sur votre projet en moins de 24h." },
+  { num: "02", title: "Visite & devis gratuit",  desc: "On se déplace chez vous pour évaluer vos besoins et vous remettre un devis détaillé sans engagement." },
+  { num: "03", title: "Réalisation des travaux", desc: "Nos artisans interviennent dans les délais convenus avec un suivi rigoureux de l'avancement du chantier." },
+  { num: "04", title: "Réception & garantie",    desc: "On finalise ensemble la réception du chantier. Vos travaux sont garantis décennale et SAV réactif." },
+]
 
-export default async function Home() {
-  // Stats réelles depuis Supabase
-  const [nbArtisans, nbProjets, nbChantiers] = await Promise.all([
-    prisma.artisanProfile.count({ where: { disponible: true } }),
-    prisma.projet.count(),
-    prisma.chantier.count({ where: { statut: "TERMINE" } }),
-  ])
+const villes = [
+  "Saint-Omer", "Arras", "Boulogne-sur-Mer",
+  "Béthune", "Calais", "Hazebrouck",
+  "Aire-sur-la-Lys", "Fruges", "Lumbres",
+]
 
+const temoignages = [
+  { nom: "Sophie M.",       ville: "Saint-Omer",  note: 5, texte: "Excellent travail pour notre rénovation complète. L'équipe est sérieuse, propre et respectueuse des délais. Je recommande vivement !" },
+  { nom: "Jean-Pierre L.",  ville: "Béthune",     note: 5, texte: "Devis rapide, prix honnête et résultat impeccable. Nos nouvelles cloisons et notre carrelage sont parfaits. Merci à toute l'équipe." },
+  { nom: "Marie C.",        ville: "Longuenesse", note: 5, texte: "Terrasse et allée réalisées en 4 jours chrono. La finition est soignée et le suivi client excellent. Une entreprise de confiance." },
+]
+
+export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative pt-32 pb-24 overflow-hidden">
-        {/* Fond dégradé */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 -z-10" />
-        <div className="absolute top-20 right-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-40 -z-10" />
-        <div className="absolute bottom-0 left-10 w-64 h-64 bg-indigo-100 rounded-full blur-3xl opacity-30 -z-10" />
-
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
-            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            La plateforme de mise en relation travaux n°1
+    <>
+      {/* HERO */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0F2C5E] via-[#1a3f7a] to-[#0a1f42]" aria-hidden />
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} aria-hidden />
+        <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-4xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
+            <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
+            Artisans certifiés RGE — Garantie décennale
           </div>
-
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight tracking-tight mb-6">
-            Trouvez l'artisan{" "}
-            <span className="relative">
-              <span className="text-blue-600">parfait</span>
-              <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
-                <path d="M2 9C50 3 150 1 298 9" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round"/>
-              </svg>
-            </span>
-            <br />pour vos travaux
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6" style={{ fontFamily: "var(--font-playfair), serif" }}>
+            Vos Travaux,{" "}
+            <span className="text-[#F97316]">Notre Expertise</span>
           </h1>
-
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Décrivez votre projet, recevez des devis d'artisans qualifiés de votre région
-            et suivez l'avancement de vos chantiers — tout en un seul endroit.
+          <p className="text-lg sm:text-xl text-slate-200 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Entreprise de travaux ancrée à Longuenesse, nous intervenons dans un rayon de 80km pour
+            tous vos projets de rénovation, maçonnerie et aménagement.
           </p>
-
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/auth/signup?role=CLIENT"
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg px-8 py-4 rounded-2xl transition-all shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-blue-200 hover:-translate-y-0.5">
-              🏠 Je cherche un artisan
+            <Link href="/devis" className="bg-[#F97316] text-white font-semibold px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors shadow-lg text-lg">
+              Demander un Devis Gratuit
             </Link>
-            <Link href="/auth/signup?role=ARTISAN"
-              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-900 font-semibold text-lg px-8 py-4 rounded-2xl border-2 border-gray-200 hover:border-gray-300 transition-all hover:-translate-y-0.5">
-              🔧 Je suis artisan
+            <Link href="/services" className="bg-white/10 backdrop-blur-sm border border-white/30 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/20 transition-colors text-lg">
+              Nos Services
             </Link>
           </div>
-
-          <p className="text-sm text-gray-400 mt-5">Inscription gratuite · Sans engagement · Devis en 24h</p>
+          <div className="mt-12 flex flex-wrap justify-center gap-8 text-slate-300 text-sm">
+            <div className="flex items-center gap-2"><IconCheck /><span>Devis sous 48h</span></div>
+            <div className="flex items-center gap-2"><IconShield /><span>Garantie décennale</span></div>
+            <div className="flex items-center gap-2"><IconPhone /><span>Disponible 7j/7</span></div>
+          </div>
         </div>
-
-        {/* Stats mini sous le hero */}
-        <div className="max-w-3xl mx-auto px-6 mt-16">
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-xl shadow-gray-100 grid grid-cols-3 divide-x divide-gray-100">
-            {[
-              { value: nbArtisans > 0 ? `${nbArtisans}+` : "500+", label: "Artisans certifiés" },
-              { value: nbProjets  > 0 ? `${nbProjets}+`  : "2 000+", label: "Projets publiés" },
-              { value: nbChantiers > 0 ? `${nbChantiers}+` : "1 500+", label: "Chantiers réalisés" },
-            ].map(({ value, label }) => (
-              <div key={label} className="py-6 text-center">
-                <p className="text-3xl font-extrabold text-blue-600">{value}</p>
-                <p className="text-sm text-gray-500 mt-1">{label}</p>
-              </div>
-            ))}
-          </div>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/50">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </section>
 
-      {/* ── COMMENT ÇA MARCHE ─────────────────────────────────────────────── */}
-      <section id="comment-ca-marche" className="py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <p className="text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Simple & rapide</p>
-            <h2 className="text-4xl font-extrabold text-gray-900">Comment ça marche ?</h2>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            {/* Côté client */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center text-xl">🏠</div>
-                <h3 className="text-xl font-bold text-gray-900">Pour les particuliers</h3>
-              </div>
-              <div className="space-y-6">
-                {etapesClient.map((e, i) => (
-                  <div key={e.num} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 rounded-full bg-blue-600 text-white font-bold text-sm flex items-center justify-center shrink-0">
-                        {e.num}
-                      </div>
-                      {i < etapesClient.length - 1 && (
-                        <div className="w-0.5 h-full bg-blue-100 mt-2 mb-0" />
-                      )}
-                    </div>
-                    <div className="pb-6">
-                      <p className="font-semibold text-gray-900 mb-1">{e.titre}</p>
-                      <p className="text-sm text-gray-500 leading-relaxed">{e.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Link href="/auth/signup"
-                className="mt-2 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-colors">
-                Déposer un projet gratuitement →
-              </Link>
-            </div>
-
-            {/* Côté artisan */}
-            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-xl">🔧</div>
-                <h3 className="text-xl font-bold text-gray-900">Pour les artisans</h3>
-              </div>
-              <div className="space-y-6">
-                {etapesArtisan.map((e, i) => (
-                  <div key={e.num} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-10 h-10 rounded-full bg-orange-500 text-white font-bold text-sm flex items-center justify-center shrink-0">
-                        {e.num}
-                      </div>
-                      {i < etapesArtisan.length - 1 && (
-                        <div className="w-0.5 h-full bg-orange-100 mt-2 mb-0" />
-                      )}
-                    </div>
-                    <div className="pb-6">
-                      <p className="font-semibold text-gray-900 mb-1">{e.titre}</p>
-                      <p className="text-sm text-gray-500 leading-relaxed">{e.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Link href="/auth/signup"
-                className="mt-2 w-full flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3.5 rounded-xl transition-colors">
-                Créer mon profil artisan →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── CATÉGORIES ────────────────────────────────────────────────────── */}
-      <section id="categories" className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Tous corps de métier</p>
-            <h2 className="text-4xl font-extrabold text-gray-900">Quel type de travaux ?</h2>
-            <p className="text-gray-500 mt-4 max-w-xl mx-auto">
-              Des artisans spécialisés dans chaque domaine, prêts à intervenir chez vous.
+      {/* SERVICES */}
+      <section className="py-20 bg-[#F8F7F4]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14 reveal">
+            <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Ce que nous faisons</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
+              Nos domaines d&apos;expertise
+            </h2>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+              De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment.
             </p>
           </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {categories.map((cat) => (
-              <Link
-                key={cat.label}
-                href={`/auth/signup`}
-                className="group flex flex-col items-center text-center p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/50 hover:shadow-md transition-all cursor-pointer"
-              >
-                <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">{cat.icon}</span>
-                <p className="font-semibold text-gray-900 text-sm mb-1">{cat.label}</p>
-                <p className="text-xs text-gray-400">{cat.desc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-children">
+            {services.map((s) => (
+              <Link key={s.title} href={s.href} className="group bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#F97316]/30 transition-all duration-300">
+                <div className="w-14 h-14 bg-[#0F2C5E]/5 rounded-xl flex items-center justify-center text-[#0F2C5E] mb-5 group-hover:bg-[#F97316] group-hover:text-white transition-colors">
+                  {s.icon}
+                </div>
+                <h3 className="font-bold text-[#0F2C5E] text-lg mb-2">{s.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                <div className="mt-5 text-[#F97316] text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                  En savoir plus
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── AVANTAGES ─────────────────────────────────────────────────────── */}
-      <section id="avantages" className="py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Pourquoi nous choisir</p>
-            <h2 className="text-4xl font-extrabold text-gray-900">La plateforme qui vous simplifie la vie</h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {avantages.map((a) => (
-              <div key={a.titre}
-                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-blue-100 hover:shadow-md transition-all">
-                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-2xl mb-4">
-                  {a.icon}
+      {/* POURQUOI NOUS */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="reveal">
+              <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Pourquoi nous choisir</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-6" style={{ fontFamily: "var(--font-playfair), serif" }}>
+                L&apos;artisanat local au service de votre projet
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Depuis notre création, nous mettons la qualité d&apos;exécution, la transparence et la satisfaction client
+                au cœur de chaque chantier. Nos artisans sont sélectionnés pour leur expertise et leur rigueur.
+              </p>
+              <Link href="/devis" className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors">
+                Obtenir un devis gratuit
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 reveal-children">
+              {avantages.map((a) => (
+                <div key={a.title} className="bg-[#F8F7F4] rounded-2xl p-6 border border-gray-100">
+                  <div className="w-11 h-11 bg-[#0F2C5E] rounded-lg flex items-center justify-center text-white mb-4">{a.icon}</div>
+                  <h3 className="font-bold text-[#0F2C5E] mb-2">{a.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{a.desc}</p>
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{a.titre}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{a.desc}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESSUS */}
+      <section className="py-20 bg-[#0F2C5E]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14 reveal">
+            <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Comment ça marche</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: "var(--font-playfair), serif" }}>Notre processus en 4 étapes</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 reveal-children">
+            {etapes.map((e, i) => (
+              <div key={e.num} className="relative text-center">
+                {i < etapes.length - 1 && <div className="hidden lg:block absolute top-7 left-[60%] right-0 h-px bg-white/20" />}
+                <div className="w-14 h-14 bg-[#F97316] rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-5 relative z-10">{e.num}</div>
+                <h3 className="font-bold text-white text-lg mb-3">{e.title}</h3>
+                <p className="text-slate-300 text-sm leading-relaxed">{e.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── TÉMOIGNAGES ───────────────────────────────────────────────────── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-14">
-            <p className="text-blue-600 font-semibold text-sm uppercase tracking-widest mb-3">Ils nous font confiance</p>
-            <h2 className="text-4xl font-extrabold text-gray-900">Ce qu'ils en disent</h2>
+      {/* ZONE D'INTERVENTION */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14 reveal">
+            <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Zone géographique</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
+              Nous intervenons dans un rayon de 80km
+            </h2>
+            <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
+              Basés à <strong>Longuenesse (62219)</strong>, nous couvrons l&apos;ensemble du Nord-Pas-de-Calais.
+            </p>
           </div>
-
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              {
-                name: "Sophie M.", role: "Particulière à Lyon",
-                avatar: "S", color: "bg-pink-100 text-pink-600",
-                text: "J'ai reçu 4 devis en moins de 48h pour ma rénovation de salle de bain. L'artisan choisi était parfait, et j'ai pu suivre l'avancement depuis mon téléphone.",
-                note: 5,
-              },
-              {
-                name: "Marc D.", role: "Plombier indépendant",
-                avatar: "M", color: "bg-blue-100 text-blue-600",
-                text: "Depuis que j'utilise TravauxCentre, j'ai rempli mon planning de 3 mois en avance. Le suivi de chantier intégré me fait gagner un temps précieux.",
-                note: 5,
-              },
-              {
-                name: "Claire B.", role: "Propriétaire à Bordeaux",
-                avatar: "C", color: "bg-green-100 text-green-600",
-                text: "Interface très simple, artisans sérieux et réactifs. Le devis détaillé et les rapports d'avancement m'ont rassuré tout au long du chantier.",
-                note: 5,
-              },
-            ].map((t) => (
-              <div key={t.name} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                <div className="flex items-center gap-1 mb-4">
-                  {Array.from({ length: t.note }).map((_, i) => (
-                    <span key={i} className="text-yellow-400">★</span>
-                  ))}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
+            <div className="relative bg-[#F8F7F4] rounded-3xl overflow-hidden aspect-square max-w-md mx-auto w-full flex items-center justify-center shadow-inner">
+              <div className="relative flex items-center justify-center">
+                <div className="w-72 h-72 rounded-full border-2 border-[#0F2C5E]/10 flex items-center justify-center">
+                  <div className="w-52 h-52 rounded-full border-2 border-[#0F2C5E]/15 flex items-center justify-center">
+                    <div className="w-36 h-36 rounded-full border-2 border-[#0F2C5E]/20 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-[#0F2C5E] flex items-center justify-center shadow-lg">
+                        <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 italic">"{t.text}"</p>
+                <span className="absolute -top-2 text-xs text-gray-400 font-medium">80km</span>
+              </div>
+              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
+                <span className="bg-[#0F2C5E] text-white text-xs font-semibold px-3 py-1 rounded-full">📍 Longuenesse</span>
+              </div>
+            </div>
+            <div>
+              <p className="text-gray-600 mb-6 leading-relaxed">Nous couvrons notamment les villes suivantes et toutes les communes environnantes :</p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+                {villes.map((v) => (
+                  <div key={v} className="flex items-center gap-2 bg-[#F8F7F4] rounded-lg px-3 py-2">
+                    <span className="text-[#F97316] text-xs">📍</span>
+                    <span className="text-[#0F2C5E] text-sm font-medium">{v}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-gray-500 italic mb-6">Votre ville n&apos;est pas listée ? Contactez-nous, nous étudions chaque demande.</p>
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-[#F97316] text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition-colors">
+                Vérifier ma zone
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TÉMOIGNAGES */}
+      <section className="py-20 bg-[#F8F7F4]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14 reveal">
+            <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Avis clients</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>Ce que disent nos clients</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-children">
+            {temoignages.map((t) => (
+              <div key={t.nom} className="bg-white rounded-2xl p-7 shadow-sm border border-gray-100">
+                <div className="flex text-[#F97316] mb-4">
+                  {Array.from({ length: t.note }).map((_, i) => <IconStar key={i} />)}
+                </div>
+                <p className="text-gray-700 leading-relaxed mb-6 italic">&ldquo;{t.texte}&rdquo;</p>
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full ${t.color} flex items-center justify-center font-bold`}>
-                    {t.avatar}
-                  </div>
+                  <div className="w-10 h-10 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white font-bold text-sm">{t.nom[0]}</div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                    <p className="text-xs text-gray-400">{t.role}</p>
+                    <p className="font-semibold text-[#0F2C5E] text-sm">{t.nom}</p>
+                    <p className="text-gray-400 text-xs">{t.ville}</p>
                   </div>
                 </div>
               </div>
@@ -287,79 +250,27 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ── CTA FINAL ─────────────────────────────────────────────────────── */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-700 -z-10" />
-        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-30 -z-10" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500 rounded-full blur-3xl opacity-20 -z-10" />
-
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+      {/* CTA */}
+      <section className="py-20 bg-[#0F2C5E]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Prêt à démarrer votre projet ?
           </h2>
-          <p className="text-blue-100 text-lg mb-10 leading-relaxed">
-            Rejoignez des milliers de clients et d'artisans qui font confiance à TravauxCentre.
-            Inscription gratuite, sans engagement.
+          <p className="text-slate-300 text-lg mb-10 leading-relaxed">
+            Contactez-nous dès aujourd&apos;hui pour obtenir votre devis gratuit. Nos artisans se déplacent chez vous
+            et vous remettent un chiffrage détaillé sous 48h, sans engagement.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/auth/signup"
-              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-blue-700 font-bold text-lg px-8 py-4 rounded-2xl transition-all shadow-lg hover:-translate-y-0.5">
-              Commencer gratuitement →
+            <Link href="/rendez-vous" className="bg-[#F97316] text-white font-semibold px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors shadow-lg text-lg">
+              Prendre Rendez-vous
             </Link>
-            <Link href="/auth/signin"
-              className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-white/60 text-white font-semibold text-lg px-8 py-4 rounded-2xl transition-all">
-              J'ai déjà un compte
-            </Link>
+            <a href="tel:+33300000000" className="bg-white/10 border border-white/30 text-white font-semibold px-8 py-4 rounded-xl hover:bg-white/20 transition-colors text-lg flex items-center justify-center gap-2">
+              <IconPhone />
+              03 XX XX XX XX
+            </a>
           </div>
         </div>
       </section>
-
-      {/* ── FOOTER ────────────────────────────────────────────────────────── */}
-      <footer className="bg-gray-900 text-gray-400 py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid sm:grid-cols-4 gap-10 mb-12">
-            {/* Brand */}
-            <div className="sm:col-span-2">
-              <div className="mb-4">
-                <span className="text-xl font-bold text-blue-400">Travaux</span>
-                <span className="text-xl font-bold text-white">Centre</span>
-              </div>
-              <p className="text-sm leading-relaxed max-w-xs">
-                La plateforme de mise en relation entre particuliers et artisans qualifiés pour tous vos projets de travaux.
-              </p>
-            </div>
-
-            {/* Particuliers */}
-            <div>
-              <p className="text-white font-semibold mb-4 text-sm">Particuliers</p>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/auth/signup" className="hover:text-white transition-colors">Déposer un projet</Link></li>
-                <li><Link href="/auth/signup" className="hover:text-white transition-colors">Trouver un artisan</Link></li>
-                <li><Link href="/auth/signin" className="hover:text-white transition-colors">Mon espace client</Link></li>
-              </ul>
-            </div>
-
-            {/* Artisans */}
-            <div>
-              <p className="text-white font-semibold mb-4 text-sm">Artisans</p>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/auth/signup" className="hover:text-white transition-colors">Créer mon profil</Link></li>
-                <li><Link href="/auth/signin" className="hover:text-white transition-colors">Mon espace artisan</Link></li>
-                <li><a href="#avantages"       className="hover:text-white transition-colors">Nos avantages</a></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-            <p>© {new Date().getFullYear()} TravauxCentre. Tous droits réservés.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
-              <a href="#" className="hover:text-white transition-colors">CGU</a>
-              <a href="#" className="hover:text-white transition-colors">Confidentialité</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </>
   )
 }

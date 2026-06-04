@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy:   #0F2C5E;
+  --color-orange: #F97316;
+  --color-cream:  #F8F7F4;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "DM Sans", sans-serif;
+  color: #1a1a1a;
+  background: #ffffff;
 }
+
+h1, h2, h3 {
+  font-family: "Playfair Display", serif;
+}
+
+/* Scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered children */
+.reveal-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal-children.visible > *:nth-child(1) { opacity:1; transform:none; transition-delay: 0.05s }
+.reveal-children.visible > *:nth-child(2) { opacity:1; transform:none; transition-delay: 0.15s }
+.reveal-children.visible > *:nth-child(3) { opacity:1; transform:none; transition-delay: 0.25s }
+.reveal-children.visible > *:nth-child(4) { opacity:1; transform:none; transition-delay: 0.35s }
