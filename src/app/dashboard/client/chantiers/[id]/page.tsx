@@ -1,7 +1,7 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/Badge"
+import { Badge } from "@/components/ui/status-badge"
 import Link from "next/link"
 
 const statutConfig: Record<string, { label: string; variant: "warning" | "info" | "default" | "success" }> = {
