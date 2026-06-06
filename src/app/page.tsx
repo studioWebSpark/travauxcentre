@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import ZoneMapCompactLoader from "@/components/ZoneMapCompactLoader"
 
 export const metadata: Metadata = {
   title: "Travaux Centre | Entreprise de Travaux à Longuenesse et région (80km)",
@@ -190,41 +191,50 @@ export default function Home() {
               Basés à <strong>Longuenesse (62219)</strong>, nous couvrons l&apos;ensemble du Nord-Pas-de-Calais.
             </p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
-            <div className="relative bg-[#F8F7F4] rounded-3xl overflow-hidden aspect-square max-w-md mx-auto w-full flex items-center justify-center shadow-inner">
-              <div className="relative flex items-center justify-center">
-                <div className="w-72 h-72 rounded-full border-2 border-[#0F2C5E]/10 flex items-center justify-center">
-                  <div className="w-52 h-52 rounded-full border-2 border-[#0F2C5E]/15 flex items-center justify-center">
-                    <div className="w-36 h-36 rounded-full border-2 border-[#0F2C5E]/20 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-[#0F2C5E] flex items-center justify-center shadow-lg">
-                        <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                      </div>
-                    </div>
+          {/* Carte compacte + infos côte à côte */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch reveal">
+            {/* Carte — 3/5 */}
+            <div className="lg:col-span-3 relative rounded-2xl overflow-hidden border border-gray-200 shadow-sm" style={{ minHeight: 340 }}>
+              <ZoneMapCompactLoader />
+            </div>
+
+            {/* Infos — 2/5 */}
+            <div className="lg:col-span-2 flex flex-col justify-between">
+              <div>
+                <p className="text-gray-600 mb-5 leading-relaxed text-sm">
+                  Nous couvrons <strong>26 communes</strong> et toutes les localités environnantes. Cliquez sur un point pour accéder à la page de votre ville.
+                </p>
+                <div className="space-y-2 mb-6">
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="w-3 h-3 rounded-full bg-green-600 shrink-0" />
+                    <span className="text-gray-600"><strong>Zone proche</strong> — &lt; 20 km</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="w-3 h-3 rounded-full bg-[#0F2C5E] shrink-0" />
+                    <span className="text-gray-600"><strong>Zone intermédiaire</strong> — 20 à 45 km</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="w-3 h-3 rounded-full bg-gray-400 shrink-0" />
+                    <span className="text-gray-600"><strong>Zone étendue</strong> — 45 à 80 km</span>
                   </div>
                 </div>
-                <span className="absolute -top-2 text-xs text-gray-400 font-medium">80km</span>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {villes.map((v) => (
+                    <span key={v} className="bg-[#F8F7F4] text-[#0F2C5E] text-xs font-medium px-2.5 py-1 rounded-full border border-gray-100">
+                      {v}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-                <span className="bg-[#0F2C5E] text-white text-xs font-semibold px-3 py-1 rounded-full">📍 Longuenesse</span>
+              <div className="flex flex-col gap-2">
+                <Link href="/zones-intervention" className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-5 py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm">
+                  Voir toutes nos zones
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </Link>
+                <Link href="/devis" className="inline-flex items-center justify-center gap-2 bg-[#F97316] text-white font-semibold px-5 py-3 rounded-xl hover:bg-orange-600 transition-colors text-sm">
+                  Devis gratuit sous 48h
+                </Link>
               </div>
-            </div>
-            <div>
-              <p className="text-gray-600 mb-6 leading-relaxed">Nous couvrons notamment les villes suivantes et toutes les communes environnantes :</p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
-                {villes.map((v) => (
-                  <div key={v} className="flex items-center gap-2 bg-[#F8F7F4] rounded-lg px-3 py-2">
-                    <span className="text-[#F97316] text-xs">📍</span>
-                    <span className="text-[#0F2C5E] text-sm font-medium">{v}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-500 italic mb-6">Votre ville n&apos;est pas listée ? Contactez-nous, nous étudions chaque demande.</p>
-              <Link href="/contact" className="inline-flex items-center gap-2 bg-[#F97316] text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition-colors">
-                Vérifier ma zone
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              </Link>
             </div>
           </div>
         </div>
