@@ -348,6 +348,8 @@ model Lead {
 
   notes            NoteLead[]
   plannings        Planning[]
+  chantiers        ChantierCrm[]
+  devis            DevisCrm[]
 }
 
 model NoteLead {
@@ -381,6 +383,141 @@ model Planning {
   createdAt DateTime       @default(now())
 
   lead      Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+// ─── CRM Chantiers ───────────────────────────────────────────────────────────
+
+enum StatutChantierCrm {
+  PLANIFIE
+  EN_COURS
+  PAUSE
+  TERMINE
+  ANNULE
+}
+
+enum CategoriePhoto {
+  AVANT
+  PENDANT
+  APRES
+}
+
+model ChantierCrm {
+  id          String            @id @default(cuid())
+  leadId      String?
+  titre       String
+  description String?
+  adresse     String
+  budget      Float?
+  budgetReel  Float?
+  dateDebut   DateTime?
+  dateFin     DateTime?
+  statut      StatutChantierCrm @default(PLANIFIE)
+  progression Int               @default(0)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  lead      Lead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  etapes    EtapeChantierCrm[]
+  photos    PhotoChantierCrm[]
+  notes     NoteChantierCrm[]
+  devis     DevisCrm[]
+  factures  FactureCrm[]
+}
+
+model EtapeChantierCrm {
+  id           String      @id @default(cuid())
+  chantierId   String
+  titre        String
+  description  String?
+  ordre        Int         @default(0)
+  statut       String      @default("A_FAIRE")
+  dateEcheance DateTime?
+  createdAt    DateTime    @default(now())
+
+  chantier     ChantierCrm @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+model PhotoChantierCrm {
+  id          String         @id @default(cuid())
+  chantierId  String
+  url         String
+  categorie   CategoriePhoto @default(PENDANT)
+  description String?
+  createdAt   DateTime       @default(now())
+
+  chantier    ChantierCrm    @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+model NoteChantierCrm {
+  id         String      @id @default(cuid())
+  chantierId String
+  contenu    String
+  auteur     String      @default("Équipe")
+  createdAt  DateTime    @default(now())
+
+  chantier   ChantierCrm @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+// ─── CRM Devis & Factures ────────────────────────────────────────────────────
+
+model DevisCrm {
+  id           String          @id @default(cuid())
+  numero       String          @unique
+  leadId       String?
+  chantierId   String?
+  dateEmission DateTime        @default(now())
+  dateValidite DateTime?
+  statut       String          @default("BROUILLON")
+  tva          Float           @default(0.20)
+  notes        String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  lead         Lead?           @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  chantier     ChantierCrm?    @relation(fields: [chantierId], references: [id], onDelete: SetNull)
+  lignes       LigneDevisCrm[]
+  factures     FactureCrm[]
+}
+
+model LigneDevisCrm {
+  id           String   @id @default(cuid())
+  devisId      String
+  description  String
+  quantite     Float    @default(1)
+  unite        String   @default("forfait")
+  prixUnitaire Float
+
+  devis        DevisCrm @relation(fields: [devisId], references: [id], onDelete: Cascade)
+}
+
+model FactureCrm {
+  id           String           @id @default(cuid())
+  numero       String           @unique
+  chantierId   String?
+  devisId      String?
+  dateEmission DateTime         @default(now())
+  dateEcheance DateTime?
+  type         String           @default("FACTURE")
+  statut       String           @default("BROUILLON")
+  tva          Float            @default(0.20)
+  notes        String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  chantier     ChantierCrm?     @relation(fields: [chantierId], references: [id], onDelete: SetNull)
+  devis        DevisCrm?        @relation(fields: [devisId], references: [id], onDelete: SetNull)
+  lignes       LigneFactureCrm[]
+}
+
+model LigneFactureCrm {
+  id           String     @id @default(cuid())
+  factureId    String
+  description  String
+  quantite     Float      @default(1)
+  unite        String     @default("forfait")
+  prixUnitaire Float
+
+  facture      FactureCrm @relation(fields: [factureId], references: [id], onDelete: Cascade)
 }
 
 // ─── XP & Gamification ───────────────────────────────────────────────────────

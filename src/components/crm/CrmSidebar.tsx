@@ -2,17 +2,19 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar } from "lucide-react"
+import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText } from "lucide-react"
 import type { getLevelInfo } from "@/lib/xp"
 
 type XpInfo = ReturnType<typeof getLevelInfo>
 
 const nav = [
-  { label: "Dashboard",  href: "/crm",          icon: LayoutDashboard },
-  { label: "Leads",      href: "/crm/leads",     icon: Users },
-  { label: "Pipeline",   href: "/crm/pipeline",  icon: Kanban },
-  { label: "Carte",      href: "/crm/carte",     icon: MapPin },
+  { label: "Dashboard",  href: "/crm",           icon: LayoutDashboard },
+  { label: "Leads",      href: "/crm/leads",      icon: Users },
+  { label: "Pipeline",   href: "/crm/pipeline",   icon: Kanban },
+  { label: "Chantiers",  href: "/crm/chantiers",  icon: Wrench },
+  { label: "Devis",      href: "/crm/devis/new",  icon: FileText },
   { label: "Calendrier", href: "/crm/calendrier", icon: Calendar },
+  { label: "Carte",      href: "/crm/carte",      icon: MapPin },
 ]
 
 export default function CrmSidebar({ xp }: { xp: XpInfo }) {
