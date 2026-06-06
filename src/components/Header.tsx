@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X, HardHat } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -15,8 +16,11 @@ const nav = [
 ]
 
 export default function Header() {
+  const pathname                = usePathname()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen]         = useState(false)
+
+  if (pathname.startsWith("/crm")) return null
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)

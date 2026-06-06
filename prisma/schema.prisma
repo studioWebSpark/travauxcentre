@@ -302,10 +302,25 @@ enum TypeDocument {
   AUTRE
 }
 
-// ─── Site vitrine — Leads & RDV ──────────────────────────────────────────────
+// ─── CRM — Leads & Pipeline ──────────────────────────────────────────────────
+
+enum StatutLead {
+  NOUVEAU
+  CONTACTE
+  DEVIS_ENVOYE
+  GAGNE
+  PERDU
+  EN_ATTENTE
+}
+
+enum PrioriteLead {
+  HAUTE
+  NORMALE
+  BASSE
+}
 
 model Lead {
-  id               String   @id @default(cuid())
+  id               String       @id @default(cuid())
   nom              String
   email            String
   telephone        String
@@ -317,9 +332,31 @@ model Lead {
   budget           String?
   dateSouhaitee    String?
   source           String?
+
+  // CRM
+  statut           StatutLead   @default(NOUVEAU)
+  priorite         PrioriteLead @default(NORMALE)
+  montantDevis     Float?
+  dateContact      DateTime?
+  dateRdv          DateTime?
+  commentaireInterne String?
+
   hubspotContactId String?
   hubspotDealId    String?
-  createdAt        DateTime @default(now())
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  notes            NoteLead[]
+}
+
+model NoteLead {
+  id        String   @id @default(cuid())
+  leadId    String
+  contenu   String
+  auteur    String   @default("Équipe")
+  createdAt DateTime @default(now())
+
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
 }
 
 model RendezVous {

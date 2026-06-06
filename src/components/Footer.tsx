@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { MapPin, Phone, Mail, Clock, HardHat } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { zones } from "@/lib/zones"
@@ -35,6 +38,9 @@ const socials = [
 ]
 
 export default function Footer() {
+  const pathname = usePathname()
+  if (pathname.startsWith("/crm")) return null
+
   return (
     <footer className="bg-[#0a1f42] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
