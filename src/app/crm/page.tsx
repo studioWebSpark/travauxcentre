@@ -2,7 +2,9 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import { STATUTS, PRIORITES, daysSince, formatDate, formatEuro } from "@/lib/crm"
-import { AlertTriangle, TrendingUp, Euro, Users, ChevronRight } from "lucide-react"
+import { getTotalXp, getLevelInfo } from "@/lib/xp"
+import ObjectifsWidget from "@/components/crm/ObjectifsWidget"
+import { AlertTriangle, TrendingUp, Euro, Users, ChevronRight, Star } from "lucide-react"
 
 export const metadata: Metadata = { title: "Dashboard" }
 export const dynamic = "force-dynamic"
@@ -13,13 +15,14 @@ export default async function CrmDashboard() {
   const week  = new Date(today); week.setDate(today.getDate() - 7)
   const month = new Date(today); month.setDate(1)
 
-  const [allLeads, recentLeads] = await Promise.all([
+  const [allLeads, recentLeads, totalXp] = await Promise.all([
     prisma.lead.findMany({ orderBy: { createdAt: "desc" } }),
     prisma.lead.findMany({
       orderBy: { createdAt: "desc" },
       take: 8,
       include: { notes: { orderBy: { createdAt: "desc" }, take: 1 } },
     }),
+    getTotalXp(),
   ])
 
   const total      = allLeads.length
@@ -37,9 +40,8 @@ export default async function CrmDashboard() {
     return (days ?? 0) >= 2
   })
 
-  // Stats pipeline
-  const parStatut = STATUTS
-  const pipeline  = Object.entries(parStatut).map(([statut, cfg]) => ({
+  const xpInfo  = getLevelInfo(totalXp)
+  const pipeline = Object.entries(STATUTS).map(([statut, cfg]) => ({
     statut, cfg,
     count: allLeads.filter((l) => l.statut === statut).length,
   }))
@@ -91,7 +93,32 @@ export default async function CrmDashboard() {
         ))}
       </div>
 
+      {/* XP Banner */}
+      <div className="bg-[#0F2C5E] rounded-2xl p-5 flex items-center gap-5">
+        <div className="text-4xl shrink-0">{xpInfo.current.icon}</div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <span className="font-bold text-white text-lg">{xpInfo.current.label}</span>
+              <span className="ml-2 text-xs text-slate-400">Niveau {xpInfo.current.level}</span>
+            </div>
+            <span className="text-[#F97316] font-bold text-lg">{totalXp} XP</span>
+          </div>
+          <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${xpInfo.progress}%`, background: xpInfo.current.color }} />
+          </div>
+          {xpInfo.next && (
+            <p className="text-xs text-slate-500 mt-1.5">
+              {xpInfo.next.min - totalXp} XP avant {xpInfo.next.label} {xpInfo.next.icon}
+            </p>
+          )}
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Objectifs */}
+        <ObjectifsWidget />
+
         {/* Pipeline mini */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
           <div className="flex items-center justify-between mb-5">
@@ -119,7 +146,7 @@ export default async function CrmDashboard() {
         </div>
 
         {/* Derniers leads */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-start-2">
           <div className="flex items-center justify-between mb-5">
             <h2 className="font-bold text-[#0F2C5E]">Derniers leads</h2>
             <Link href="/crm/leads" className="text-xs text-gray-400 hover:text-[#0F2C5E] transition-colors">Voir tous →</Link>

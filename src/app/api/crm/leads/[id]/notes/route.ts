@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
+import { awardXp } from "@/lib/xp"
 
 export async function POST(
   request: Request,
@@ -16,11 +17,10 @@ export async function POST(
     data: { leadId: id, contenu: contenu.trim(), auteur: auteur ?? "Équipe" },
   })
 
-  // Mettre à jour la date de contact
-  await prisma.lead.update({
-    where: { id },
-    data: { dateContact: new Date() },
-  })
+  await Promise.all([
+    prisma.lead.update({ where: { id }, data: { dateContact: new Date() } }),
+    awardXp("NOTE_AJOUTEE", { leadId: id, label: "Note ajoutée" }),
+  ])
 
   return NextResponse.json(note)
 }

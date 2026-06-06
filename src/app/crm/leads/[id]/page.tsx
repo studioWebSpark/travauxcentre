@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { prisma } from "@/lib/prisma"
-import { STATUTS, PRIORITES, PIPELINE_ORDER, formatDate, formatEuro } from "@/lib/crm"
+import { STATUTS, PRIORITES, formatDate, formatEuro } from "@/lib/crm"
 import LeadActions from "@/components/crm/LeadActions"
 import NoteForm from "@/components/crm/NoteForm"
+import EmailConfirmButton from "@/components/crm/EmailConfirmButton"
 import { Phone, Mail, MapPin, Calendar, Euro, FileText, Clock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { StatutLead } from "@/generated/prisma"
@@ -47,8 +48,9 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
             <Phone className="w-4 h-4" /> Appeler
           </a>
           <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
-            <Mail className="w-4 h-4" /> Email
+            <Mail className="w-4 h-4" /> Email libre
           </a>
+          <EmailConfirmButton leadId={lead.id} statut={lead.statut} />
         </div>
       </div>
 

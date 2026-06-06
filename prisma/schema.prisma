@@ -359,6 +359,17 @@ model NoteLead {
   lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
 }
 
+// ─── XP & Gamification ───────────────────────────────────────────────────────
+
+model XpEvent {
+  id        String   @id @default(cuid())
+  type      String   // LEAD_CONTACTE | DEVIS_ENVOYE | DEAL_GAGNE | NOTE_AJOUTEE | EMAIL_ENVOYE | OBJECTIF_JOUR | OBJECTIF_SEMAINE | OBJECTIF_MOIS
+  points    Int
+  leadId    String?
+  label     String?
+  createdAt DateTime @default(now())
+}
+
 model RendezVous {
   id               String   @id @default(cuid())
   nom              String
