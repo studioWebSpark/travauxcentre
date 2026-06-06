@@ -1,7 +1,7 @@
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { notFound } from "next/navigation"
-import { Badge } from "@/components/ui/Badge"
+import { Badge } from "@/components/ui/status-badge"
 import { DevisForm } from "@/components/artisan/DevisForm"
 
 const categorieLabel: Record<string, string> = {

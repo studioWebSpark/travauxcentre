@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { Badge } from "@/components/ui/Badge"
+import { Badge } from "@/components/ui/status-badge"
 import Link from "next/link"
 
 const categorieLabel: Record<string, string> = {

@@ -25,13 +25,13 @@ export default function RealisationsPage() {
   return (
     <div className="pt-24 pb-16">
       {/* Hero */}
-      <div className="bg-[#0F2C5E] py-16 mb-14">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center text-white">
-          <p className="text-[#F97316] font-semibold text-sm uppercase tracking-widest mb-3">Nos chantiers</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            Nos Réalisations
+      <div className="bg-white border-b border-gray-100 py-16 mb-14">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#0F2C5E]/40 mb-4">Nos chantiers</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
+            Nos <span className="inline-block bg-[#0F2C5E] text-white px-3 py-1 rounded-sm">Réalisations</span>
           </h1>
-          <p className="text-slate-300 text-lg max-w-xl mx-auto">
+          <p className="text-gray-500 text-lg max-w-xl mx-auto">
             +150 chantiers réalisés dans la région. Découvrez nos projets avant / après.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function RealisationsPage() {
             Votre projet sera notre prochaine réalisation
           </h2>
           <p className="text-gray-600 mb-8">Contactez-nous pour un devis gratuit sous 48h.</p>
-          <Link href="/devis" className="inline-flex bg-[#F97316] text-white font-semibold px-8 py-4 rounded-xl hover:bg-orange-600 transition-colors">
+          <Link href="/devis" className="inline-flex bg-[#0F2C5E] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors">
             Demander un devis gratuit
           </Link>
         </div>
