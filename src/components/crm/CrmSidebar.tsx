@@ -13,6 +13,7 @@ const nav = [
   { label: "Pipeline",   href: "/crm/pipeline",   icon: Kanban },
   { label: "Chantiers",  href: "/crm/chantiers",  icon: Wrench },
   { label: "Devis",      href: "/crm/devis",      icon: FileText },
+  { label: "Factures",   href: "/crm/factures",   icon: FileText },
   { label: "Calendrier", href: "/crm/calendrier", icon: Calendar },
   { label: "Carte",      href: "/crm/carte",      icon: MapPin },
 ]
