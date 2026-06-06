@@ -470,6 +470,9 @@ model DevisCrm {
   statut       String          @default("BROUILLON")
   tva          Float           @default(0.20)
   notes        String?
+  token        String          @unique @default(cuid())
+  emailEnvoye  Boolean         @default(false)
+  dateAccepte  DateTime?
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 
@@ -501,6 +504,7 @@ model FactureCrm {
   statut       String           @default("BROUILLON")
   tva          Float            @default(0.20)
   notes        String?
+  emailEnvoye  Boolean          @default(false)
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
 

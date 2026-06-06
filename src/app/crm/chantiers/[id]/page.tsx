@@ -6,7 +6,9 @@ import ChantierActions from "@/components/crm/ChantierActions"
 import PhotoUpload from "@/components/crm/PhotoUpload"
 import NoteChantierForm from "@/components/crm/NoteChantierForm"
 import EtapesList from "@/components/crm/EtapesList"
-import { ArrowLeft, MapPin, Calendar, Euro, Phone, Mail, FileText, Plus } from "lucide-react"
+import DevisActions from "@/components/crm/DevisActions"
+import FactureButton from "@/components/crm/FactureButton"
+import { ArrowLeft, MapPin, Phone, Mail, FileText, Plus } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = { title: "Chantier" }
@@ -154,6 +156,15 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                         </a>
                       </div>
                     </div>
+                    {/* Actions envoi + validation */}
+                    <div className="mt-2 px-1">
+                      <DevisActions
+                        devisId={d.id}
+                        statut={d.statut}
+                        token={(d as typeof d & { token: string }).token ?? ""}
+                        emailEnvoye={(d as typeof d & { emailEnvoye: boolean }).emailEnvoye ?? false}
+                      />
+                    </div>
                   )
                 })}
                 {c.factures.map((f) => {
@@ -216,6 +227,15 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               dateDebut: c.dateDebut?.toISOString() ?? null,
               dateFin:   c.dateFin?.toISOString()   ?? null,
             }} />
+          </div>
+
+          {/* Facturation */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h2 className="font-bold text-[#0F2C5E] mb-4">Facturation</h2>
+            <FactureButton chantierId={c.id} statut={c.statut} />
+            {!["EN_COURS","TERMINE"].includes(c.statut) && (
+              <p className="text-xs text-gray-400 text-center">Disponible quand le chantier est En cours ou Terminé</p>
+            )}
           </div>
 
           {/* Client */}
