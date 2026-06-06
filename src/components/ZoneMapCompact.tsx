@@ -8,11 +8,19 @@ export default function ZoneMapCompact() {
   const instanceRef = useRef<unknown>(null)
 
   useEffect(() => {
-    if (!mapRef.current || instanceRef.current) return
+    if (!mapRef.current) return
+    // Leaflet marque le container avec _leaflet_id après init
+    if ((mapRef.current as HTMLDivElement & { _leaflet_id?: number })._leaflet_id) return
+
+    let cancelled = false
 
     async function init() {
       const L = (await import("leaflet")).default
       await import("leaflet/dist/leaflet.css")
+
+      // Annulé si le composant a été démonté pendant le chargement async
+      if (cancelled || !mapRef.current) return
+      if ((mapRef.current as HTMLDivElement & { _leaflet_id?: number })._leaflet_id) return
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (L.Icon.Default.prototype as any)._getIconUrl
@@ -22,13 +30,13 @@ export default function ZoneMapCompact() {
         shadowUrl:     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       })
 
-      const map = L.map(mapRef.current!, {
-        center:           [LONGUENESSE.lat, LONGUENESSE.lng],
-        zoom:             8,
-        scrollWheelZoom:  false,
-        zoomControl:      false,
+      const map = L.map(mapRef.current, {
+        center:             [LONGUENESSE.lat, LONGUENESSE.lng],
+        zoom:               8,
+        scrollWheelZoom:    false,
+        zoomControl:        false,
         attributionControl: false,
-        dragging:         false,
+        dragging:           false,
       })
 
       instanceRef.current = map
@@ -37,7 +45,6 @@ export default function ZoneMapCompact() {
         maxZoom: 18,
       }).addTo(map)
 
-      // Cercle 80 km
       L.circle([LONGUENESSE.lat, LONGUENESSE.lng], {
         radius:      RAYON_KM * 1000,
         color:       "#0F2C5E",
@@ -47,7 +54,6 @@ export default function ZoneMapCompact() {
         dashArray:   "8 5",
       }).addTo(map)
 
-      // Marqueur siège
       const baseIcon = L.divIcon({
         html: `<div style="width:32px;height:32px;background:#0F2C5E;border:3px solid #F97316;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.35)">
           <svg width="14" height="14" fill="#F97316" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -62,7 +68,6 @@ export default function ZoneMapCompact() {
         .addTo(map)
         .bindPopup(`<strong style="color:#0F2C5E">Travaux Centre</strong><br/><span style="font-size:12px;color:#F97316">Longuenesse — 62219</span>`)
 
-      // Marqueurs zones (petits)
       zones.forEach((z) => {
         const color = z.distanceKm < 20 ? "#16a34a" : z.distanceKm < 45 ? "#0F2C5E" : "#9ca3af"
         const icon = L.divIcon({
@@ -76,7 +81,6 @@ export default function ZoneMapCompact() {
           .bindPopup(`<a href="/zones-intervention/${z.slug}" style="color:#0F2C5E;font-weight:600;font-size:13px;text-decoration:none">${z.nom}</a><br/><span style="font-size:11px;color:#888">${z.distanceKm} km</span>`)
       })
 
-      // Fit to all points
       const bounds = L.latLngBounds([
         [LONGUENESSE.lat, LONGUENESSE.lng],
         ...zones.map((z): [number, number] => [z.lat, z.lng]),
@@ -87,8 +91,12 @@ export default function ZoneMapCompact() {
     init().catch(console.error)
 
     return () => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (instanceRef.current) { (instanceRef.current as any).remove(); instanceRef.current = null }
+      cancelled = true
+      if (instanceRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ;(instanceRef.current as any).remove()
+        instanceRef.current = null
+      }
     }
   }, [])
 

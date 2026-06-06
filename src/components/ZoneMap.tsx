@@ -3,19 +3,25 @@
 import { useEffect, useRef } from "react"
 import { zones, LONGUENESSE, RAYON_KM } from "@/lib/zones"
 
-// Leaflet chargé dynamiquement (pas de SSR)
+type LeafletContainer = HTMLDivElement & { _leaflet_id?: number }
+
 export default function ZoneMap() {
-  const mapRef = useRef<HTMLDivElement>(null)
+  const mapRef      = useRef<HTMLDivElement>(null)
   const instanceRef = useRef<unknown>(null)
 
   useEffect(() => {
-    if (!mapRef.current || instanceRef.current) return
+    if (!mapRef.current) return
+    if ((mapRef.current as LeafletContainer)._leaflet_id) return
+
+    let cancelled = false
 
     async function init() {
       const L = (await import("leaflet")).default
       await import("leaflet/dist/leaflet.css")
 
-      // Fix icônes Leaflet en Next.js
+      if (cancelled || !mapRef.current) return
+      if ((mapRef.current as LeafletContainer)._leaflet_id) return
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (L.Icon.Default.prototype as any)._getIconUrl
       L.Icon.Default.mergeOptions({
@@ -24,32 +30,29 @@ export default function ZoneMap() {
         shadowUrl:     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
       })
 
-      const map = L.map(mapRef.current!, {
-        center: [LONGUENESSE.lat, LONGUENESSE.lng],
-        zoom: 9,
+      const map = L.map(mapRef.current, {
+        center:          [LONGUENESSE.lat, LONGUENESSE.lng],
+        zoom:            9,
         scrollWheelZoom: false,
-        zoomControl: true,
+        zoomControl:     true,
       })
 
       instanceRef.current = map
 
-      // Tuiles OpenStreetMap — aucune clé API requise
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 18,
       }).addTo(map)
 
-      // Cercle 80km
       L.circle([LONGUENESSE.lat, LONGUENESSE.lng], {
-        radius: RAYON_KM * 1000,
-        color: "#0F2C5E",
-        fillColor: "#0F2C5E",
+        radius:      RAYON_KM * 1000,
+        color:       "#0F2C5E",
+        fillColor:   "#0F2C5E",
         fillOpacity: 0.06,
-        weight: 2,
-        dashArray: "8 6",
+        weight:      2,
+        dashArray:   "8 6",
       }).addTo(map)
 
-      // Marqueur base (Longuenesse) — étoile orange
       const baseIcon = L.divIcon({
         html: `<div style="
           width:38px;height:38px;
@@ -64,8 +67,8 @@ export default function ZoneMap() {
           </svg>
         </div>`,
         className: "",
-        iconSize: [38, 38],
-        iconAnchor: [19, 38],
+        iconSize:    [38, 38],
+        iconAnchor:  [19, 38],
         popupAnchor: [0, -40],
       })
 
@@ -80,7 +83,6 @@ export default function ZoneMap() {
           { maxWidth: 220 }
         )
 
-      // Marqueurs zones — couleur selon distance
       zones.forEach((zone) => {
         const color =
           zone.distanceKm < 20 ? "#16a34a" :
@@ -102,8 +104,8 @@ export default function ZoneMap() {
             </svg>
           </div>`,
           className: "",
-          iconSize: [28, 28],
-          iconAnchor: [14, 28],
+          iconSize:    [28, 28],
+          iconAnchor:  [14, 28],
           popupAnchor: [0, -30],
         })
 
@@ -123,7 +125,6 @@ export default function ZoneMap() {
           )
       })
 
-      // Ajuster la vue pour tout afficher
       const allCoords: [number, number][] = [
         [LONGUENESSE.lat, LONGUENESSE.lng],
         ...zones.map((z): [number, number] => [z.lat, z.lng]),
@@ -134,6 +135,7 @@ export default function ZoneMap() {
     init().catch(console.error)
 
     return () => {
+      cancelled = true
       if (instanceRef.current) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ;(instanceRef.current as any).remove()
@@ -145,7 +147,6 @@ export default function ZoneMap() {
   return (
     <div className="relative">
       <div ref={mapRef} className="w-full rounded-2xl overflow-hidden" style={{ height: 520 }} />
-      {/* Légende */}
       <div className="absolute bottom-4 left-4 z-[1000] bg-white rounded-xl shadow-lg p-3 text-xs space-y-1.5">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-[#0F2C5E] border-2 border-[#F97316] inline-block" />
