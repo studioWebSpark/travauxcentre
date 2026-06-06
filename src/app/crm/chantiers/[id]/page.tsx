@@ -142,28 +142,29 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                   const st  = STATUTS_DEVIS[d.statut]
                   const tot = calcTotaux(d.lignes, d.tva)
                   return (
-                    <div key={d.id} className="flex items-center justify-between p-3 bg-[#F8F7F4] rounded-xl">
-                      <div>
-                        <p className="text-sm font-semibold text-[#0F2C5E]">{d.numero}</p>
-                        <p className="text-xs text-gray-400">{d.lignes.length} ligne{d.lignes.length > 1 ? "s" : ""}</p>
+                    <div key={d.id} className="space-y-2">
+                      <div className="flex items-center justify-between p-3 bg-[#F8F7F4] rounded-xl">
+                        <div>
+                          <p className="text-sm font-semibold text-[#0F2C5E]">{d.numero}</p>
+                          <p className="text-xs text-gray-400">{d.lignes.length} ligne{d.lignes.length > 1 ? "s" : ""}</p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-bold text-[#0F2C5E]">{formatEuro(tot.ttc)}</span>
+                          <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color}`}>{st.label}</span>
+                          <a href={`/api/crm/devis/${d.id}/pdf`} target="_blank"
+                            className="text-xs bg-[#0F2C5E] text-white px-2.5 py-1 rounded-lg hover:bg-[#1a3f7a] transition-colors">
+                            PDF
+                          </a>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-[#0F2C5E]">{formatEuro(tot.ttc)}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color}`}>{st.label}</span>
-                        <a href={`/api/crm/devis/${d.id}/pdf`} target="_blank"
-                          className="text-xs bg-[#0F2C5E] text-white px-2.5 py-1 rounded-lg hover:bg-[#1a3f7a] transition-colors">
-                          PDF
-                        </a>
+                      <div className="px-1">
+                        <DevisActions
+                          devisId={d.id}
+                          statut={d.statut}
+                          token={(d as typeof d & { token: string }).token ?? ""}
+                          emailEnvoye={(d as typeof d & { emailEnvoye: boolean }).emailEnvoye ?? false}
+                        />
                       </div>
-                    </div>
-                    {/* Actions envoi + validation */}
-                    <div className="mt-2 px-1">
-                      <DevisActions
-                        devisId={d.id}
-                        statut={d.statut}
-                        token={(d as typeof d & { token: string }).token ?? ""}
-                        emailEnvoye={(d as typeof d & { emailEnvoye: boolean }).emailEnvoye ?? false}
-                      />
                     </div>
                   )
                 })}
