@@ -3,175 +3,51 @@ export type Zone = {
   nom: string
   codePostal: string
   departement: string
+  lat: number
+  lng: number
+  distanceKm: number
   intro: string
   contexte: string
   projetsFrequents: string[]
   particularites: string
 }
 
+export const LONGUENESSE = { lat: 50.7336, lng: 2.2621 }
+export const RAYON_KM = 80
+
 export const zones: Zone[] = [
-  {
-    slug: "lens",
-    nom: "Lens",
-    codePostal: "62300",
-    departement: "Pas-de-Calais",
-    intro:
-      "Lens et son agglomération vivent une transformation profonde. Ancienne cité minière réinventée autour de la culture et du sport, la ville attire de nombreux projets de rénovation dans ses maisons de ville, corons réhabilités et logements du centre.",
-    contexte:
-      "Le bassin minier lensois concentre un parc immobilier ancien en pleine mutation. Nombreuses rénovations de maisons en brique, remises aux normes électriques et thermiques, et extensions pour adapter les logements aux besoins d'aujourd'hui.",
-    projetsFrequents: [
-      "Rénovation complète de maisons en brique",
-      "Isolation thermique (ITE/ITI) — éligible MaPrimeRénov'",
-      "Mise aux normes électrique NF C15-100",
-      "Extension et aménagement de combles",
-      "Ravalement de façade et enduits",
-      "Pose de carrelage et parquet",
-    ],
-    particularites:
-      "Les maisons typiques du bassin minier (corons, maisons de ville en brique rouge) ont des caractéristiques techniques spécifiques que nos artisans maîtrisent parfaitement.",
-  },
-  {
-    slug: "henin-beaumont",
-    nom: "Hénin-Beaumont",
-    codePostal: "62110",
-    departement: "Pas-de-Calais",
-    intro:
-      "Hénin-Beaumont, au cœur du bassin minier, concentre un tissu résidentiel dense de maisons anciennes et de pavillons en cours de réhabilitation. La ville connaît une dynamique de renouveau urbain favorable aux projets de rénovation.",
-    contexte:
-      "Entre Lens et Carvin, Hénin-Beaumont présente un habitat majoritairement ancien avec de nombreuses opportunités de remise à neuf : isolation, électricité, plomberie et embellissement intérieur.",
-    projetsFrequents: [
-      "Rénovation intérieure globale",
-      "Isolation des murs et combles",
-      "Remplacement de chaudière et plomberie",
-      "Peinture et revêtements de sol",
-      "Aménagement de salle de bain",
-      "Création de terrasse ou dalle extérieure",
-    ],
-    particularites:
-      "Nous intervenons régulièrement dans cette zone et connaissons les spécificités des constructions du secteur minier. Déplacement rapide depuis notre base de Longuenesse.",
-  },
-  {
-    slug: "bethune",
-    nom: "Béthune",
-    codePostal: "62400",
-    departement: "Pas-de-Calais",
-    intro:
-      "Béthune, sous-préfecture dynamique du Pas-de-Calais, bénéficie d'un tissu économique actif et d'un parc immobilier varié allant des maisons bourgeoises du centre aux pavillons périphériques. Nos équipes interviennent régulièrement dans l'arrondissement.",
-    contexte:
-      "La région béthunoise mêle habitat ancien de centre-ville et zones pavillonnaires des années 70-90. Les projets vont de la remise à neuf totale à l'amélioration ciblée (isolation, cuisine, salle de bain).",
-    projetsFrequents: [
-      "Rénovation de maisons bourgeoises",
-      "Extension de pavillon",
-      "Isolation thermique par l'extérieur",
-      "Mise aux normes électriques",
-      "Carrelage et parquet haut de gamme",
-      "Aménagement extérieur (terrasse, allée)",
-    ],
-    particularites:
-      "Béthune fait partie de notre zone d'intervention historique. Nos artisans connaissent bien les matériaux et techniques adaptés aux constructions locales.",
-  },
-  {
-    slug: "arras",
-    nom: "Arras",
-    codePostal: "62000",
-    departement: "Pas-de-Calais",
-    intro:
-      "Arras, préfecture du Pas-de-Calais et ville d'art et d'histoire, recèle un patrimoine bâti exceptionnel. Ses hôtels particuliers, maisons flamandes à pignons et immeubles du centre-ville demandent une expertise artisanale soignée que nos équipes maîtrisent.",
-    contexte:
-      "La préfecture attire propriétaires et investisseurs souhaitant rénover un bien en centre historique ou dans les quartiers périphériques en développement. Les contraintes ABF (Architectes des Bâtiments de France) peuvent s'appliquer et nos équipes savent les gérer.",
-    projetsFrequents: [
-      "Rénovation de biens en secteur sauvegardé",
-      "Ravalement et enduits de façade en pierre",
-      "Réfection de toiture et charpente",
-      "Plâtrerie et enduits intérieurs traditionnels",
-      "Second œuvre complet (élec, plomberie, isolation)",
-      "Aménagement de combles et sous-pentes",
-    ],
-    particularites:
-      "Nos artisans ont l'habitude de travailler sur le bâti ancien et savent préserver les éléments architecturaux remarquables tout en modernisant les installations.",
-  },
-  {
-    slug: "lille",
-    nom: "Lille",
-    codePostal: "59000",
-    departement: "Nord",
-    intro:
-      "Capitale des Hauts-de-France, Lille et sa métropole (MEL) représentent un marché immobilier dynamique où la rénovation de l'habitat ancien côtoie la mise aux normes de logements locatifs. Nos équipes se déplacent dans toute la métropole lilloise.",
-    contexte:
-      "Du Vieux-Lille aux communes périphériques (Villeneuve-d'Ascq, Roubaix, Tourcoing, Marcq-en-Barœul…), la MEL offre une grande diversité de chantiers. L'encadrement des loyers pousse les propriétaires à optimiser leurs biens, notamment par l'isolation et la rénovation intérieure.",
-    projetsFrequents: [
-      "Rénovation d'appartements anciens (haussmanniens, flamands)",
-      "Mise aux normes DPE — isolation renforcée",
-      "Remise à neuf pour mise en location",
-      "Second œuvre complet de maisons de ville",
-      "Gros œuvre : ouvertures, extensions",
-      "Aménagement extérieur en zone urbaine dense",
-    ],
-    particularites:
-      "La distance depuis Longuenesse (env. 45 km) reste dans notre zone d'intervention. Nous planifions les chantiers lillois groupés pour optimiser les déplacements.",
-  },
-  {
-    slug: "boulogne-sur-mer",
-    nom: "Boulogne-sur-Mer",
-    codePostal: "62200",
-    departement: "Pas-de-Calais",
-    intro:
-      "Premier port de pêche de France, Boulogne-sur-Mer associe un centre historique médiéval à un vaste tissu résidentiel en bord de mer. L'air iodé et l'humidité côtière imposent des matériaux et techniques spécifiques que nos artisans maîtrisent.",
-    contexte:
-      "Les propriétaires boulonnais font face à des contraintes particulières : humidité, vent, exposition marine. Les travaux d'isolation, de ravalement et d'étanchéité sont fréquents. La résidence secondaire est aussi bien représentée sur la côte.",
-    projetsFrequents: [
-      "Ravalement et traitement anti-humidité",
-      "Isolation adaptée au climat côtier",
-      "Rénovation de résidences secondaires",
-      "Remise en état de maisons de pêcheurs",
-      "Aménagement extérieur résistant aux intempéries",
-      "Second œuvre : VMC, chauffage, plomberie",
-    ],
-    particularites:
-      "Nous sélectionnons des matériaux adaptés aux environnements côtiers : peintures anti-sel, bardages résistants, menuiseries renforcées contre les embruns.",
-  },
-  {
-    slug: "berck",
-    nom: "Berck",
-    codePostal: "62600",
-    departement: "Pas-de-Calais",
-    intro:
-      "Station balnéaire de la Côte d'Opale, Berck-sur-Mer concentre un parc immobilier touristique important : villas Belle Époque, appartements vue mer, maisons de famille à rénover entre deux saisons.",
-    contexte:
-      "Berck attire des propriétaires de résidences secondaires souhaitant rénover leur bien pendant la basse saison. Les travaux sont souvent globaux (rénovation complète) avec des contraintes de délai avant la saison estivale.",
-    projetsFrequents: [
-      "Rénovation complète de villas et maisons de vacances",
-      "Remise à neuf avant mise en location saisonnière",
-      "Isolation et chauffage pour résidences secondaires",
-      "Ravalement et entretien de façades exposées",
-      "Terrasse et aménagement extérieur",
-      "Mise aux normes électriques et plomberie",
-    ],
-    particularites:
-      "Nos équipes planifient les chantiers à Berck en basse saison (octobre à avril) pour maximiser l'accès aux logements. Devis rapide pour respecter vos contraintes de calendrier.",
-  },
-  {
-    slug: "hazebrouck",
-    nom: "Hazebrouck",
-    codePostal: "59190",
-    departement: "Nord",
-    intro:
-      "Capitale de la Flandre intérieure, Hazebrouck est une ville à taille humaine entourée d'un tissu rural riche. Les maisons flamandes en brique et les fermes réhabilitées y forment un patrimoine bâti caractéristique que nos artisans connaissent bien.",
-    contexte:
-      "L'architecture flamande typique de la région demande un savoir-faire particulier pour les rénovations : joints de briques, charpentes en bois massif, enduits à la chaux. Nos équipes sont à l'aise avec ces techniques traditionnelles.",
-    projetsFrequents: [
-      "Rénovation de maisons flamandes en brique",
-      "Réfection de toiture et charpente bois",
-      "Isolation et second œuvre de fermes réhabilitées",
-      "Aménagement de grange ou dépendance",
-      "Ravalement et rejointoiement de façades",
-      "Extension et véranda",
-    ],
-    particularites:
-      "Hazebrouck est dans notre zone historique d'intervention depuis notre création. Nos artisans connaissent les matériaux locaux et les techniques adaptées à l'architecture flamande.",
-  },
+  { slug: "saint-omer",             nom: "Saint-Omer",               codePostal: "62500", departement: "Pas-de-Calais", lat: 50.7474, lng: 2.2571, distanceKm: 4,  intro: "Saint-Omer, ville d'art et d'histoire à 4 km de notre base, est notre terrain d'intervention quotidien. Ses ruelles médiévales, hôtels particuliers et maisons bourgeoises forment un parc bâti riche en projets de rénovation.",                                                                                                                          contexte: "La cité audomaroise concentre un bâti ancien et des quartiers pavillonnaires périphériques. Les travaux vont de la restauration de façades classées à la rénovation énergétique complète.", projetsFrequents: ["Rénovation de maisons anciennes", "Ravalement façade en pierre", "Isolation thermique intérieure et extérieure", "Mise aux normes électriques", "Pose de parquet et carrelage", "Aménagement jardin et terrasse"], particularites: "Nos artisans interviennent quotidiennement à Saint-Omer. Délais de déplacement nuls — réponse ultra-rapide pour tout devis ou urgence." },
+  { slug: "lumbres",                nom: "Lumbres",                  codePostal: "62380", departement: "Pas-de-Calais", lat: 50.7042, lng: 2.1140, distanceKm: 12, intro: "Lumbres et la vallée de l'Aa forment un secteur rural en pleine valorisation. Maisons de village, fermes réhabilitées et résidences individuelles constituent l'essentiel de nos chantiers.",                                                                                                                                                    contexte: "La commune attire des projets de rénovation rurale : gîtes, maisons secondaires, fermes transformées. L'isolation et la remise aux normes sont les prestations les plus demandées.",           projetsFrequents: ["Rénovation de maisons de village", "Réhabilitation de fermes et granges", "Isolation thermique RT2020", "Plomberie et chauffage", "Aménagement extérieur", "Parquet massif"],       particularites: "Connaissance du patrimoine rural local et des constructions en pierre et brique de la vallée de l'Aa." },
+  { slug: "fauquembergues",         nom: "Fauquembergues",           codePostal: "62560", departement: "Pas-de-Calais", lat: 50.5989, lng: 2.0988, distanceKm: 17, intro: "Petite ville de l'arrondissement de Saint-Omer, Fauquembergues et son canton regroupent un habitat rural varié. La rénovation de maisons de bourg et corps de ferme y est au cœur de notre activité.",                                                                                                                                                  contexte: "Le canton présente un habitat ancien souvent sous-rénové, avec des opportunités importantes en isolation, second œuvre et embellissement.",                                                      projetsFrequents: ["Réfection de maisons de bourg", "Isolation combles et murs", "Remplacement menuiseries", "Électricité et plomberie", "Ravalement façade", "Création salle de bain"],               particularites: "Zone peu desservie par les artisans locaux — notre proximité nous permet d'offrir un service rapide et compétitif." },
+  { slug: "aire-sur-la-lys",        nom: "Aire-sur-la-Lys",          codePostal: "62120", departement: "Pas-de-Calais", lat: 50.6401, lng: 2.3956, distanceKm: 18, intro: "Aire-sur-la-Lys, ancienne place forte sur la Lys, conjugue architecture militaire et bâti civil ancien. La ville et ses environs présentent de nombreux chantiers mêlant patrimoine et modernisation.",                                                                                                                                              contexte: "Le centre-ville comporte de nombreuses maisons des XVIIIe-XIXe siècles. Les quartiers périphériques accueillent des pavillons des années 70 souvent à rénover.",                               projetsFrequents: ["Rénovation de maisons de caractère", "Isolation énergétique", "Mise aux normes électriques", "Carrelage et parquet", "Terrasse", "Extension de maison"],                            particularites: "Artisans formés aux contraintes patrimoniales du secteur." },
+  { slug: "ardres",                 nom: "Ardres",                   codePostal: "62610", departement: "Pas-de-Calais", lat: 50.8584, lng: 2.0178, distanceKm: 24, intro: "Entre Saint-Omer et Calais, Ardres est une petite cité médiévale entourée de marais. Son patrimoine bâti typique et son cadre naturel en font un secteur prisé des rénovateurs.",                                                                                                                                                              contexte: "L'humidité des marais audomarois impose des techniques spécifiques (traitement anti-humidité, isolation adaptée).",                                                                              projetsFrequents: ["Traitement humidité et remontées capillaires", "Isolation murs et combles", "Rénovation intérieure complète", "Plomberie et chauffage", "Ravalement", "Aménagement extérieur"],     particularites: "Connaissance des contraintes hygrométriques des zones marécageuses." },
+  { slug: "fruges",                 nom: "Fruges",                   codePostal: "62310", departement: "Pas-de-Calais", lat: 50.5152, lng: 2.1348, distanceKm: 26, intro: "Fruges, au cœur du Ternois, est une bourgade rurale où les maisons de briques côtoient les fermes en réhabilitation. Nos équipes interviennent régulièrement dans ce secteur.",                                                                                                                                                            contexte: "Le secteur concentre un habitat rural dispersé avec de nombreuses opportunités de rénovation complète.",                                                                                         projetsFrequents: ["Réhabilitation de fermes", "Isolation thermique RT2020", "Second œuvre complet", "Menuiseries PVC ou bois", "Salle de bain", "Terrasse et allée"],                                  particularites: "Planification de tournées en Ternois pour optimiser les déplacements." },
+  { slug: "desvres",                nom: "Desvres",                  codePostal: "62240", departement: "Pas-de-Calais", lat: 50.6723, lng: 1.8338, distanceKm: 28, intro: "Desvres, connue pour sa faïence, est nichée dans le Boulonnais. Son tissu résidentiel mêle maisons bourgeoises, pavillons et fermes boulonnaises réhabilitées.",                                                                                                                                                                         contexte: "Le Boulonnais offre un habitat varié avec des matériaux locaux (grès, silex) nécessitant un savoir-faire spécifique.",                                                                         projetsFrequents: ["Rénovation maisons boulonnaises", "Ravalement pierres et silex", "Isolation et second œuvre", "Salle de bain et cuisine", "Menuiseries résistantes", "Terrasse"],                   particularites: "Maîtrise des matériaux locaux du Boulonnais : grès, silex, briques." },
+  { slug: "hazebrouck",             nom: "Hazebrouck",               codePostal: "59190", departement: "Nord",           lat: 50.7237, lng: 2.5384, distanceKm: 28, intro: "Capitale de la Flandre intérieure, Hazebrouck est une ville à taille humaine entourée d'un tissu rural riche. Les maisons flamandes en brique et les fermes réhabilitées y forment un patrimoine caractéristique.",                                                                                                                             contexte: "L'architecture flamande typique demande un savoir-faire particulier : joints de briques, charpentes en bois massif, enduits à la chaux.",                                                      projetsFrequents: ["Rénovation maisons flamandes en brique", "Réfection toiture et charpente bois", "Isolation et second œuvre de fermes", "Aménagement de grange", "Ravalement et rejointoiement", "Extension et véranda"], particularites: "Zone historique d'intervention. Maîtrise de l'architecture flamande." },
+  { slug: "lillers",                nom: "Lillers",                  codePostal: "62190", departement: "Pas-de-Calais", lat: 50.5640, lng: 2.4867, distanceKm: 33, intro: "Lillers, dans l'arrondissement de Béthune, est une ville industrielle reconvertie avec un parc de logements anciens en pleine rénovation.",                                                                                                                                                                                                   contexte: "La zone Lillers-Isbergues concentre maisons de cité, pavillons des années 70 et quelques fermes. L'isolation et la rénovation énergétique sont les chantiers dominants.",                      projetsFrequents: ["Isolation thermique intérieure et extérieure", "Remise aux normes électriques", "Plomberie et chauffage", "Ravalement façade", "Salle de bain", "Carrelage et sol"],                 particularites: "Secteur en renouveau : projets souvent éligibles MaPrimeRénov' et CEE." },
+  { slug: "marquise",               nom: "Marquise",                 codePostal: "62250", departement: "Pas-de-Calais", lat: 50.8263, lng: 1.7027, distanceKm: 34, intro: "Entre Boulogne et Calais, Marquise et le pays de Marbre accueillent un habitat semi-rural en pierre locale. Maisons en pierre et pavillons forment notre terrain d'intervention.",                                                                                                                                                      contexte: "Le secteur présente un bâti solide en pierre locale (marbre de Marquise) avec des besoins en rénovation intérieure et isolation.",                                                             projetsFrequents: ["Rénovation maisons en pierre de Marquise", "Isolation thermique", "Second œuvre", "Salle de bain et cuisine", "Terrasse extérieure", "Ravalement"],                                 particularites: "Expertise sur les constructions en pierre locale du pays de Marbre." },
+  { slug: "hesdin",                 nom: "Hesdin",                   codePostal: "62140", departement: "Pas-de-Calais", lat: 50.3712, lng: 2.0378, distanceKm: 38, intro: "Hesdin, ancienne ville fortifiée sur la Canche, est au cœur du Ternois-Côte d'Opale. Son bâti ancien et ses villages environnants offrent de nombreuses opportunités de rénovation.",                                                                                                                                                   contexte: "La région hesdinoise concentre un habitat rural et semi-urbain ancien nécessitant mise aux normes et amélioration.",                                                                             projetsFrequents: ["Rénovation maisons anciennes", "Ravalement et façade", "Isolation et chauffage", "Second œuvre complet", "Extension", "Aménagement extérieur"],                                    particularites: "Tournées Hesdin-Ternoise planifiées. Devis sur site dans les 48h." },
+  { slug: "bruay-la-buissiere",     nom: "Bruay-la-Buissière",       codePostal: "62700", departement: "Pas-de-Calais", lat: 50.4876, lng: 2.5467, distanceKm: 38, intro: "Bruay-la-Buissière, ancienne cité minière de l'arrondissement de Béthune, vit une mutation profonde. Corons réhabilités, maisons de ville et pavillons sont au cœur de notre activité.",                                                                                                                                                   contexte: "Parc immobilier ancien à fort potentiel de valorisation. Isolation, remise aux normes et embellissement sont les principales demandes.",                                                         projetsFrequents: ["Rénovation corons et maisons minières", "Isolation éligible MaPrimeRénov'", "Mise aux normes NF C15-100", "Ravalement briques", "Salle de bain", "Parquet et carrelage"],           particularites: "Connaissance approfondie du bâti minier. Maîtrise des spécificités des maisons en brique rouge." },
+  { slug: "calais",                 nom: "Calais",                   codePostal: "62100", departement: "Pas-de-Calais", lat: 50.9513, lng: 1.8587, distanceKm: 42, intro: "Calais, carrefour européen entre France et Angleterre, est une ville en profonde rénovation. Son tissu résidentiel mêle maisons de ville du centre reconstruit, pavillons périphériques et résidences côtières.",                                                                                                                             contexte: "La proximité de la mer et des vents forts impose des matériaux et techniques spécifiques. Le marché locatif actif pousse les propriétaires à rénover pour les normes DPE.",                     projetsFrequents: ["Rénovation intérieure complète", "Isolation renforcée milieu marin", "Ravalement façade anti-embruns", "Mise aux normes électriques", "Salle de bain", "Terrasse et dalles"],        particularites: "Matériaux sélectionnés pour leur résistance au climat côtier." },
+  { slug: "etaples",                nom: "Étaples-sur-Mer",          codePostal: "62630", departement: "Pas-de-Calais", lat: 50.5153, lng: 1.6468, distanceKm: 43, intro: "Étaples-sur-Mer, cité portuaire de la Côte d'Opale, attire propriétaires de résidences principales et secondaires. Son bâti marin typique demande une expertise côtière.",                                                                                                                                                              contexte: "La commune présente un habitat balnéaire varié. La rénovation de maisons de pêcheurs et de villas Belle Époque y est fréquente.",                                                              projetsFrequents: ["Rénovation maisons de pêcheurs", "Villas balnéaires — rénovation complète", "Isolation anti-humidité côtière", "Ravalement et peinture extérieure", "Terrasse bois ou composite", "Résidences secondaires"], particularites: "Spécialistes de la rénovation côtière. Disponibles en basse saison pour minimiser les gênes." },
+  { slug: "montreuil-sur-mer",      nom: "Montreuil-sur-Mer",        codePostal: "62170", departement: "Pas-de-Calais", lat: 50.4641, lng: 1.7677, distanceKm: 43, intro: "Montreuil-sur-Mer, cité fortifiée sur les hauteurs de la Canche, est un joyau patrimonial. Sa citadelle, ses remparts et ses maisons anciennes nécessitent une expertise artisanale de haute qualité.",                                                                                                                                    contexte: "Ville classée avec bâtiments sous protection ABF. Notre expérience sur le bâti ancien nous permet de gérer ces spécificités complexes.",                                                        projetsFrequents: ["Restauration maisons en secteur sauvegardé", "Maçonnerie en pierre calcaire", "Charpente et couverture traditionnelle", "Enduits à la chaux", "Menuiseries bois sur-mesure", "Aménagement intérieur patrimonial"], particularites: "Expérience sur bâti ancien protégé. Travail en liaison avec les ABF." },
+  { slug: "saint-pol-sur-ternoise", nom: "Saint-Pol-sur-Ternoise",   codePostal: "62130", departement: "Pas-de-Calais", lat: 50.3804, lng: 2.3343, distanceKm: 43, intro: "Saint-Pol-sur-Ternoise, capitale du Ternois, est un centre de services rural entouré d'un habitat dispersé. La rénovation de maisons de bourg et de fermes y est notre principale activité.",                                                                                                                                           contexte: "Le Ternois est un territoire rural avec un parc immobilier souvent ancien. L'isolation et la remise aux normes constituent les chantiers dominants.",                                            projetsFrequents: ["Isolation thermique rurale", "Second œuvre : électricité, plomberie", "Rénovation maisons de bourg", "Réhabilitation de fermes", "Menuiseries", "Salle de bain et cuisine"],         particularites: "Tournées Ternois planifiées. Créneau de visite sous 48h garanti." },
+  { slug: "le-touquet",             nom: "Le Touquet-Paris-Plage",   codePostal: "62520", departement: "Pas-de-Calais", lat: 50.5248, lng: 1.5923, distanceKm: 48, intro: "Station balnéaire d'exception, Le Touquet concentre un parc immobilier haut de gamme : villas anglo-normandes, appartements de prestige, résidences secondaires. Nos artisans interviennent sur ces chantiers exigeants.",                                                                                                               contexte: "Le marché du Touquet est celui de la rénovation haut de gamme. Les propriétaires attendent des finitions irréprochables et des matériaux de qualité premium.",                                  projetsFrequents: ["Rénovation haut de gamme de villas", "Parquet massif et carrelage grand format", "Salle de bain de prestige", "Peinture décorative", "Terrasse bois exotique ou composite", "Résidences secondaires"], particularites: "Savoir-faire reconnu sur les chantiers premium. Finitions soignées, matériaux haut de gamme." },
+  { slug: "bethune",                nom: "Béthune",                  codePostal: "62400", departement: "Pas-de-Calais", lat: 50.5300, lng: 2.6400, distanceKm: 46, intro: "Béthune, sous-préfecture dynamique du Pas-de-Calais, bénéficie d'un tissu économique actif et d'un parc immobilier varié allant des maisons bourgeoises du centre aux pavillons périphériques.",                                                                                                                                        contexte: "La région béthunoise mêle habitat ancien de centre-ville et zones pavillonnaires des années 70-90.",                                                                                            projetsFrequents: ["Rénovation maisons bourgeoises", "Extension de pavillon", "Isolation thermique extérieure", "Mise aux normes électriques", "Carrelage et parquet", "Aménagement extérieur"],         particularites: "Zone d'intervention historique. Connaissance des matériaux et techniques locaux." },
+  { slug: "gravelines",             nom: "Gravelines",               codePostal: "59820", departement: "Nord",           lat: 50.9891, lng: 2.1270, distanceKm: 52, intro: "Gravelines, cité fortifiée de Vauban entre Calais et Dunkerque, offre un patrimoine architectural unique. Ses maisons flamandes et son centre historique préservé sont notre terrain d'intervention.",                                                                                                                                  contexte: "Ville classée Monument Historique dans son ensemble. Notre expérience sur le bâti ancien permet de gérer les contraintes ABF.",                                                                  projetsFrequents: ["Restauration maisons flamandes", "Ravalement en respect ABF", "Isolation intérieure (contraintes patrimoine)", "Second œuvre complet", "Menuiseries bois conformes", "Aménagement cours"], particularites: "Maîtrise des travaux en secteur patrimonial classé. Coordination ABF et mairie." },
+  { slug: "berck",                  nom: "Berck-sur-Mer",            codePostal: "62600", departement: "Pas-de-Calais", lat: 50.4010, lng: 1.5643, distanceKm: 54, intro: "Station balnéaire de la Côte d'Opale, Berck-sur-Mer concentre un parc immobilier touristique important : villas Belle Époque, appartements vue mer, maisons de famille à rénover entre deux saisons.",                                                                                                                               contexte: "Berck attire des propriétaires de résidences secondaires souhaitant rénover pendant la basse saison.",                                                                                          projetsFrequents: ["Rénovation complète villas et maisons de vacances", "Remise à neuf avant location saisonnière", "Isolation et chauffage", "Ravalement façades", "Terrasse", "Mise aux normes électriques"], particularites: "Chantiers planifiés en basse saison (octobre–avril). Devis rapide pour vos contraintes calendaires." },
+  { slug: "lens",                   nom: "Lens",                     codePostal: "62300", departement: "Pas-de-Calais", lat: 50.4328, lng: 2.8314, distanceKm: 55, intro: "Lens et son agglomération vivent une transformation profonde. Ancienne cité minière réinventée autour de la culture et du sport, la ville attire de nombreux projets de rénovation.",                                                                                                                                                  contexte: "Le bassin minier lensois concentre un parc immobilier ancien en pleine mutation.",                                                                                                              projetsFrequents: ["Rénovation maisons en brique", "Isolation thermique MaPrimeRénov'", "Mise aux normes NF C15-100", "Extension et combles", "Ravalement façade", "Carrelage et parquet"],              particularites: "Maîtrise des spécificités des maisons en brique rouge du bassin minier." },
+  { slug: "arras",                  nom: "Arras",                    codePostal: "62000", departement: "Pas-de-Calais", lat: 50.2918, lng: 2.7789, distanceKm: 60, intro: "Arras, préfecture du Pas-de-Calais et ville d'art et d'histoire, recèle un patrimoine bâti exceptionnel : hôtels particuliers, maisons flamandes à pignons, immeubles historiques.",                                                                                                                                                    contexte: "La préfecture attire propriétaires et investisseurs souhaitant rénover en centre historique. Les contraintes ABF peuvent s'appliquer.",                                                         projetsFrequents: ["Rénovation en secteur sauvegardé", "Ravalement en pierre", "Réfection toiture et charpente", "Plâtrerie traditionnelle", "Second œuvre complet", "Aménagement combles"],             particularites: "Artisans habitués au bâti ancien et aux exigences ABF." },
+  { slug: "henin-beaumont",         nom: "Hénin-Beaumont",           codePostal: "62110", departement: "Pas-de-Calais", lat: 50.4205, lng: 2.9575, distanceKm: 62, intro: "Hénin-Beaumont, au cœur du bassin minier, concentre un tissu résidentiel dense de maisons anciennes et de pavillons en cours de réhabilitation.",                                                                                                                                                                              contexte: "Entre Lens et Carvin, l'habitat majoritairement ancien offre des opportunités importantes en isolation, second œuvre et embellissement.",                                                        projetsFrequents: ["Rénovation intérieure globale", "Isolation murs et combles", "Chaudière et plomberie", "Peinture et revêtements de sol", "Salle de bain", "Terrasse ou dalle"],                     particularites: "Connaissance des constructions du bassin minier. Déplacement rapide depuis Longuenesse." },
+  { slug: "dunkerque",              nom: "Dunkerque",                codePostal: "59140", departement: "Nord",           lat: 51.0343, lng: 2.3767, distanceKm: 65, intro: "Grand port industriel et touristique, Dunkerque et sa communauté urbaine constituent un marché de la rénovation important. Maisons flamandes, logements locatifs et résidences côtières — les chantiers sont variés.",                                                                                                               contexte: "L'humidité marine du littoral dunkerquois impose des matériaux performants et des techniques adaptées.",                                                                                         projetsFrequents: ["Rénovation maisons flamandes", "Isolation renforcée milieu marin", "Second œuvre complet", "Salle de bain et cuisine", "Ravalement façade", "Terrasse côtière"],                    particularites: "Sélection rigoureuse des matériaux pour le climat maritime dunkerquois." },
+  { slug: "lille",                  nom: "Lille Métropole",          codePostal: "59000", departement: "Nord",           lat: 50.6292, lng: 3.0573, distanceKm: 66, intro: "Capitale des Hauts-de-France, Lille et sa métropole représentent un marché immobilier dynamique où rénovation de l'habitat ancien et mise aux normes locatives coexistent.",                                                                                                                                                        contexte: "Du Vieux-Lille aux communes périphériques (Villeneuve-d'Ascq, Roubaix, Marcq…), la MEL offre une grande diversité de chantiers.",                                                             projetsFrequents: ["Rénovation appartements anciens", "Isolation DPE renforcée", "Remise à neuf pour location", "Second œuvre maisons de ville", "Gros œuvre : ouvertures, extensions", "Aménagement extérieur urbain"], particularites: "Chantiers lillois planifiés en groupes depuis Longuenesse (~66 km)." },
+  { slug: "doullens",               nom: "Doullens",                 codePostal: "80600", departement: "Somme",          lat: 50.1661, lng: 2.3393, distanceKm: 72, intro: "Doullens, en limite de notre zone d'intervention (Somme), est une petite ville de garnison dont le bâti ancien et les maisons périphériques font l'objet de projets de rénovation.",                                                                                                                                              contexte: "Situé à la frontière Pas-de-Calais / Somme, Doullens bénéficie de notre expertise pour des projets que les artisans locaux ne peuvent absorber.",                                              projetsFrequents: ["Rénovation maisons anciennes", "Isolation thermique", "Second œuvre", "Ravalement façade", "Extension", "Salle de bain"],                                                            particularites: "Limite extrême de notre zone. Intervention sur devis et selon disponibilités." },
 ]
 
 export function getZone(slug: string): Zone | undefined {
   return zones.find((z) => z.slug === slug)
+}
+
+export function getZonesSortedByDistance(): Zone[] {
+  return [...zones].sort((a, b) => a.distanceKm - b.distanceKm)
 }
