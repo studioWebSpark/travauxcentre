@@ -15,7 +15,6 @@ export default async function FacturesListPage() {
       lignes:   true,
       chantier: {
         include: { lead: { select: { nom: true, email: true } } },
-        select:  { titre: true, lead: true },
       },
     },
   })
