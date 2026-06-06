@@ -13,7 +13,6 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
       lignes:   true,
       chantier: {
         include: { lead: { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } } },
-        select:  { titre: true, adresse: true, lead: true },
       },
     },
   })

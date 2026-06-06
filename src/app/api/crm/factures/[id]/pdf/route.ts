@@ -12,7 +12,6 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
       lignes:   true,
       chantier: {
         include: { lead: { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } } },
-        select:  { titre: true, adresse: true, lead: true },
       },
     },
   })
