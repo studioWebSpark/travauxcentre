@@ -347,6 +347,7 @@ model Lead {
   updatedAt        DateTime     @updatedAt
 
   notes            NoteLead[]
+  plannings        Planning[]
 }
 
 model NoteLead {
@@ -357,6 +358,29 @@ model NoteLead {
   createdAt DateTime @default(now())
 
   lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+}
+
+// ─── Planning & Rendez-vous clients ──────────────────────────────────────────
+
+enum StatutPlanning {
+  EN_ATTENTE
+  CONFIRME
+  ANNULE
+}
+
+model Planning {
+  id        String         @id @default(cuid())
+  leadId    String
+  date      DateTime
+  duree     Int            @default(60)   // minutes
+  typeRdv   String
+  adresse   String?
+  notes     String?
+  statut    StatutPlanning @default(EN_ATTENTE)
+  token     String         @unique @default(cuid())
+  createdAt DateTime       @default(now())
+
+  lead      Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
 }
 
 // ─── XP & Gamification ───────────────────────────────────────────────────────
