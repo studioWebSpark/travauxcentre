@@ -22,7 +22,7 @@ export default function DevisPublicPage() {
   const [state, setState] = useState<"loading" | "ready" | "accepting" | "accepted" | "already" | "error">("loading")
 
   useEffect(() => {
-    fetch(`/api/devis/${token}`)
+    fetch(`/api/public/devis/${token}`)
       .then((r) => r.json())
       .then((d) => {
         setData(d)
@@ -34,7 +34,7 @@ export default function DevisPublicPage() {
   async function accepter() {
     if (!data) return
     setState("accepting")
-    const res = await fetch(`/api/devis/${token}`, { method: "POST" })
+    const res = await fetch(`/api/public/devis/${token}`, { method: "POST" })
     const json = await res.json()
     setState(json.success || json.alreadyAccepted ? "accepted" : "error")
   }
