@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -83,7 +84,11 @@ export default function AProposPage() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-4">
+            <div className="relative h-56 rounded-3xl overflow-hidden">
+              <Image src="/images/about.jpg" alt="Équipe Travaux Centre sur chantier" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
             {[
               { chiffre: "+150", label: "Chantiers réalisés" },
               { chiffre: "80km", label: "Zone d'intervention" },
@@ -95,6 +100,7 @@ export default function AProposPage() {
                 <p className="text-gray-500 text-sm">{stat.label}</p>
               </div>
             ))}
+            </div>
           </div>
         </div>
 

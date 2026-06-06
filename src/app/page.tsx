@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 export const metadata: Metadata = {
@@ -17,10 +18,10 @@ function IconShield()  { return <svg className="w-6 h-6" fill="none" stroke="cur
 function IconTrophy()  { return <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-2m6 2v-2M12 17v-4m-5.5-7H5a2 2 0 00-2 2v1a5.5 5.5 0 0011 0V8a2 2 0 00-2-2h-1.5m-3 0V4a1 1 0 011-1h2a1 1 0 011 1v2m-4 0h4"/></svg> }
 
 const services = [
-  { icon: <IconHome />,   title: "Rénovation Intérieure",     desc: "Peinture, carrelage, parquet, plâtrerie, faux-plafonds — on transforme vos espaces avec soin et précision.",                                  href: "/services/renovation-interieure" },
-  { icon: <IconBrick />,  title: "Gros Œuvre & Maçonnerie",   desc: "Murs porteurs, fondations, extensions, reprises en sous-œuvre — nos maçons certifiés assurent la solidité de votre bâti.",                     href: "/services/gros-oeuvre" },
-  { icon: <IconTree />,   title: "Aménagement Extérieur",     desc: "Terrasses, allées, clôtures, dallages — on sublime vos extérieurs pour créer des espaces de vie agréables.",                                    href: "/services/amenagement-exterieur" },
-  { icon: <IconWrench />, title: "Second Œuvre",              desc: "Électricité, plomberie, isolation thermique et acoustique — des installations conformes aux normes en vigueur.",                                  href: "/services/second-oeuvre" },
+  { icon: <IconHome />,   title: "Rénovation Intérieure",     desc: "Peinture, carrelage, parquet, plâtrerie, faux-plafonds — on transforme vos espaces avec soin et précision.",                 href: "/services/renovation-interieure", img: "/images/renovation-interieure.jpg" },
+  { icon: <IconBrick />,  title: "Gros Œuvre & Maçonnerie",   desc: "Murs porteurs, fondations, extensions, reprises en sous-œuvre — nos maçons certifiés assurent la solidité de votre bâti.",  href: "/services/gros-oeuvre",           img: "/images/gros-oeuvre.jpg" },
+  { icon: <IconTree />,   title: "Aménagement Extérieur",     desc: "Terrasses, allées, clôtures, dallages — on sublime vos extérieurs pour créer des espaces de vie agréables.",                  href: "/services/amenagement-exterieur", img: "/images/amenagement-exterieur.jpg" },
+  { icon: <IconWrench />, title: "Second Œuvre",              desc: "Électricité, plomberie, isolation thermique et acoustique — des installations conformes aux normes en vigueur.",               href: "/services/second-oeuvre",         img: "/images/second-oeuvre.jpg" },
 ]
 
 const avantages = [
@@ -54,8 +55,8 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F2C5E] via-[#1a3f7a] to-[#0a1f42]" aria-hidden />
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} aria-hidden />
+        <Image src="/images/hero.jpg" alt="Chantier de rénovation Travaux Centre" fill priority className="object-cover" sizes="100vw" />
+        <div className="absolute inset-0 bg-[#0F2C5E]/70" aria-hidden />
         <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm font-medium mb-6">
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
@@ -104,15 +105,21 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-children">
             {services.map((s) => (
-              <Link key={s.title} href={s.href} className="group bg-white rounded-2xl p-7 shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#F97316]/30 transition-all duration-300">
-                <div className="w-14 h-14 bg-[#0F2C5E]/5 rounded-xl flex items-center justify-center text-[#0F2C5E] mb-5 group-hover:bg-[#F97316] group-hover:text-white transition-colors">
-                  {s.icon}
+              <Link key={s.title} href={s.href} className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg hover:border-[#F97316]/30 transition-all duration-300">
+                <div className="relative h-44 overflow-hidden">
+                  <Image src={s.img} alt={s.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" />
+                  <div className="absolute inset-0 bg-[#0F2C5E]/30 group-hover:bg-[#0F2C5E]/10 transition-colors" />
+                  <div className="absolute top-3 left-3 w-10 h-10 bg-white rounded-lg flex items-center justify-center text-[#0F2C5E] shadow">
+                    {s.icon}
+                  </div>
                 </div>
-                <h3 className="font-bold text-[#0F2C5E] text-lg mb-2">{s.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
-                <div className="mt-5 text-[#F97316] text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
-                  En savoir plus
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                <div className="p-5">
+                  <h3 className="font-bold text-[#0F2C5E] text-lg mb-2">{s.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                  <div className="mt-4 text-[#F97316] text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                    En savoir plus
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </div>
                 </div>
               </Link>
             ))}
