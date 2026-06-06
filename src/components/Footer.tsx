@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { MapPin, Phone, Mail, Clock, HardHat } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
+import { zones } from "@/lib/zones"
 
 const services = [
   { label: "Rénovation intérieure",    href: "/services/renovation-interieure" },
@@ -37,6 +38,31 @@ export default function Footer() {
   return (
     <footer className="bg-[#0a1f42] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Zones d'intervention — section SEO complète */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-4">
+            <h4 className="font-semibold text-xs uppercase tracking-widest text-slate-500">
+              Zones d&apos;intervention — 80 km autour de Longuenesse
+            </h4>
+            <Link href="/zones-intervention" className="text-xs text-slate-500 hover:text-slate-300 transition-colors underline underline-offset-2">
+              Voir la carte →
+            </Link>
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            {zones.map((z) => (
+              <Link
+                key={z.slug}
+                href={`/zones-intervention/${z.slug}`}
+                className="text-xs text-slate-500 hover:text-slate-300 transition-colors whitespace-nowrap"
+              >
+                {z.nom} ({z.codePostal})
+              </Link>
+            ))}
+          </div>
+        </div>
+
+        <Separator className="mb-12 bg-white/8" />
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-1">
@@ -140,6 +166,7 @@ export default function Footer() {
         </div>
 
         <Separator className="mt-12 bg-white/8" />
+
 
         <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p>© {new Date().getFullYear()} Travaux Centre. Tous droits réservés.</p>
