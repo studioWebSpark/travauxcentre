@@ -1,8 +1,11 @@
 "use client"
 
 import { useEffect } from "react"
+import { usePathname } from "next/navigation"
 
 export default function ScrollReveal() {
+  const pathname = usePathname()
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -13,15 +16,27 @@ export default function ScrollReveal() {
           }
         })
       },
-      { threshold: 0.1 }
+      { threshold: 0.05 }
     )
 
-    document.querySelectorAll(".reveal, .reveal-children").forEach((el) => {
-      observer.observe(el)
+    // Petite frame pour laisser le DOM se stabiliser après la navigation
+    const raf = requestAnimationFrame(() => {
+      document.querySelectorAll(".reveal, .reveal-children").forEach((el) => {
+        // Éléments déjà dans le viewport → visibles immédiatement
+        const rect = el.getBoundingClientRect()
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add("visible")
+        } else {
+          observer.observe(el)
+        }
+      })
     })
 
-    return () => observer.disconnect()
-  }, [])
+    return () => {
+      cancelAnimationFrame(raf)
+      observer.disconnect()
+    }
+  }, [pathname]) // Re-déclenche à chaque changement de page
 
   return null
 }
