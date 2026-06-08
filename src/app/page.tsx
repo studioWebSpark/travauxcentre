@@ -12,7 +12,6 @@ function IconHome()    { return <svg className="w-7 h-7" fill="none" stroke="cur
 function IconBrick()   { return <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="4" rx="1" strokeWidth={1.5}/><rect x="2" y="13" width="20" height="4" rx="1" strokeWidth={1.5}/><line x1="7" y1="7" x2="7" y2="11" strokeWidth={1.5}/><line x1="12" y1="13" x2="12" y2="17" strokeWidth={1.5}/></svg> }
 function IconTree()    { return <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 22V12m0 0l-4-4m4 4l4-4M6 12l-2-3h16l-2 3"/><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 9L6 6h12l-2 3"/></svg> }
 function IconWrench()  { return <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg> }
-function IconStar()    { return <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> }
 function IconCheck()   { return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> }
 function IconPhone()   { return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg> }
 function IconShield()  { return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg> }
@@ -47,12 +46,6 @@ const villes = [
   "Saint-Omer", "Arras", "Boulogne-sur-Mer",
   "Béthune", "Calais", "Hazebrouck",
   "Aire-sur-la-Lys", "Fruges", "Lumbres",
-]
-
-const temoignages = [
-  { nom: "Sophie M.",       ville: "Saint-Omer",  note: 5, texte: "Excellent travail pour notre rénovation complète. L'équipe est sérieuse, propre et respectueuse des délais. Je recommande vivement !" },
-  { nom: "Jean-Pierre L.",  ville: "Béthune",     note: 5, texte: "Devis rapide, prix honnête et résultat impeccable. Nos nouvelles cloisons et notre carrelage sont parfaits. Merci à toute l'équipe." },
-  { nom: "Marie C.",        ville: "Longuenesse", note: 5, texte: "Terrasse et allée réalisées en 4 jours chrono. La finition est soignée et le suivi client excellent. Une entreprise de confiance." },
 ]
 
 // ─── Animation variants ────────────────────────────────────────────────────────
@@ -457,49 +450,6 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
-        </div>
-      </section>
-
-      {/* ── TESTIMONIES ──────────────────────────────────────────────────– */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Avis clients</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Ce que pensent nos clients</h2>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
-            {temoignages.map((t) => (
-              <motion.div key={t.nom} variants={item}>
-                <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg hover:border-[#F97316] transition-all h-full flex flex-col">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="font-bold text-[#0F2C5E]">{t.nom}</h3>
-                      <p className="text-xs text-gray-500">{t.ville}</p>
-                    </div>
-                    <div className="flex gap-1">
-                      {Array.from({ length: t.note }).map((_, i) => (
-                        <IconStar key={i} />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-gray-600 text-sm leading-relaxed flex-1">&ldquo;{t.texte}&rdquo;</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
       </section>
 
