@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { genNumeroDevis } from "@/lib/chantier"
 
 export async function POST(request: Request) {
-  const { leadId, chantierId, lignes, tva, notes, dateValidite } = await request.json()
+  const { leadId, chantierId, lignes, etapes, tva, notes, dateValidite } = await request.json()
 
   const devis = await prisma.devisCrm.create({
     data: {
@@ -21,8 +21,16 @@ export async function POST(request: Request) {
           prixUnitaire: Number(l.prixUnitaire),
         })),
       },
+      etapesPaiement: {
+        create: (etapes ?? []).map((e: { pourcentage: number; description?: string; dateEcheance?: string }, idx: number) => ({
+          pourcentage:  Number(e.pourcentage),
+          description:  e.description || null,
+          dateEcheance: e.dateEcheance ? new Date(e.dateEcheance) : null,
+          ordre:        idx,
+        })),
+      },
     },
-    include: { lignes: true },
+    include: { lignes: true, etapesPaiement: true },
   })
   return NextResponse.json(devis)
 }

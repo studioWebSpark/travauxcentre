@@ -505,9 +505,10 @@ model DevisCrm {
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
 
-  lead         Lead?           @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  chantier     ChantierCrm?    @relation(fields: [chantierId], references: [id], onDelete: SetNull)
+  lead         Lead?                @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  chantier     ChantierCrm?         @relation(fields: [chantierId], references: [id], onDelete: SetNull)
   lignes       LigneDevisCrm[]
+  etapesPaiement EtapePaiementDevis[]
   factures     FactureCrm[]
 }
 
@@ -518,6 +519,21 @@ model LigneDevisCrm {
   quantite     Float    @default(1)
   unite        String   @default("forfait")
   prixUnitaire Float
+
+  devis        DevisCrm @relation(fields: [devisId], references: [id], onDelete: Cascade)
+}
+
+model EtapePaiementDevis {
+  id           String   @id @default(cuid())
+  devisId      String
+  pourcentage  Float    // 20, 40, 60, etc.
+  description  String?  // "À la signature", "À la fin", etc.
+  dateEcheance DateTime?
+  statut       String   @default("ATTENTE")  // ATTENTE, PAYEE
+  datePaiement DateTime?
+  ordre        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   devis        DevisCrm @relation(fields: [devisId], references: [id], onDelete: Cascade)
 }

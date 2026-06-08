@@ -6,6 +6,7 @@ import { Plus, Trash2, Loader2, FileText } from "lucide-react"
 import { calcTotaux, formatEuro } from "@/lib/chantier"
 
 type Ligne = { description: string; quantite: number; unite: string; prixUnitaire: number }
+type EtapePaiement = { pourcentage: number; description: string; dateEcheance: string }
 type Props = {
   chantiers: { id: string; titre: string }[]
   leads:     { id: string; nom: string; ville: string }[]
@@ -26,6 +27,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
   const [notes,      setNotes]      = useState("Devis valable 30 jours. Acompte de 30% à la commande.")
   const [dateValidite, setDateVal]  = useState("")
   const [lignes, setLignes]         = useState<Ligne[]>(LIGNES_PRESET)
+  const [etapes, setEtapes]         = useState<EtapePaiement[]>([])
   const [loading, setLoading]       = useState(false)
   const [createdId, setCreatedId]   = useState<string | null>(null)
 
@@ -41,13 +43,33 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
     setLignes((l) => l.map((line, j) => j === i ? { ...line, [k]: k === "description" || k === "unite" ? v : Number(v) } : line))
   }
 
+  function addEtape() {
+    setEtapes((e) => [...e, { pourcentage: 0, description: "", dateEcheance: "" }])
+  }
+
+  function removeEtape(i: number) {
+    setEtapes((e) => e.filter((_, j) => j !== i))
+  }
+
+  function setEtape(i: number, k: keyof EtapePaiement, v: string | number) {
+    setEtapes((e) => e.map((etape, j) => j === i ? { ...etape, [k]: k === "description" ? v : v } : etape))
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault()
     if (lignes.length === 0) return
     setLoading(true)
     const res = await fetch("/api/crm/devis", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chantierId: chantierId || null, leadId: leadId || null, lignes, tva, notes, dateValidite: dateValidite || null }),
+      body: JSON.stringify({
+        chantierId: chantierId || null,
+        leadId: leadId || null,
+        lignes,
+        etapes: etapes.filter((e) => e.pourcentage > 0),
+        tva,
+        notes,
+        dateValidite: dateValidite || null,
+      }),
     })
     if (res.ok) {
       const data = await res.json()
@@ -176,6 +198,37 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
             <span className="text-[#F97316]">{formatEuro(totaux.ttc)}</span>
           </div>
         </div>
+      </div>
+
+      {/* Étapes de paiement */}
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+        <h2 className="font-bold text-[#0F2C5E] mb-4">Étapes de paiement (optionnel)</h2>
+        <p className="text-xs text-gray-500 mb-4">Configurez les pourcentages et dates de paiement</p>
+
+        <div className="space-y-3">
+          {etapes.map((e, i) => (
+            <div key={i} className="grid grid-cols-12 gap-2 items-center bg-gray-50 p-3 rounded-lg">
+              <input type="number" min={1} max={100} value={e.pourcentage} onChange={(ev) => setEtape(i, "pourcentage", Number(ev.target.value))}
+                placeholder="%"
+                className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
+              <span className="col-span-1 text-center text-gray-400">%</span>
+              <input type="text" value={e.description} onChange={(ev) => setEtape(i, "description", ev.target.value)}
+                placeholder="Ex: À la signature"
+                className="col-span-5 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
+              <input type="date" value={e.dateEcheance} onChange={(ev) => setEtape(i, "dateEcheance", ev.target.value)}
+                className="col-span-3 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
+              <button type="button" onClick={() => removeEtape(i)}
+                className="col-span-1 text-gray-300 flex justify-center hover:text-red-500">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <button type="button" onClick={addEtape}
+          className="mt-4 w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 text-gray-400 py-2.5 rounded-xl text-sm hover:text-gray-500 hover:border-gray-300">
+          <Plus className="w-4 h-4" /> Ajouter une étape
+        </button>
       </div>
 
       {/* Notes */}
