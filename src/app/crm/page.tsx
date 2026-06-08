@@ -82,7 +82,7 @@ export default async function CrmDashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white font-montserrat">Tableau de bord</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Vue d&apos;ensemble de votre activité</p>
+          <p className="text-sm text-[#333333] mt-0.5">Vue d&apos;ensemble de votre activité</p>
         </div>
         <Link
           href="/crm/leads"
@@ -96,24 +96,24 @@ export default async function CrmDashboard() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">CA encaissé ce mois</p>
+          <p className="text-xs text-[#1a1a1a] font-medium uppercase tracking-wide">CA encaissé ce mois</p>
           <p className="text-2xl font-bold text-[#F97316] mt-1 font-montserrat">{formatEuro(kpis.caMois)}</p>
-          <p className="text-xs text-slate-400 mt-1">Factures payées</p>
+          <p className="text-xs text-[#404040] mt-1">Factures payées</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">CA annuel</p>
+          <p className="text-xs text-[#1a1a1a] font-medium uppercase tracking-wide">CA annuel</p>
           <p className="text-2xl font-bold text-white mt-1 font-montserrat">{formatEuro(kpis.caAnnuel)}</p>
-          <p className="text-xs text-slate-400 mt-1">Depuis le 1er janv.</p>
+          <p className="text-xs text-[#404040] mt-1">Depuis le 1er janv.</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">Leads ce mois</p>
+          <p className="text-xs text-[#1a1a1a] font-medium uppercase tracking-wide">Leads ce mois</p>
           <p className="text-2xl font-bold text-white mt-1 font-montserrat">{kpis.leadsMonth}</p>
-          <p className="text-xs text-slate-400 mt-1">{kpis.totalLeads} au total</p>
+          <p className="text-xs text-[#404040] mt-1">{kpis.totalLeads} au total</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">Taux de conversion</p>
+          <p className="text-xs text-[#1a1a1a] font-medium uppercase tracking-wide">Taux de conversion</p>
           <p className="text-2xl font-bold text-[#F97316] mt-1 font-montserrat">{kpis.tauxConversion}%</p>
-          <p className="text-xs text-slate-400 mt-1">{kpis.leadsGagne} gagnés</p>
+          <p className="text-xs text-[#404040] mt-1">{kpis.leadsGagne} gagnés</p>
         </div>
       </div>
 
@@ -127,7 +127,7 @@ export default async function CrmDashboard() {
           </div>
           <div className="space-y-1 mb-2">
             <div className="flex justify-between text-xs">
-              <span className="text-slate-300">Visualisation:</span>
+              <span className="text-[#1a1a1a]">Visualisation:</span>
               <span className="text-[#F97316] font-semibold">{formatEuro(Math.max(...caMoisGlissant.map(m => m.ca)))}</span>
             </div>
           </div>
@@ -143,12 +143,12 @@ export default async function CrmDashboard() {
                       title={`${m.mois}: ${formatEuro(m.ca)}`}
                     />
                     {m.ca > 0 && (
-                      <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-slate-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                      <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-[#333333] whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                         {formatEuro(m.ca)}
                       </span>
                     )}
                   </div>
-                  <span className="text-[9px] text-slate-400 text-center leading-tight">{m.mois}</span>
+                  <span className="text-[9px] text-[#333333] text-center leading-tight">{m.mois}</span>
                 </div>
               )
             })}
@@ -171,7 +171,7 @@ export default async function CrmDashboard() {
                     </div>
                   )}
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-200 w-24 shrink-0 truncate font-medium">{step.label}</span>
+                    <span className="text-xs text-[#1a1a1a] w-24 shrink-0 truncate font-medium">{step.label}</span>
                     <div className="flex-1 bg-white/10 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full transition-all ${step.color}`}
@@ -197,7 +197,7 @@ export default async function CrmDashboard() {
               const pct = sourcesMax > 0 ? Math.max((s.count / sourcesMax) * 100, 4) : 0
               return (
                 <div key={s.source} className="flex items-center gap-3">
-                  <span className="text-xs text-slate-200 w-28 shrink-0 truncate font-medium">{s.source || "Inconnu"}</span>
+                  <span className="text-xs text-[#1a1a1a] w-28 shrink-0 truncate font-medium">{s.source || "Inconnu"}</span>
                   <div className="flex-1 bg-white/10 rounded-full h-2">
                     <div
                       className="h-2 rounded-full bg-gradient-to-r from-[#F97316] to-orange-400 transition-all"
@@ -209,7 +209,7 @@ export default async function CrmDashboard() {
               )
             })}
             {sources.length === 0 && (
-              <p className="text-sm text-slate-400 italic">Aucune donnée</p>
+              <p className="text-sm text-[#404040] italic">Aucuna donnée</p>
             )}
           </div>
         </div>
@@ -230,7 +230,7 @@ export default async function CrmDashboard() {
               </span>
             ))}
             {villes.length === 0 && (
-              <span className="text-sm text-slate-400 italic">Aucune donnée</span>
+              <span className="text-sm text-[#404040] italic">Aucune donnée</span>
             )}
           </div>
         </div>
@@ -258,11 +258,11 @@ export default async function CrmDashboard() {
                 <span className="shrink-0 w-2 h-2 rounded-full bg-red-400 mt-1.5" />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-red-300">Lead sans contact &gt; 48h</p>
-                  <p className="text-xs text-slate-400 truncate">
+                  <p className="text-xs text-[#1a1a1a] truncate">
                     {l.nom} — {l.typeTravaux}
                   </p>
                 </div>
-                <span className="text-[10px] text-slate-400 shrink-0">
+                <span className="text-[10px] text-[#1a1a1a] shrink-0">
                   {l.createdAt.toLocaleDateString("fr-FR")}
                 </span>
               </Link>
@@ -276,9 +276,9 @@ export default async function CrmDashboard() {
                 <span className="shrink-0 w-2 h-2 rounded-full bg-amber-400 mt-1.5" />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-amber-300">Devis sans réponse &gt; 7 jours</p>
-                  <p className="text-xs text-slate-400 truncate">{d.numero}</p>
+                  <p className="text-xs text-[#1a1a1a] truncate">{d.numero}</p>
                 </div>
-                <span className="text-[10px] text-slate-400 shrink-0">
+                <span className="text-[10px] text-[#1a1a1a] shrink-0">
                   {d.updatedAt.toLocaleDateString("fr-FR")}
                 </span>
               </Link>
@@ -292,9 +292,9 @@ export default async function CrmDashboard() {
                 <span className="shrink-0 w-2 h-2 rounded-full bg-orange-400 mt-1.5" />
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-orange-300">Facture en retard de paiement</p>
-                  <p className="text-xs text-slate-400 truncate">{f.numero}</p>
+                  <p className="text-xs text-[#1a1a1a] truncate">{f.numero}</p>
                 </div>
-                <span className="text-[10px] text-slate-400 shrink-0">
+                <span className="text-[10px] text-[#1a1a1a] shrink-0">
                   Éch. {f.dateEcheance?.toLocaleDateString("fr-FR") ?? "—"}
                 </span>
               </Link>
@@ -304,10 +304,10 @@ export default async function CrmDashboard() {
       ) : (
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="w-4 h-4 text-slate-400" />
-            <h2 className="text-sm font-semibold text-slate-300 font-montserrat">Alertes</h2>
+            <AlertTriangle className="w-4 h-4 text-[#555555]" />
+            <h2 className="text-sm font-semibold text-[#1a1a1a] font-montserrat">Alertes</h2>
           </div>
-          <p className="text-sm text-slate-400 mt-2 italic">Aucune alerte en cours. Tout est à jour !</p>
+          <p className="text-sm text-[#404040] mt-2 italic">Aucune alerte en cours. Tout est à jour !</p>
         </div>
       )}
     </div>

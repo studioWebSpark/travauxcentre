@@ -130,7 +130,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
         >
           <p
             className={`text-xs font-bold mb-1 font-montserrat ${
-              isSelected ? "text-white" : isToday ? "text-blue-200" : "text-white"
+              isSelected ? "text-white" : isToday ? "text-blue-200" : "text-[#1a1a1a]"
             }`}
           >
             {day}
@@ -154,7 +154,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
             {dayPlannings.length > 2 && (
               <p
                 className={`text-xs px-1.5 ${
-                  isSelected ? "text-white/70" : "text-slate-400"
+                  isSelected ? "text-white/70" : "text-[#404040]"
                 }`}
               >
                 +{dayPlannings.length - 2} plus
@@ -179,7 +179,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-white font-montserrat">Calendrier des rendez-vous</h1>
-        <p className="text-slate-400 text-sm mt-0.5">{aVenir.length} RDV à venir</p>
+        <p className="text-[#404040] text-sm mt-0.5">{aVenir.length} RDV à venir</p>
       </div>
 
       {/* Stats */}
@@ -191,7 +191,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
         ].map(({ label, value, color, bg }) => (
           <div key={label} className={`glass rounded-[0.875rem] border p-4 ${bg}`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-300 mt-0.5 font-medium uppercase tracking-wide">{label}</p>
+            <p className="text-xs text-[#1a1a1a] mt-0.5 font-medium uppercase tracking-wide">{label}</p>
           </div>
         ))}
       </div>
@@ -233,7 +233,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                 }
                 className="p-2 rounded-lg hover:bg-white/10 transition-colors"
               >
-                <ChevronLeft className="w-4 h-4 text-slate-400" />
+                <ChevronLeft className="w-4 h-4 text-[#333333]" />
               </button>
 
               <h2 className="text-base font-semibold text-white w-32 text-center capitalize font-montserrat">
@@ -248,7 +248,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                 }
                 className="p-2 rounded-lg hover:bg-white/10 transition-colors"
               >
-                <ChevronRight className="w-4 h-4 text-slate-400" />
+                <ChevronRight className="w-4 h-4 text-[#333333]" />
               </button>
             </div>
           </div>
@@ -256,7 +256,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
           {/* Day headers */}
           <div className="grid grid-cols-7 gap-2 mb-2">
             {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-              <div key={day} className="text-center text-xs font-semibold text-white py-2 font-montserrat uppercase tracking-wider">
+              <div key={day} className="text-center text-xs font-semibold text-[#1a1a1a] py-2 font-montserrat uppercase tracking-wider">
                 {day}
               </div>
             ))}
@@ -288,7 +288,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
 
                 <div className="space-y-3">
                   {getSelectedDayPlannings().length === 0 ? (
-                    <p className="text-xs text-slate-400 text-center py-4">Aucun planning</p>
+                    <p className="text-xs text-[#404040] text-center py-4">Aucun planning</p>
                   ) : (
                     getSelectedDayPlannings().map((p) => {
                       const status = getStatusLabel(p.statut)
@@ -304,7 +304,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                               <p className="text-xs font-bold text-[#F97316] group-hover:underline">
                                 {p.lead.nom}
                               </p>
-                              <p className="text-xs text-slate-300 mt-0.5 font-medium">{p.typeRdv}</p>
+                              <p className="text-xs text-[#1a1a1a] mt-0.5 font-medium">{p.typeRdv}</p>
                             </div>
                             <span
                               className={`text-xs font-semibold px-2 py-1 rounded-full border flex items-center gap-1 shrink-0 ${status.color}`}
@@ -315,18 +315,18 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
 
                           <div className="space-y-1.5 text-xs">
                             <div className="flex items-center gap-2 text-white">
-                              <Clock className="w-3 h-3 text-slate-400 shrink-0" />
+                              <Clock className="w-3 h-3 text-[#555555] shrink-0" />
                               <span className="font-medium">{heure} — {p.duree} min</span>
                             </div>
                             {p.adresse && (
                               <div className="flex items-start gap-2 text-white">
-                                <MapPin className="w-3 h-3 text-slate-400 shrink-0 mt-0.5" />
+                                <MapPin className="w-3 h-3 text-[#555555] shrink-0 mt-0.5" />
                                 <span className="truncate font-medium">{p.adresse}</span>
                               </div>
                             )}
                             {p.notes && (
                               <div className="pt-1 border-t border-white/20 mt-1.5">
-                                <p className="text-slate-200 text-xs font-medium">{p.notes}</p>
+                                <p className="text-[#1a1a1a] text-xs font-medium">{p.notes}</p>
                               </div>
                             )}
                           </div>

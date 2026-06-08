@@ -42,7 +42,7 @@ export default async function LeadsPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white font-montserrat">Leads</h1>
-          <p className="text-slate-400 text-sm mt-0.5">{leads.length} résultat{leads.length > 1 ? "s" : ""}</p>
+          <p className="text-[#404040] text-sm mt-0.5">{leads.length} résultat{leads.length > 1 ? "s" : ""}</p>
         </div>
         <NouveauLeadModal />
       </div>
@@ -50,7 +50,7 @@ export default async function LeadsPage({
       {/* Filtres */}
       <form method="GET" className="glass rounded-[0.875rem] border border-white/8 p-4 flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-48">
-          <label className="block text-xs font-medium text-slate-300 mb-1">Recherche</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Recherche</label>
           <input
             name="q"
             defaultValue={q}
@@ -59,14 +59,14 @@ export default async function LeadsPage({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">Statut</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Statut</label>
           <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             <option className="bg-[#0D1B2A]">Tous</option>
             {Object.entries(STATUTS).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">Type de travaux</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Type de travaux</label>
           <select name="type" defaultValue={type ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             {TYPES.map((t) => <option key={t} className="bg-[#0D1B2A]">{t}</option>)}
           </select>
@@ -74,7 +74,7 @@ export default async function LeadsPage({
         <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
           Filtrer
         </button>
-        <Link href="/crm/leads" className="text-sm text-slate-400 hover:text-slate-300 transition-colors py-2">Réinitialiser</Link>
+        <Link href="/crm/leads" className="text-sm text-[#404040] hover:text-[#1a1a1a] transition-colors py-2">Réinitialiser</Link>
       </form>
 
       {/* Table */}
@@ -93,7 +93,7 @@ export default async function LeadsPage({
             </thead>
             <tbody className="divide-y divide-white/8">
               {leads.length === 0 && (
-                <tr><td colSpan={6} className="text-center py-12 text-slate-400 text-sm">Aucun lead trouvé</td></tr>
+                <tr><td colSpan={6} className="text-center py-12 text-[#404040] text-sm">Aucun lead trouvé</td></tr>
               )}
               {leads.map((lead) => {
                 const pr = PRIORITES[lead.priorite]
@@ -104,21 +104,21 @@ export default async function LeadsPage({
                         <span className={`w-2 h-2 rounded-full ${pr.dot} shrink-0`} />
                         <div>
                           <p className="font-semibold text-white">{lead.nom}</p>
-                          <p className="text-slate-400 text-xs">{lead.ville} ({lead.codePostal})</p>
+                          <p className="text-[#404040] text-xs">{lead.ville} ({lead.codePostal})</p>
                         </div>
                       </div>
                       <div className="flex gap-3 mt-1 ml-4.5">
-                        <a href={`tel:${lead.telephone}`} className="text-slate-400 hover:text-[#F97316] transition-colors">
+                        <a href={`tel:${lead.telephone}`} className="text-[#333333] hover:text-[#F97316] transition-colors">
                           <Phone className="w-3.5 h-3.5" />
                         </a>
-                        <a href={`mailto:${lead.email}`} className="text-slate-400 hover:text-[#F97316] transition-colors">
+                        <a href={`mailto:${lead.email}`} className="text-[#333333] hover:text-[#F97316] transition-colors">
                           <Mail className="w-3.5 h-3.5" />
                         </a>
                       </div>
                     </td>
                     <td className="px-4 py-3">
                       <p className="text-white text-sm font-medium">{lead.typeTravaux}</p>
-                      {lead.surface && <p className="text-slate-400 text-xs">{lead.surface} m²</p>}
+                      {lead.surface && <p className="text-[#404040] text-xs">{lead.surface} m²</p>}
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell">
                       <p className="text-white font-medium">{lead.budget || "—"}</p>
@@ -127,7 +127,7 @@ export default async function LeadsPage({
                     <td className="px-4 py-3">
                       <LeadStatusSelect leadId={lead.id} statut={lead.statut} />
                     </td>
-                    <td className="px-4 py-3 hidden lg:table-cell text-slate-400 text-xs whitespace-nowrap">
+                    <td className="px-4 py-3 hidden lg:table-cell text-[#404040] text-xs whitespace-nowrap">
                       {formatDate(lead.createdAt)}
                     </td>
                     <td className="px-4 py-3">

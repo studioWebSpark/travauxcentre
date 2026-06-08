@@ -57,7 +57,7 @@ export default async function FacturesListPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white font-montserrat">Factures</h1>
-          <p className="text-slate-400 text-sm mt-0.5">{factures.length} résultat{factures.length > 1 ? "s" : ""}</p>
+          <p className="text-[#404040] text-sm mt-0.5">{factures.length} résultat{factures.length > 1 ? "s" : ""}</p>
         </div>
         <div className="text-sm font-semibold text-green-400 bg-green-500/20 border border-green-500/30 px-4 py-2 rounded-xl">
           CA encaissé : {formatEuro(totalPayee)}
@@ -77,7 +77,7 @@ export default async function FacturesListPage({
       {/* Filtres */}
       <form method="GET" className="glass rounded-[0.875rem] border border-white/8 p-4 flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-48">
-          <label className="block text-xs font-medium text-slate-300 mb-1">Recherche</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Recherche</label>
           <input
             name="q"
             defaultValue={q}
@@ -86,7 +86,7 @@ export default async function FacturesListPage({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">Statut</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Statut</label>
           <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             <option className="bg-[#0D1B2A]">Tous</option>
             {Object.entries(STATUTS_FACTURE).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
@@ -95,13 +95,13 @@ export default async function FacturesListPage({
         <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
           Filtrer
         </button>
-        <Link href="/crm/factures" className="text-sm text-slate-400 hover:text-slate-300 transition-colors py-2">Réinitialiser</Link>
+        <Link href="/crm/factures" className="text-sm text-[#404040] hover:text-[#1a1a1a] transition-colors py-2">Réinitialiser</Link>
       </form>
 
       {factures.length === 0 ? (
         <div className="glass rounded-[0.875rem] border border-white/8 text-center py-16">
-          <FileText className="w-10 h-10 text-slate-400 mx-auto mb-3" />
-          <p className="text-slate-400">Les factures apparaissent ici quand vous les générez depuis un chantier.</p>
+          <FileText className="w-10 h-10 text-[#555555] mx-auto mb-3" />
+          <p className="text-[#404040]">Les factures apparaissent ici quand vous les générez depuis un chantier.</p>
           <Link href="/crm/chantiers" className="text-[#F97316] text-sm font-semibold hover:underline mt-2 inline-block">
             Aller aux chantiers →
           </Link>
@@ -129,32 +129,32 @@ export default async function FacturesListPage({
                     <tr key={f.id} className="hover:bg-white/5 transition-colors">
                       <td className="px-5 py-4">
                         <p className="font-bold text-[#F97316]">{f.numero}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-[#404040] mt-0.5">
                           {f.type} · {new Date(f.dateEmission).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
                         </p>
                         {f.dateEcheance && (
-                          <p className={`text-xs mt-0.5 ${f.statut !== "PAYEE" && new Date(f.dateEcheance) < new Date() ? "text-red-400 font-semibold" : "text-slate-400"}`}>
+                          <p className={`text-xs mt-0.5 ${f.statut !== "PAYEE" && new Date(f.dateEcheance) < new Date() ? "text-red-400 font-semibold" : "text-[#404040]"}`}>
                             Échéance : {new Date(f.dateEcheance).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
                           </p>
                         )}
                       </td>
                       <td className="px-5 py-4">
                         <p className="font-medium text-white">{client?.nom ?? "—"}</p>
-                        <p className="text-xs text-slate-400">{client?.email ?? ""}</p>
+                        <p className="text-xs text-[#404040]">{client?.email ?? ""}</p>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
                         <p className="text-white text-xs font-medium">{f.chantier?.titre ?? "—"}</p>
                       </td>
                       <td className="px-5 py-4 text-right">
                         <p className="font-bold text-[#F97316]">{formatEuro(tot.ttc)}</p>
-                        <p className="text-xs text-slate-400">{formatEuro(tot.ht)} HT</p>
+                        <p className="text-xs text-[#404040]">{formatEuro(tot.ht)} HT</p>
                       </td>
                       <td className="px-5 py-4 text-center">
                         <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full border ${st.bg} ${st.color}`}>
                           {st.label}
                         </span>
                         {f.emailEnvoye && (
-                          <p className="text-xs text-slate-400 mt-1">📧 envoyée</p>
+                          <p className="text-xs text-[#404040] mt-1">📧 envoyée</p>
                         )}
                       </td>
                       <td className="px-5 py-4">

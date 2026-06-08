@@ -52,7 +52,7 @@ export default async function DevisListPage({
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white font-montserrat">Devis</h1>
-          <p className="text-slate-400 text-sm mt-0.5">{devis.length} résultat{devis.length > 1 ? "s" : ""}</p>
+          <p className="text-[#404040] text-sm mt-0.5">{devis.length} résultat{devis.length > 1 ? "s" : ""}</p>
         </div>
         <Link href="/crm/devis/new"
           className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl hover:from-orange-500 hover:to-orange-700 transition-all text-sm">
@@ -73,7 +73,7 @@ export default async function DevisListPage({
       {/* Filtres */}
       <form method="GET" className="glass rounded-[0.875rem] border border-white/8 p-4 flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-48">
-          <label className="block text-xs font-medium text-slate-300 mb-1">Recherche</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Recherche</label>
           <input
             name="q"
             defaultValue={q}
@@ -82,7 +82,7 @@ export default async function DevisListPage({
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">Statut</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Statut</label>
           <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             <option className="bg-[#0D1B2A]">Tous</option>
             {Object.entries(STATUTS_DEVIS).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
@@ -91,14 +91,14 @@ export default async function DevisListPage({
         <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
           Filtrer
         </button>
-        <Link href="/crm/devis" className="text-sm text-slate-400 hover:text-slate-300 transition-colors py-2">Réinitialiser</Link>
+        <Link href="/crm/devis" className="text-sm text-[#404040] hover:text-[#1a1a1a] transition-colors py-2">Réinitialiser</Link>
       </form>
 
       {/* Table */}
       {devis.length === 0 ? (
         <div className="glass rounded-[0.875rem] border border-white/8 text-center py-16">
-          <FileText className="w-10 h-10 text-slate-400 mx-auto mb-3" />
-          <p className="text-slate-400 mb-4">Aucun devis pour l&apos;instant</p>
+          <FileText className="w-10 h-10 text-[#555555] mx-auto mb-3" />
+          <p className="text-[#404040] mb-4">Aucun devis pour l&apos;instant</p>
           <Link href="/crm/devis/new"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
             <Plus className="w-4 h-4" /> Créer le premier devis
@@ -126,27 +126,27 @@ export default async function DevisListPage({
                     <tr key={d.id} className="hover:bg-white/5 transition-colors">
                       <td className="px-5 py-4">
                         <p className="font-bold text-[#F97316]">{d.numero}</p>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className="text-xs text-[#404040] mt-0.5">
                           {new Date(d.dateEmission).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
                         </p>
                       </td>
                       <td className="px-5 py-4">
                         <p className="font-medium text-white">{d.lead?.nom ?? "—"}</p>
-                        <p className="text-xs text-slate-400">{d.lead?.email ?? ""}</p>
+                        <p className="text-xs text-[#404040]">{d.lead?.email ?? ""}</p>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
                         <p className="text-white text-xs font-medium">{d.chantier?.titre ?? "—"}</p>
                       </td>
                       <td className="px-5 py-4 text-right">
                         <p className="font-bold text-[#F97316]">{formatEuro(tot.ttc)}</p>
-                        <p className="text-xs text-slate-400">{formatEuro(tot.ht)} HT</p>
+                        <p className="text-xs text-[#404040]">{formatEuro(tot.ht)} HT</p>
                       </td>
                       <td className="px-5 py-4 text-center">
                         <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full border ${st.bg} ${st.color}`}>
                           {st.label}
                         </span>
                         {d.emailEnvoye && (
-                          <p className="text-xs text-slate-400 mt-1">📧 envoyé</p>
+                          <p className="text-xs text-[#404040] mt-1">📧 envoyé</p>
                         )}
                       </td>
                       <td className="px-5 py-4">

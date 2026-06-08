@@ -105,14 +105,14 @@ export default function ChantiersClient({
       </div>
 
       {/* Results count */}
-      <div className="text-sm text-slate-300 font-medium">
+      <div className="text-sm text-[#1a1a1a] font-medium">
         {filteredChantiers.length} résultat{filteredChantiers.length > 1 ? "s" : ""}
       </div>
 
       {/* Grid chantiers */}
       {filteredChantiers.length === 0 ? (
         <div className="text-center py-16 glass rounded-[0.875rem] border border-white/8">
-          <p className="text-slate-400 mb-4">Aucun chantier trouvé</p>
+          <p className="text-[#404040] mb-4">Aucun chantier trouvé</p>
           {(searchQuery || selectedStatus !== "Tous") && (
             <button
               onClick={() => {
@@ -150,17 +150,17 @@ export default function ChantiersClient({
 
                   <div className="p-5">
                     <h3 className="font-bold text-white mb-1 group-hover:text-[#F97316] transition-colors">{c.titre}</h3>
-                    {c.lead && <p className="text-xs text-slate-400 mb-2">Client : {c.lead.nom}</p>}
+                    {c.lead && <p className="text-xs text-[#404040] mb-2">Client : {c.lead.nom}</p>}
 
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-3">
-                      <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                    <div className="flex items-center gap-1.5 text-xs text-[#404040] mb-3">
+                      <MapPin className="w-3.5 h-3.5 text-[#555555] shrink-0" />
                       <span className="truncate">{c.adresse}</span>
                     </div>
 
                     {/* Progression */}
                     <div className="mb-3">
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs text-slate-400">Progression</span>
+                        <span className="text-xs text-[#404040]">Progression</span>
                         <span className="text-xs font-bold text-[#F97316]">{c.progression}%</span>
                       </div>
                       <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
@@ -169,7 +169,7 @@ export default function ChantiersClient({
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between text-xs text-slate-400">
+                    <div className="flex items-center justify-between text-xs text-[#404040]">
                       <span>{c._count.etapes} étapes · {etapesDone} terminées</span>
                       <span>{c._count.photos} photos</span>
                     </div>
@@ -177,7 +177,7 @@ export default function ChantiersClient({
                     {(c.budget || c.budgetReel) && (
                       <div className="mt-3 pt-3 border-t border-white/8 text-xs">
                         {c.budgetReel && <span className="font-bold text-green-400">{formatEuro(c.budgetReel)}</span>}
-                        {c.budget && !c.budgetReel && <span className="text-slate-400">Budget : {formatEuro(c.budget)}</span>}
+                        {c.budget && !c.budgetReel && <span className="text-[#404040]">Budget : {formatEuro(c.budget)}</span>}
                       </div>
                     )}
                   </div>
