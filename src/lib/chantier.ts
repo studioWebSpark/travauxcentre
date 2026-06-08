@@ -39,8 +39,15 @@ export function formatEuro(n: number) {
   return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n)
 }
 
-let devisCounter  = 1000
-let factureCounter = 100
+// Les numéros sont générés avec timestamp pour garantir l'unicité
+export function genNumeroDevis() {
+  const now = new Date()
+  const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`
+  return `DEV-${timestamp}`
+}
 
-export function genNumeroDevis()  { return `DEV-${new Date().getFullYear()}-${String(++devisCounter).padStart(4,"0")}` }
-export function genNumeroFacture() { return `FAC-${new Date().getFullYear()}-${String(++factureCounter).padStart(4,"0")}` }
+export function genNumeroFacture() {
+  const now = new Date()
+  const timestamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(now.getDate()).padStart(2, "0")}-${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`
+  return `FAC-${timestamp}`
+}
