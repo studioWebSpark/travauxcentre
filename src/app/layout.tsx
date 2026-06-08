@@ -1,19 +1,14 @@
 import type { Metadata } from "next"
-import { Playfair_Display, DM_Sans } from "next/font/google"
+import { Montserrat } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import ScrollReveal from "@/components/ScrollReveal"
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  display: "swap",
-})
-
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 })
 
@@ -145,7 +140,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang="fr" className={montserrat.variable}>
       <head>
         <script
           type="application/ld+json"

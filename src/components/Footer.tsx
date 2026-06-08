@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { MapPin, Phone, Mail, Clock, HardHat } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
+import { MapPin, Phone, Mail, Clock } from "lucide-react"
+import { motion } from "framer-motion"
 import { zones } from "@/lib/zones"
 
 const services = [
@@ -37,23 +37,36 @@ const socials = [
   },
 ]
 
+const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
 export default function Footer() {
   const pathname = usePathname()
-  if (pathname.startsWith("/crm"))      return null
-  if (pathname.startsWith("/client"))   return null
-  if (pathname.startsWith("/devis"))    return null
-  if (pathname.startsWith("/planning")) return null
+
+  if (
+    pathname.startsWith("/crm") ||
+    pathname.startsWith("/client") ||
+    pathname.startsWith("/devis") ||
+    pathname.startsWith("/planning")
+  ) {
+    return null
+  }
 
   return (
-    <footer className="bg-[#0a1f42] text-white">
+    <footer className="bg-[#0A0F1E] text-white border-t border-white/8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Zones d'intervention — section SEO complète */}
-        <div className="mb-12">
+        {/* SEO zones */}
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: easeOut }}
+        >
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-semibold text-xs uppercase tracking-widest text-slate-500">
+            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-slate-600">
               Zones d&apos;intervention — 80 km autour de Longuenesse
             </h4>
-            <Link href="/zones-intervention" className="text-xs text-slate-500 hover:text-slate-300 transition-colors underline underline-offset-2">
+            <Link href="/zones-intervention" className="text-xs text-slate-600 hover:text-slate-400 transition-colors underline underline-offset-2">
               Voir la carte →
             </Link>
           </div>
@@ -62,28 +75,39 @@ export default function Footer() {
               <Link
                 key={z.slug}
                 href={`/zones-intervention/${z.slug}`}
-                className="text-xs text-slate-500 hover:text-slate-300 transition-colors whitespace-nowrap"
+                className="text-xs text-slate-600 hover:text-slate-400 transition-colors whitespace-nowrap"
               >
                 {z.nom} ({z.codePostal})
               </Link>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <Separator className="mb-12 bg-white/8" />
+        {/* Divider */}
+        <div className="h-px bg-white/8 mb-12" />
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+        {/* Main columns */}
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-4 gap-10"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
+        >
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2.5 mb-5">
-              <div className="w-9 h-9 rounded-lg bg-[#6B7280] flex items-center justify-center">
-                <HardHat className="w-5 h-5 text-white" />
+            <Link href="/" className="flex items-center gap-2 mb-5">
+              <div className="w-8 h-8 rounded-lg bg-[#F97316] flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 21V12h6v9" />
+                </svg>
               </div>
-              <span className="text-xl font-bold">
-                Travaux<span className="text-[#6B7280]">Centre</span>
+              <span className="text-xl font-[800]" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+                Travaux<span className="text-[#F97316]">Centre</span>
               </span>
-            </div>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+            </Link>
+            <p className="text-slate-500 text-sm leading-relaxed mb-6">
               Votre entreprise de confiance à Longuenesse pour tous vos projets de travaux
               dans un rayon de 80km.
             </p>
@@ -93,7 +117,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-white/8 hover:bg-[#6B7280] transition-colors flex items-center justify-center"
+                  className="w-9 h-9 rounded-xl glass hover:bg-white/10 transition-colors flex items-center justify-center text-slate-500 hover:text-white"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">{svg}</svg>
                 </a>
@@ -103,16 +127,13 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest text-slate-500 mb-5">
+            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-slate-500 mb-5">
               Nos services
             </h4>
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s.href}>
-                  <Link
-                    href={s.href}
-                    className="text-slate-400 text-sm hover:text-[#6B7280] transition-colors"
-                  >
+                  <Link href={s.href} className="text-slate-500 text-sm hover:text-white transition-colors">
                     {s.label}
                   </Link>
                 </li>
@@ -122,16 +143,13 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest text-slate-500 mb-5">
+            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-slate-500 mb-5">
               Navigation
             </h4>
             <ul className="space-y-2.5">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-slate-400 text-sm hover:text-[#6B7280] transition-colors"
-                  >
+                  <Link href={l.href} className="text-slate-500 text-sm hover:text-white transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -141,7 +159,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold text-xs uppercase tracking-widest text-slate-500 mb-5">
+            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-slate-500 mb-5">
               Contact
             </h4>
             <ul className="space-y-3">
@@ -150,7 +168,7 @@ export default function Footer() {
                 {
                   icon: Phone,
                   content: (
-                    <a href="tel:+33300000000" className="hover:text-[#6B7280] transition-colors">
+                    <a href="tel:+33300000000" className="hover:text-white transition-colors">
                       03 XX XX XX XX
                     </a>
                   ),
@@ -158,32 +176,31 @@ export default function Footer() {
                 {
                   icon: Mail,
                   content: (
-                    <a href="mailto:contact@travauxcentre.fr" className="hover:text-[#6B7280] transition-colors">
+                    <a href="mailto:contact@travauxcentre.fr" className="hover:text-white transition-colors">
                       contact@travauxcentre.fr
                     </a>
                   ),
                 },
                 { icon: Clock, content: "Lun – Ven : 8h – 18h" },
               ].map(({ icon: Icon, content }, i) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-slate-400">
-                  <Icon className="w-4 h-4 mt-0.5 text-[#6B7280] shrink-0" />
+                <li key={i} className="flex items-start gap-2.5 text-sm text-slate-500">
+                  <Icon className="w-4 h-4 mt-0.5 text-[#F97316] shrink-0" />
                   <span>{content}</span>
                 </li>
               ))}
             </ul>
           </div>
-        </div>
+        </motion.div>
 
-        <Separator className="mt-12 bg-white/8" />
-
-
-        <div className="mt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        {/* Bottom bar */}
+        <div className="h-px bg-white/8 mt-12 mb-8" />
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-600">
           <p>© {new Date().getFullYear()} Travaux Centre. Tous droits réservés.</p>
           <div className="flex gap-6">
-            <Link href="/mentions-legales" className="hover:text-slate-300 transition-colors">
+            <Link href="/mentions-legales" className="hover:text-slate-400 transition-colors">
               Mentions légales
             </Link>
-            <Link href="/politique-confidentialite" className="hover:text-slate-300 transition-colors">
+            <Link href="/politique-confidentialite" className="hover:text-slate-400 transition-colors">
               Confidentialité
             </Link>
           </div>
