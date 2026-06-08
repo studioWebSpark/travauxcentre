@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import { prisma } from "@/lib/prisma"
-import CalendarClient from "@/components/crm/CalendarClient"
+"use client"
 
-export const metadata: Metadata = { title: "Calendrier" }
-export const dynamic = "force-dynamic"
+import { useState, useMemo } from "react"
+import { Calendar, MapPin, Clock, ChevronLeft, ChevronRight, Check, AlertCircle } from "lucide-react"
+import Link from "next/link"
+import PlanningModal, { type PlanningFormData } from "@/components/crm/PlanningModal"
 
 interface Planning {
   id: string
@@ -16,25 +16,11 @@ interface Planning {
   lead: { id: string; nom: string; telephone: string | null }
 }
 
-export default async function CalendrierPage() {
-  const planningsData = await prisma.planning.findMany({
-    include: { lead: { select: { id: true, nom: true, telephone: true } } },
-    orderBy: { date: "asc" },
-  })
-
-  const plannings: Planning[] = planningsData.map((p) => ({
-    id: p.id,
-    date: p.date,
-    typeRdv: p.typeRdv,
-    adresse: p.adresse,
-    notes: p.notes,
-    duree: p.duree,
-    statut: p.statut,
-    lead: p.lead,
-  }))
-
-  return <CalendarClient initialPlannings={plannings} />
+interface CalendarClientProps {
+  initialPlannings: Planning[]
 }
+
+export default function CalendarClient({ initialPlannings = [] }: CalendarClientProps) {
   const [viewMode, setViewMode] = useState<"week" | "month">("month")
   const [currentDate, setCurrentDate] = useState(new Date())
   const [selectedDay, setSelectedDay] = useState<Date | null>(null)
@@ -150,18 +136,21 @@ export default async function CalendrierPage() {
             {day}
           </p>
           <div className="space-y-1">
-            {dayPlannings.slice(0, 2).map((p) => (
-              <div
-                key={p.id}
-                className={`text-xs px-1.5 py-0.5 rounded truncate ${
-                  isSelected
-                    ? "bg-white/20 text-white"
-                    : "bg-blue-500/30 text-blue-200"
-                }`}
-              >
-                {p.heure} {p.lead.nom}
-              </div>
-            ))}
+            {dayPlannings.slice(0, 2).map((p) => {
+              const heure = new Date(p.date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
+              return (
+                <div
+                  key={p.id}
+                  className={`text-xs px-1.5 py-0.5 rounded truncate ${
+                    isSelected
+                      ? "bg-white/20 text-white"
+                      : "bg-blue-500/30 text-blue-200"
+                  }`}
+                >
+                  {heure} {p.lead.nom}
+                </div>
+              )
+            })}
             {dayPlannings.length > 2 && (
               <p
                 className={`text-xs px-1.5 ${
@@ -303,6 +292,7 @@ export default async function CalendrierPage() {
                   ) : (
                     getSelectedDayPlannings().map((p) => {
                       const status = getStatusLabel(p.statut)
+                      const heure = new Date(p.date).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })
                       return (
                         <Link
                           key={p.id}
@@ -326,7 +316,7 @@ export default async function CalendrierPage() {
                           <div className="space-y-1.5 text-xs">
                             <div className="flex items-center gap-2 text-slate-300">
                               <Clock className="w-3 h-3 text-slate-400 shrink-0" />
-                              <span>{p.heure} — {p.duree} min</span>
+                              <span>{heure} — {p.duree} min</span>
                             </div>
                             {p.adresse && (
                               <div className="flex items-start gap-2 text-slate-300">

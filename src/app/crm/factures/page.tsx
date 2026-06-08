@@ -9,8 +9,25 @@ import { FileText } from "lucide-react"
 export const metadata: Metadata = { title: "Factures" }
 export const dynamic = "force-dynamic"
 
-export default async function FacturesListPage() {
+export default async function FacturesListPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ statut?: string; q?: string }>
+}) {
+  const sp     = await searchParams
+  const statut = sp.statut && sp.statut !== "Tous" ? sp.statut : undefined
+  const q      = sp.q ?? ""
+
   const factures = await prisma.factureCrm.findMany({
+    where: {
+      ...(statut ? { statut: statut as never } : {}),
+      ...(q ? {
+        OR: [
+          { numero:   { contains: q, mode: "insensitive" } },
+          { chantier: { lead: { nom: { contains: q, mode: "insensitive" } } } },
+        ],
+      } : {}),
+    },
     orderBy: { createdAt: "desc" },
     include: {
       lignes:   true,
@@ -39,10 +56,10 @@ export default async function FacturesListPage() {
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F2C5E]">Factures</h1>
-          <p className="text-gray-500 text-sm mt-0.5">{factures.length} facture{factures.length > 1 ? "s" : ""}</p>
+          <h1 className="text-2xl font-bold text-white font-montserrat">Factures</h1>
+          <p className="text-slate-400 text-sm mt-0.5">{factures.length} résultat{factures.length > 1 ? "s" : ""}</p>
         </div>
-        <div className="text-sm font-semibold text-green-600 bg-green-50 border border-green-200 px-4 py-2 rounded-xl">
+        <div className="text-sm font-semibold text-green-400 bg-green-500/20 border border-green-500/30 px-4 py-2 rounded-xl">
           CA encaissé : {formatEuro(totalPayee)}
         </div>
       </div>
@@ -50,70 +67,94 @@ export default async function FacturesListPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map(({ label, value, color, bg }) => (
-          <div key={label} className={`rounded-2xl border p-4 ${bg}`}>
+          <div key={label} className={`glass rounded-[0.875rem] border border-white/8 p-4 ${bg.replace('bg-', 'bg-opacity-20 ').replace('border-', 'border-opacity-20 ')}`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-gray-600 mt-0.5">{label}</p>
+            <p className="text-xs text-slate-400 mt-0.5">{label}</p>
           </div>
         ))}
       </div>
 
+      {/* Filtres */}
+      <form method="GET" className="glass rounded-[0.875rem] border border-white/8 p-4 flex flex-wrap gap-3 items-end">
+        <div className="flex-1 min-w-48">
+          <label className="block text-xs font-medium text-slate-300 mb-1">Recherche</label>
+          <input
+            name="q"
+            defaultValue={q}
+            placeholder="Numéro ou client…"
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
+          />
+        </div>
+        <div>
+          <label className="block text-xs font-medium text-slate-300 mb-1">Statut</label>
+          <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
+            <option className="bg-[#0D1B2A]">Tous</option>
+            {Object.entries(STATUTS_FACTURE).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
+          </select>
+        </div>
+        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
+          Filtrer
+        </button>
+        <Link href="/crm/factures" className="text-sm text-slate-400 hover:text-slate-300 transition-colors py-2">Réinitialiser</Link>
+      </form>
+
       {factures.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm text-center py-16">
-          <FileText className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-          <p className="text-gray-400">Les factures apparaissent ici quand vous les générez depuis un chantier.</p>
-          <Link href="/crm/chantiers" className="text-[#0F2C5E] text-sm font-semibold hover:underline mt-2 inline-block">
+        <div className="glass rounded-[0.875rem] border border-white/8 text-center py-16">
+          <FileText className="w-10 h-10 text-slate-400 mx-auto mb-3" />
+          <p className="text-slate-400">Les factures apparaissent ici quand vous les générez depuis un chantier.</p>
+          <Link href="/crm/chantiers" className="text-[#F97316] text-sm font-semibold hover:underline mt-2 inline-block">
             Aller aux chantiers →
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="glass rounded-[0.875rem] border border-white/8 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/60">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Numéro</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Client</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider hidden md:table-cell">Chantier</th>
-                  <th className="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Montant TTC</th>
-                  <th className="text-center px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Statut</th>
-                  <th className="px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wider">Actions</th>
+                <tr className="border-b border-white/8 bg-white/5">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Numéro</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Client</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider hidden md:table-cell font-montserrat">Chantier</th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Montant TTC</th>
+                  <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Statut</th>
+                  <th className="px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-white/8">
                 {factures.map((f) => {
                   const st  = STATUTS_FACTURE[f.statut] ?? STATUTS_FACTURE.BROUILLON
                   const tot = calcTotaux(f.lignes, f.tva)
                   const client = f.chantier?.lead
                   return (
-                    <tr key={f.id} className="hover:bg-gray-50/50 transition-colors">
+                    <tr key={f.id} className="hover:bg-white/5 transition-colors">
                       <td className="px-5 py-4">
-                        <p className="font-bold text-[#0F2C5E]">{f.numero}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
+                        <p className="font-bold text-[#F97316]">{f.numero}</p>
+                        <p className="text-xs text-slate-400 mt-0.5">
                           {f.type} · {new Date(f.dateEmission).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
                         </p>
                         {f.dateEcheance && (
-                          <p className={`text-xs mt-0.5 ${f.statut !== "PAYEE" && new Date(f.dateEcheance) < new Date() ? "text-red-500 font-semibold" : "text-gray-400"}`}>
+                          <p className={`text-xs mt-0.5 ${f.statut !== "PAYEE" && new Date(f.dateEcheance) < new Date() ? "text-red-400 font-semibold" : "text-slate-400"}`}>
                             Échéance : {new Date(f.dateEcheance).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
                           </p>
                         )}
                       </td>
                       <td className="px-5 py-4">
-                        <p className="font-medium text-gray-700">{client?.nom ?? "—"}</p>
-                        <p className="text-xs text-gray-400">{client?.email ?? ""}</p>
+                        <p className="font-medium text-white">{client?.nom ?? "—"}</p>
+                        <p className="text-xs text-slate-400">{client?.email ?? ""}</p>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <p className="text-gray-600 text-xs">{f.chantier?.titre ?? "—"}</p>
+                        <p className="text-slate-300 text-xs">{f.chantier?.titre ?? "—"}</p>
                       </td>
                       <td className="px-5 py-4 text-right">
-                        <p className="font-bold text-[#0F2C5E]">{formatEuro(tot.ttc)}</p>
-                        <p className="text-xs text-gray-400">{formatEuro(tot.ht)} HT</p>
+                        <p className="font-bold text-[#F97316]">{formatEuro(tot.ttc)}</p>
+                        <p className="text-xs text-slate-400">{formatEuro(tot.ht)} HT</p>
                       </td>
                       <td className="px-5 py-4 text-center">
                         <span className={`inline-block text-xs font-semibold px-2.5 py-1 rounded-full border ${st.bg} ${st.color}`}>
                           {st.label}
                         </span>
                         {f.emailEnvoye && (
-                          <p className="text-xs text-gray-400 mt-1">📧 envoyée</p>
+                          <p className="text-xs text-slate-400 mt-1">📧 envoyée</p>
                         )}
                       </td>
                       <td className="px-5 py-4">
