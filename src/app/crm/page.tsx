@@ -96,22 +96,22 @@ export default async function CrmDashboard() {
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">CA encaissé ce mois</p>
+          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">CA encaissé ce mois</p>
           <p className="text-2xl font-bold text-[#F97316] mt-1 font-montserrat">{formatEuro(kpis.caMois)}</p>
           <p className="text-xs text-slate-400 mt-1">Factures payées</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">CA annuel</p>
+          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">CA annuel</p>
           <p className="text-2xl font-bold text-white mt-1 font-montserrat">{formatEuro(kpis.caAnnuel)}</p>
           <p className="text-xs text-slate-400 mt-1">Depuis le 1er janv.</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">Leads ce mois</p>
+          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">Leads ce mois</p>
           <p className="text-2xl font-bold text-white mt-1 font-montserrat">{kpis.leadsMonth}</p>
           <p className="text-xs text-slate-400 mt-1">{kpis.totalLeads} au total</p>
         </div>
         <div className="glass rounded-[0.875rem] p-5 border border-white/8">
-          <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">Taux de conversion</p>
+          <p className="text-xs text-slate-300 font-medium uppercase tracking-wide">Taux de conversion</p>
           <p className="text-2xl font-bold text-[#F97316] mt-1 font-montserrat">{kpis.tauxConversion}%</p>
           <p className="text-xs text-slate-400 mt-1">{kpis.leadsGagne} gagnés</p>
         </div>
@@ -124,6 +124,12 @@ export default async function CrmDashboard() {
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp className="w-4 h-4 text-[#F97316]" />
             <h2 className="text-sm font-semibold text-white font-montserrat">CA mensuel (12 mois glissants)</h2>
+          </div>
+          <div className="space-y-1 mb-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-slate-300">Visualisation:</span>
+              <span className="text-[#F97316] font-semibold">{formatEuro(Math.max(...caMoisGlissant.map(m => m.ca)))}</span>
+            </div>
           </div>
           <div className="flex items-end gap-1.5 h-44">
             {caMoisGlissant.map((m) => {
@@ -165,7 +171,7 @@ export default async function CrmDashboard() {
                     </div>
                   )}
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-300 w-24 shrink-0 truncate">{step.label}</span>
+                    <span className="text-xs text-slate-200 w-24 shrink-0 truncate font-medium">{step.label}</span>
                     <div className="flex-1 bg-white/10 rounded-full h-2">
                       <div
                         className={`h-2 rounded-full transition-all ${step.color}`}
@@ -191,7 +197,7 @@ export default async function CrmDashboard() {
               const pct = sourcesMax > 0 ? Math.max((s.count / sourcesMax) * 100, 4) : 0
               return (
                 <div key={s.source} className="flex items-center gap-3">
-                  <span className="text-xs text-slate-300 w-28 shrink-0 truncate">{s.source || "Inconnu"}</span>
+                  <span className="text-xs text-slate-200 w-28 shrink-0 truncate font-medium">{s.source || "Inconnu"}</span>
                   <div className="flex-1 bg-white/10 rounded-full h-2">
                     <div
                       className="h-2 rounded-full bg-gradient-to-r from-[#F97316] to-orange-400 transition-all"

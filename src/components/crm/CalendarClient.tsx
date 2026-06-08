@@ -129,8 +129,8 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
           }`}
         >
           <p
-            className={`text-xs font-semibold mb-1 font-montserrat ${
-              isSelected ? "text-white" : isToday ? "text-blue-300" : "text-slate-200"
+            className={`text-xs font-bold mb-1 font-montserrat ${
+              isSelected ? "text-white" : isToday ? "text-blue-200" : "text-white"
             }`}
           >
             {day}
@@ -141,10 +141,10 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
               return (
                 <div
                   key={p.id}
-                  className={`text-xs px-1.5 py-0.5 rounded truncate ${
+                  className={`text-xs px-1.5 py-0.5 rounded truncate font-medium ${
                     isSelected
                       ? "bg-white/20 text-white"
-                      : "bg-blue-500/30 text-blue-200"
+                      : "bg-blue-500/30 text-blue-100"
                   }`}
                 >
                   {heure} {p.lead.nom}
@@ -185,13 +185,13 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: "À venir", value: aVenir.length, color: "text-blue-400", bg: "bg-blue-500/20 border-blue-500/30" },
-          { label: "Confirmés", value: confirmed.length, color: "text-green-400", bg: "bg-green-500/20 border-green-500/30" },
-          { label: "En attente", value: pending.length, color: "text-amber-400", bg: "bg-amber-500/20 border-amber-500/30" },
+          { label: "À venir", value: aVenir.length, color: "text-blue-300", bg: "bg-blue-500/20 border-blue-500/30" },
+          { label: "Confirmés", value: confirmed.length, color: "text-green-300", bg: "bg-green-500/20 border-green-500/30" },
+          { label: "En attente", value: pending.length, color: "text-amber-300", bg: "bg-amber-500/20 border-amber-500/30" },
         ].map(({ label, value, color, bg }) => (
           <div key={label} className={`glass rounded-[0.875rem] border p-4 ${bg}`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-400 mt-0.5">{label}</p>
+            <p className="text-xs text-slate-300 mt-0.5 font-medium uppercase tracking-wide">{label}</p>
           </div>
         ))}
       </div>
@@ -256,7 +256,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
           {/* Day headers */}
           <div className="grid grid-cols-7 gap-2 mb-2">
             {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
-              <div key={day} className="text-center text-xs font-semibold text-slate-400 py-2 font-montserrat">
+              <div key={day} className="text-center text-xs font-semibold text-white py-2 font-montserrat uppercase tracking-wider">
                 {day}
               </div>
             ))}
@@ -304,7 +304,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                               <p className="text-xs font-bold text-[#F97316] group-hover:underline">
                                 {p.lead.nom}
                               </p>
-                              <p className="text-xs text-slate-400 mt-0.5">{p.typeRdv}</p>
+                              <p className="text-xs text-slate-300 mt-0.5 font-medium">{p.typeRdv}</p>
                             </div>
                             <span
                               className={`text-xs font-semibold px-2 py-1 rounded-full border flex items-center gap-1 shrink-0 ${status.color}`}
@@ -314,19 +314,19 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                           </div>
 
                           <div className="space-y-1.5 text-xs">
-                            <div className="flex items-center gap-2 text-slate-300">
+                            <div className="flex items-center gap-2 text-white">
                               <Clock className="w-3 h-3 text-slate-400 shrink-0" />
-                              <span>{heure} — {p.duree} min</span>
+                              <span className="font-medium">{heure} — {p.duree} min</span>
                             </div>
                             {p.adresse && (
-                              <div className="flex items-start gap-2 text-slate-300">
+                              <div className="flex items-start gap-2 text-white">
                                 <MapPin className="w-3 h-3 text-slate-400 shrink-0 mt-0.5" />
-                                <span className="truncate">{p.adresse}</span>
+                                <span className="truncate font-medium">{p.adresse}</span>
                               </div>
                             )}
                             {p.notes && (
                               <div className="pt-1 border-t border-white/20 mt-1.5">
-                                <p className="text-slate-300 text-xs">{p.notes}</p>
+                                <p className="text-slate-200 text-xs font-medium">{p.notes}</p>
                               </div>
                             )}
                           </div>

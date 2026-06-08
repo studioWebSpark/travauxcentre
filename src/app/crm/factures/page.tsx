@@ -112,12 +112,12 @@ export default async function FacturesListPage({
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/8 bg-white/5">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Numéro</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Client</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider hidden md:table-cell font-montserrat">Chantier</th>
-                  <th className="text-right px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Montant TTC</th>
-                  <th className="text-center px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Statut</th>
-                  <th className="px-5 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Actions</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Numéro</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Client</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden md:table-cell font-montserrat">Chantier</th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Montant TTC</th>
+                  <th className="text-center px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Statut</th>
+                  <th className="px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/8">
@@ -143,7 +143,7 @@ export default async function FacturesListPage({
                         <p className="text-xs text-slate-400">{client?.email ?? ""}</p>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <p className="text-slate-300 text-xs">{f.chantier?.titre ?? "—"}</p>
+                        <p className="text-white text-xs font-medium">{f.chantier?.titre ?? "—"}</p>
                       </td>
                       <td className="px-5 py-4 text-right">
                         <p className="font-bold text-[#F97316]">{formatEuro(tot.ttc)}</p>

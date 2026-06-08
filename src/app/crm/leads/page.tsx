@@ -83,11 +83,11 @@ export default async function LeadsPage({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/8 bg-white/5">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Client</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Travaux</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider hidden md:table-cell font-montserrat">Budget</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider font-montserrat">Statut</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-slate-300 uppercase tracking-wider hidden lg:table-cell font-montserrat">Date</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Client</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Travaux</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden md:table-cell font-montserrat">Budget</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Statut</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden lg:table-cell font-montserrat">Date</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -117,11 +117,11 @@ export default async function LeadsPage({
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-slate-200 text-sm">{lead.typeTravaux}</p>
+                      <p className="text-white text-sm font-medium">{lead.typeTravaux}</p>
                       {lead.surface && <p className="text-slate-400 text-xs">{lead.surface} m²</p>}
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell">
-                      <p className="text-slate-200">{lead.budget || "—"}</p>
+                      <p className="text-white font-medium">{lead.budget || "—"}</p>
                       {lead.montantDevis && <p className="text-green-400 text-xs font-semibold">{formatEuro(lead.montantDevis)}</p>}
                     </td>
                     <td className="px-4 py-3">
