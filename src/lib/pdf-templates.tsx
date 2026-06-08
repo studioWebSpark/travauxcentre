@@ -42,13 +42,13 @@ const s = StyleSheet.create({
   footerText:{ fontSize: 8, color: C.gray },
   badge:     { backgroundColor: C.light, borderRadius: 4, padding: "6px 10px", marginBottom: 12 },
   badgeText: { fontSize: 9, color: C.gray },
-  paymentSection: { backgroundColor: "#fef3c7", borderRadius: 6, padding: 12, marginTop: 12, borderLeft: `3px solid #f59e0b` },
-  paymentTitle: { fontSize: 9, fontFamily: "Helvetica-Bold", color: "#92400e", marginBottom: 8 },
-  paymentStage: { marginBottom: 6, paddingBottom: 6, borderBottom: `1px solid #fcd34d` },
-  stagePercent: { fontSize: 9, fontFamily: "Helvetica-Bold", color: "#b45309" },
-  stageDesc: { fontSize: 8, color: "#78350f", marginTop: 2 },
-  paymentWarning: { backgroundColor: "#fee2e2", borderRadius: 6, padding: 10, marginTop: 12, borderLeft: `3px solid #ef4444` },
-  warningText: { fontSize: 8, color: "#7f1d1d", lineHeight: 1.4 },
+  paymentSection: { backgroundColor: "#fef3c7", borderRadius: 6, padding: 16, marginTop: 16, marginBottom: 12, borderLeft: `3px solid #f59e0b` },
+  paymentTitle: { fontSize: 10, fontFamily: "Helvetica-Bold", color: "#92400e", marginBottom: 14 },
+  paymentStage: { marginBottom: 12, paddingBottom: 12, borderBottom: `1px solid #fcd34d` },
+  stagePercent: { fontSize: 10, fontFamily: "Helvetica-Bold", color: "#b45309", marginBottom: 4 },
+  stageDesc: { fontSize: 9, color: "#78350f", marginTop: 4, marginBottom: 2 },
+  paymentWarning: { backgroundColor: "#fee2e2", borderRadius: 6, padding: 14, marginTop: 12, marginBottom: 12, borderLeft: `3px solid #ef4444` },
+  warningText: { fontSize: 9, color: "#7f1d1d", lineHeight: 1.5, marginBottom: 4 },
   notes:     { backgroundColor: C.light, borderRadius: 6, padding: 12, marginTop: 12 },
   notesText: { fontSize: 9, color: "#374151", lineHeight: 1.5 },
   validity:  { backgroundColor: "#dcfce7", borderRadius: 6, padding: 10, marginTop: 12 },
@@ -156,7 +156,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
                 <View key={etape.id} style={s.paymentStage}>
                   <Text style={s.stagePercent}>{idx + 1}. {etape.pourcentage}% — {fmt(montantEtape)} TTC</Text>
                   {etape.description && <Text style={s.stageDesc}>{etape.description}</Text>}
-                  {dateEcheance && <Text style={s.stageDesc}>📅 {dateEcheance}</Text>}
+                  {dateEcheance && <Text style={s.stageDesc}>📅 Échéance : {dateEcheance}</Text>}
                 </View>
               )
             })}
@@ -166,10 +166,10 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
         {/* Avertissements de paiement */}
         {etapesPaiement && etapesPaiement.length > 0 && (
           <View style={s.paymentWarning}>
-            <Text style={s.warningText}>⚠️ Importants :</Text>
-            <Text style={[s.warningText, { marginTop: 4 }]}>• Les travaux ne commenceront qu&apos;après réception du premier acompte</Text>
-            <Text style={[s.warningText, { marginTop: 2 }]}>• Le solde doit être réglé avant la fin des travaux</Text>
-            <Text style={[s.warningText, { marginTop: 2 }]}>• Tout retard de paiement entraînera l&apos;arrêt des travaux</Text>
+            <Text style={[s.warningText, { fontFamily: "Helvetica-Bold", marginBottom: 6 }]}>⚠️ Points importants :</Text>
+            <Text style={s.warningText}>• Les travaux ne commenceront qu&apos;après réception du premier acompte</Text>
+            <Text style={s.warningText}>• Le solde doit être réglé avant la fin des travaux</Text>
+            <Text style={s.warningText}>• Tout retard de paiement entraînera l&apos;arrêt des travaux</Text>
           </View>
         )}
 
