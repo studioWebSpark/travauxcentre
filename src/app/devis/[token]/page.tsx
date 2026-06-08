@@ -166,7 +166,7 @@ export default function DevisPublicPage() {
               {/* Étapes de paiement */}
               {data?.etapesPaiement && data.etapesPaiement.length > 0 && (
                 <div className="bg-[#F8F7F4] rounded-2xl p-5">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">💳 Conditions de paiement</p>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Conditions de paiement</p>
                   <div className="space-y-3">
                     {data.etapesPaiement.map((etape, idx) => {
                       const montantEtape = Math.round((etape.pourcentage / 100) * ttc * 100) / 100
@@ -181,7 +181,7 @@ export default function DevisPublicPage() {
                               <p className="text-sm text-gray-600">{etape.description}</p>
                             )}
                             {dateEcheance && (
-                              <p className="text-xs text-gray-500">📅 {dateEcheance}</p>
+                              <p className="text-xs text-gray-500">Échéance : {dateEcheance}</p>
                             )}
                           </div>
                         </div>
@@ -191,7 +191,7 @@ export default function DevisPublicPage() {
 
                   {/* Points importants */}
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded mt-4">
-                    <p className="font-semibold text-yellow-800 text-sm mb-2">⚠️ Points importants :</p>
+                    <p className="font-semibold text-yellow-800 text-sm mb-2">Points importants :</p>
                     <ul className="text-sm text-yellow-700 space-y-1">
                       <li>• Les travaux ne commenceront qu'après réception du premier acompte</li>
                       <li>• Le solde doit être réglé avant la fin des travaux</li>
