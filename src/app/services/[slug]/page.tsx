@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { motion } from "framer-motion"
 
 const services: Record<string, {
   title: string; subtitle: string; metaDesc: string;
@@ -60,12 +61,29 @@ const services: Record<string, {
   },
 }
 
+const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const service = services[slug]
   if (!service) return {}
   return {
-    title: `${service.title} à Longuenesse`,
+    title: `${service.title} à Longuenesse | Travaux Centre`,
     description: service.metaDesc,
   }
 }
@@ -80,74 +98,157 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   if (!service) notFound()
 
   return (
-    <div className="pt-24 pb-16">
+    <div className="bg-white min-h-screen">
       {/* Hero */}
-      <div className="bg-white border-b border-gray-100 py-16 mb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
-          <Link href="/services" className="inline-flex items-center gap-1 text-gray-400 hover:text-[#0F2C5E] text-sm mb-6 transition-colors">
-            ← Tous les services
-          </Link>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-3" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            {service.title}
-          </h1>
-          <p className="text-gray-400 font-medium">{service.subtitle}</p>
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: easeOut }}
+            className="mb-6"
+          >
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-1 text-[#F97316] hover:text-orange-600 text-sm font-medium transition-colors"
+            >
+              ← Tous les services
+            </Link>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="space-y-4"
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em]">Service spécialisé</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F2C5E]">
+              {service.title}
+            </h1>
+            <p className="text-gray-600 text-lg">{service.subtitle}</p>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <div className="lg:col-span-2 space-y-10">
-            <div>
-              <h2 className="text-2xl font-bold text-[#0F2C5E] mb-4" style={{ fontFamily: "var(--font-playfair), serif" }}>Notre expertise</h2>
-              <p className="text-gray-600 leading-relaxed">{service.intro}</p>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>Nos prestations</h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {service.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-gray-700 bg-[#F8F7F4] rounded-xl px-4 py-3">
-                    <span className="w-5 h-5 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>Nos engagements</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {service.avantages.map((a) => (
-                  <div key={a.titre} className="border border-gray-100 rounded-2xl p-5">
-                    <h3 className="font-bold text-[#0F2C5E] mb-1">{a.titre}</h3>
-                    <p className="text-gray-500 text-sm">{a.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar CTA */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-28 space-y-4">
-              <div className="bg-[#0F2C5E] text-white rounded-3xl p-7">
-                <h3 className="font-bold text-xl mb-3" style={{ fontFamily: "var(--font-playfair), serif" }}>Devis gratuit</h3>
-                <p className="text-slate-300 text-sm mb-6">Obtenez un chiffrage détaillé sous 48h, sans engagement.</p>
-                <Link href="/devis" className="block w-full bg-[#0F2C5E] text-white font-semibold py-3 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors text-center">
-                  Demander un devis
-                </Link>
-              </div>
-              <div className="bg-[#F8F7F4] rounded-3xl p-7 border border-gray-100">
-                <h3 className="font-bold text-[#0F2C5E] mb-3">Nous appeler</h3>
-                <p className="text-gray-500 text-sm mb-4">Lundi – Vendredi, 8h – 18h</p>
-                <a href="tel:+33300000000" className="block w-full bg-white border border-gray-200 text-[#0F2C5E] font-semibold py-3 rounded-xl hover:bg-gray-50 transition-colors text-center">
-                  03 XX XX XX XX
-                </a>
-              </div>
-            </div>
-          </div>
+      {/* Intro */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-lg text-gray-700 leading-relaxed"
+          >
+            {service.intro}
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* Prestations */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mb-12 text-center"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos prestations</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Découvrez l'ensemble de nos services pour ce domaine</p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {service.items.map((item) => (
+              <motion.div
+                key={item}
+                variants={item}
+                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#F97316] transition-colors"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="w-6 h-6 bg-[#F97316] rounded-full flex items-center justify-center text-white text-sm font-bold shrink-0 mt-1">✓</span>
+                  <p className="text-gray-700 font-medium">{item}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Engagements */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mb-12 text-center"
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos engagements</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Ce qui nous distingue et ce que vous pouvez attendre de nous</p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {service.avantages.map((a) => (
+              <motion.div
+                key={a.titre}
+                variants={item}
+                className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#F97316] transition-colors"
+              >
+                <h3 className="font-bold text-[#0F2C5E] mb-3 text-lg">{a.titre}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{a.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">
+            Prêt à démarrer votre projet ?
+          </h2>
+          <p className="text-gray-700 text-lg">
+            Contactez-nous pour un devis gratuit. Nous répondons en moins de 48h.
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              href="/devis"
+              className="bg-[#F97316] text-white font-semibold px-8 py-3 rounded-xl hover:bg-orange-600 transition-colors"
+            >
+              Demander un devis
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-[#F97316] text-[#F97316] font-semibold px-8 py-3 rounded-xl hover:bg-[#F97316]/5 transition-colors"
+            >
+              Nous contacter
+            </Link>
+          </div>
+        </motion.div>
+      </section>
     </div>
   )
 }
