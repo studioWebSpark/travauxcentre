@@ -182,7 +182,7 @@ export default function DepensesChantier({ chantierId, budget }: Props) {
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] text-sm font-semibold px-4 py-2 rounded-lg disabled:opacity-60"
+          className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white text-sm font-semibold px-4 py-2 rounded-lg disabled:opacity-60"
         >
           {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Euro className="w-3.5 h-3.5" />}
           {saving ? "Enregistrement…" : "Ajouter"}

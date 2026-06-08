@@ -68,7 +68,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
         <p className="text-gray-500 text-sm mb-8">Téléchargez le PDF ou retournez au chantier.</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a href={`/api/crm/devis/${createdId}/pdf`} target="_blank"
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl ">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl ">
             <FileText className="w-4 h-4" /> Télécharger le PDF
           </a>
           {chantierId && (
@@ -186,7 +186,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
       </div>
 
       <button type="submit" disabled={loading || lignes.length === 0}
-        className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-bold py-4 rounded-2xl disabled:opacity-60 flex items-center justify-center gap-2 text-base">
+        className="w-full bg-[#0F2C5E] text-white font-bold py-4 rounded-2xl disabled:opacity-60 flex items-center justify-center gap-2 text-base">
         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
         {loading ? "Création…" : "Créer le devis et générer le PDF"}
       </button>

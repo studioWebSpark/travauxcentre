@@ -35,7 +35,7 @@ export default function NoteForm({ leadId }: { leadId: string }) {
       <button
         type="submit"
         disabled={loading || !text.trim()}
-        className="bg-[#0F2C5E] text-[#1a1a1a] px-3 py-2.5 rounded-xl disabled:opacity-40 shrink-0"
+        className="bg-[#0F2C5E] text-white px-3 py-2.5 rounded-xl disabled:opacity-40 shrink-0"
       >
         <Send className="w-4 h-4" />
       </button>

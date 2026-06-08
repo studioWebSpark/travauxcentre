@@ -65,7 +65,7 @@ export default function NouveauLeadModal() {
   return (
     <>
       <button onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
+        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm">
         <UserPlus className="w-4 h-4" /> Nouveau lead
       </button>
 
@@ -180,7 +180,7 @@ export default function NouveauLeadModal() {
               {/* Actions */}
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={loading}
-                  className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
+                  className="flex-1 bg-[#0F2C5E] text-white font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4" />}
                   {loading ? "Création…" : "Créer le lead"}
                 </button>

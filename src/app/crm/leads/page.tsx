@@ -71,7 +71,7 @@ export default async function LeadsPage({
             {TYPES.map((t) => <option key={t} className="bg-[#0D1B2A]">{t}</option>)}
           </select>
         </div>
-        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2 rounded-xl text-sm ">
+        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm ">
           Filtrer
         </button>
         <Link href="/crm/leads" className="text-sm text-[#404040] py-2">Réinitialiser</Link>

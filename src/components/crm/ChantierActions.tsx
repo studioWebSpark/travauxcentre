@@ -90,7 +90,7 @@ export default function ChantierActions({ chantier }: Props) {
       </div>
 
       <button onClick={save} disabled={saving}
-        className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-2.5 rounded-xl disabled:opacity-60 text-sm">
+        className="w-full bg-[#0F2C5E] text-white font-semibold py-2.5 rounded-xl disabled:opacity-60 text-sm">
         {saved ? "✓ Sauvegardé" : saving ? "Sauvegarde…" : "Sauvegarder"}
       </button>
     </div>

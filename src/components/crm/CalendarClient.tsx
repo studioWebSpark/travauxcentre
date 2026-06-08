@@ -206,7 +206,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                 onClick={() => setViewMode("month")}
                 className={`px-4 py-2 rounded-lg text-sm font-medium ${
                   viewMode === "month"
-                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a]"
+                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-white"
                     : "bg-white/10 text-[#1a1a1a] border border-white/20 "
                 }`}
               >
@@ -216,7 +216,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                 onClick={() => setViewMode("week")}
                 className={`px-4 py-2 rounded-lg text-sm font-medium ${
                   viewMode === "week"
-                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a]"
+                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-white"
                     : "bg-white/10 text-[#1a1a1a] border border-white/20 "
                 }`}
               >
@@ -281,7 +281,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
 
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full mb-4 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] "
+                  className="w-full mb-4 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-[#F97316] to-orange-600 text-white "
                 >
                   + Ajouter planning
                 </button>

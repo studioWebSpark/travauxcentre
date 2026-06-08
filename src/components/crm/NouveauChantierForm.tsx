@@ -98,7 +98,7 @@ export default function NouveauChantierForm({ leads }: { leads: Lead[] }) {
       </div>
 
       <button type="submit" disabled={loading}
-        className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
+        className="w-full bg-[#0F2C5E] text-white font-semibold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
         {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Création...</> : "Créer le chantier"}
       </button>
     </form>

@@ -81,7 +81,7 @@ export default function EtapesList({ chantierId, etapes }: { chantierId: string;
             className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
           <div className="flex gap-2">
             <button onClick={addEtape} disabled={saving}
-              className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-2 rounded-xl text-sm disabled:opacity-60 flex items-center justify-center gap-2">
+              className="flex-1 bg-[#0F2C5E] text-white font-semibold py-2 rounded-xl text-sm disabled:opacity-60 flex items-center justify-center gap-2">
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               {saving ? "Ajout…" : "Ajouter"}
             </button>

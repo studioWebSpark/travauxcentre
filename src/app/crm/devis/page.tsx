@@ -55,7 +55,7 @@ export default async function DevisListPage({
           <p className="text-[#404040] text-sm mt-0.5">{devis.length} résultat{devis.length > 1 ? "s" : ""}</p>
         </div>
         <Link href="/crm/devis/new"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm">
           <Plus className="w-4 h-4" /> Nouveau devis
         </Link>
       </div>
@@ -88,7 +88,7 @@ export default async function DevisListPage({
             {Object.entries(STATUTS_DEVIS).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
           </select>
         </div>
-        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2 rounded-xl text-sm ">
+        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm ">
           Filtrer
         </button>
         <Link href="/crm/devis" className="text-sm text-[#404040] py-2">Réinitialiser</Link>

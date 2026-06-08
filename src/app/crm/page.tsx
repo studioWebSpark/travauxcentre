@@ -86,7 +86,7 @@ export default async function CrmDashboard() {
         </div>
         <Link
           href="/crm/leads"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg"
         >
           <Plus className="w-4 h-4" />
           Nouveau lead

@@ -42,7 +42,7 @@ export default function ChantiersClient({
           <p className="text-[#1a1a1a] text-sm mt-0.5">{initialChantiers.length} chantier{initialChantiers.length > 1 ? "s" : ""}</p>
         </div>
         <Link href="/crm/chantiers/new"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm">
           <Plus className="w-4 h-4" /> Nouveau chantier
         </Link>
       </div>

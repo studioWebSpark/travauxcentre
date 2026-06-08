@@ -109,7 +109,7 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
             <Plus className="w-4 h-4" /> Coller une annonce
           </button>
           <button onClick={scan} disabled={scanning}
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-60">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-60">
             {scanning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
             {scanning ? "Scan en cours…" : "Scanner maintenant"}
           </button>
@@ -154,7 +154,7 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
           <Search className="w-10 h-10 text-gray-200 mx-auto mb-3" />
           <p className="text-gray-400 mb-4">Aucune annonce — lancez un scan pour démarrer</p>
           <button onClick={scan} disabled={scanning}
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-5 py-3 rounded-xl text-sm">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-5 py-3 rounded-xl text-sm">
             <Search className="w-4 h-4" /> Lancer le premier scan
           </button>
         </div>
@@ -248,7 +248,7 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
               </div>
               <div className="flex gap-3 pt-1">
                 <button type="submit" disabled={pasting}
-                  className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
+                  className="flex-1 bg-[#0F2C5E] text-white font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
                   {pasting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   {pasting ? "Analyse IA en cours…" : "Analyser avec l'IA"}
                 </button>
