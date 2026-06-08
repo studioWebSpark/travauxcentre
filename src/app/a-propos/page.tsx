@@ -1,17 +1,14 @@
-import type { Metadata } from "next"
+'use client'
+
 import Image from "next/image"
 import Link from "next/link"
-
-export const metadata: Metadata = {
-  title: "À Propos — Notre histoire, nos valeurs, notre équipe",
-  description: "Découvrez l'histoire de Travaux Centre, entreprise familiale à Longuenesse. Nos valeurs, nos certifications et notre équipe d'artisans qualifiés.",
-}
+import { motion } from "framer-motion"
 
 const certifications = [
-  { nom: "Qualibat",           desc: "Certification qualité bâtiment" },
-  { nom: "RGE",               desc: "Reconnu Garant de l'Environnement" },
-  { nom: "Décennale",         desc: "Assurance garantie décennale" },
-  { nom: "KBIS",              desc: "Entreprise immatriculée" },
+  { nom: "Qualibat", desc: "Certification qualité bâtiment", icon: "✓" },
+  { nom: "RGE", desc: "Reconnu Garant de l'Environnement", icon: "🌱" },
+  { nom: "Décennale", desc: "Assurance garantie décennale", icon: "🛡️" },
+  { nom: "KBIS", desc: "Entreprise immatriculée", icon: "📋" },
 ]
 
 const valeurs = [
@@ -33,153 +30,211 @@ const valeurs = [
   {
     icon: "🌱",
     titre: "Responsabilité",
-    desc: "Nous privilégions des matériaux durables, des techniques économes en énergie et une gestion responsable des déchets de chantier.",
+    desc: "Nous privilégions des matériaux durables, des techniques économes en énergie et une gestion responsable des déchets.",
   },
 ]
 
-const equipe = [
-  { nom: "Marc Dupont",   role: "Gérant — Chef de chantier",        experience: "15 ans d'expérience" },
-  { nom: "Pierre Martin", role: "Maçon certifié RGE",               experience: "12 ans d'expérience" },
-  { nom: "Julie Bernard", role: "Coordinatrice chantiers & devis",  experience: "8 ans d'expérience" },
-  { nom: "Thomas Leroy",  role: "Électricien certifié NF C15-100",  experience: "10 ans d'expérience" },
-]
+const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
 
 export default function AProposPage() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="bg-white min-h-screen">
       {/* Hero */}
-      <div className="bg-white border-b border-gray-100 py-16 mb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#0F2C5E]/40 mb-4">Notre histoire</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            À Propos de{" "}
-            <span className="inline-block bg-[#0F2C5E] text-white px-3 py-1 rounded-sm">Travaux Centre</span>
-          </h1>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Une entreprise familiale fondée à Longuenesse, au service des habitants du Nord-Pas-de-Calais.
-          </p>
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="space-y-6"
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em]">Notre histoire</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F2C5E]">
+              À Propos de <span className="text-[#F97316]">Travaux Centre</span>
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+              Une entreprise familiale fondée à Longuenesse, au service des habitants du Nord-Pas-de-Calais.
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-        {/* Histoire */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
-              Notre histoire
-            </h2>
-            <div className="space-y-4 text-gray-600 leading-relaxed">
-              <p>
-                Travaux Centre est née de la passion d&apos;artisans locaux pour un travail bien fait. Fondée à Longuenesse,
-                notre entreprise s&apos;est construite sur un principe simple : traiter chaque client comme si on travaillait
-                pour un ami, avec toute l&apos;honnêteté et la rigueur que cela implique.
-              </p>
-              <p>
-                Depuis nos débuts, nous avons réalisé plus de 150 chantiers dans la région, de la simple peinture
-                d&apos;un appartement aux extensions de maison les plus complexes. Chaque projet nous a permis de grandir
-                et d&apos;affiner notre savoir-faire.
-              </p>
-              <p>
-                Aujourd&apos;hui, notre équipe de professionnels qualifiés et certifiés RGE intervient dans un rayon de
-                80km autour de Longuenesse, couvrant l&apos;ensemble du Nord-Pas-de-Calais.
-              </p>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <div className="relative h-56 rounded-3xl overflow-hidden">
-              <Image src="/images/about.jpg" alt="Équipe Travaux Centre sur chantier" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-            {[
-              { chiffre: "+150", label: "Chantiers réalisés" },
-              { chiffre: "80km", label: "Zone d'intervention" },
-              { chiffre: "48h",  label: "Délai de réponse" },
-              { chiffre: "10+",  label: "Ans d'expérience" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-[#F8F7F4] rounded-2xl p-6 text-center border border-gray-100">
-                <p className="text-3xl font-bold text-[#0F2C5E] mb-1" style={{ fontFamily: "var(--font-playfair), serif" }}>{stat.chiffre}</p>
-                <p className="text-gray-500 text-sm">{stat.label}</p>
+      {/* Histoire Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          >
+            {/* Texte */}
+            <div className="space-y-6">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Notre histoire</h2>
+              <div className="space-y-4 text-gray-700 leading-relaxed">
+                <p>
+                  Travaux Centre est née de la passion d&apos;artisans locaux pour un travail bien fait. Fondée à Longuenesse,
+                  notre entreprise s&apos;est construite sur un principe simple : traiter chaque client comme si on travaillait
+                  pour un ami, avec toute l&apos;honnêteté et la rigueur que cela implique.
+                </p>
+                <p>
+                  Depuis nos débuts, nous avons réalisé plus de 150 chantiers dans la région, de la simple peinture
+                  d&apos;un appartement aux extensions de maison les plus complexes. Chaque projet nous a permis de grandir
+                  et d&apos;affiner notre savoir-faire.
+                </p>
+                <p>
+                  Aujourd&apos;hui, notre équipe de professionnels qualifiés et certifiés RGE intervient dans un rayon de
+                  80km autour de Longuenesse, couvrant l&apos;ensemble du Nord-Pas-de-Calais.
+                </p>
               </div>
-            ))}
             </div>
-          </div>
-        </div>
 
-        {/* Valeurs */}
-        <div>
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>Nos valeurs</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Image et stats */}
+            <div className="space-y-4">
+              <div className="relative h-64 rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/about.jpg"
+                  alt="Équipe Travaux Centre sur chantier"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+              </div>
+              <motion.div
+                className="grid grid-cols-2 gap-4"
+                variants={container}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                {[
+                  { chiffre: "+150", label: "Chantiers réalisés" },
+                  { chiffre: "80km", label: "Zone d'intervention" },
+                  { chiffre: "48h", label: "Délai de réponse" },
+                  { chiffre: "10+", label: "Ans d'expérience" },
+                ].map((stat) => (
+                  <motion.div key={stat.label} variants={item} className="bg-white rounded-2xl p-6 text-center border border-gray-100 hover:border-[#F97316] transition-colors">
+                    <p className="text-3xl font-bold text-[#F97316] mb-2">{stat.chiffre}</p>
+                    <p className="text-xs text-gray-600">{stat.label}</p>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Valeurs */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Nos principes</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Nos valeurs fondamentales</h2>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {valeurs.map((v) => (
-              <div key={v.titre} className="bg-white rounded-2xl border border-gray-100 p-6 text-center shadow-sm">
-                <div className="text-4xl mb-4">{v.icon}</div>
-                <h3 className="font-bold text-[#0F2C5E] mb-2">{v.titre}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
-              </div>
+              <motion.div key={v.titre} variants={item} className="bg-white rounded-2xl p-8 text-center space-y-4 border border-gray-100 hover:border-[#F97316] transition-colors">
+                <div className="text-5xl">{v.icon}</div>
+                <h3 className="text-xl font-bold text-[#0F2C5E]">{v.titre}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{v.desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Certifications */}
-        <div className="bg-[#0F2C5E] rounded-3xl p-10 text-white">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{ fontFamily: "var(--font-playfair), serif" }}>Nos certifications</h2>
-            <p className="text-slate-300">Des garanties concrètes pour votre tranquillité d&apos;esprit</p>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Certifications */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Nos garanties</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Nos certifications et labels</h2>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {certifications.map((c) => (
-              <div key={c.nom} className="bg-white/10 rounded-2xl p-5 text-center border border-white/10">
-                <div className="w-12 h-12 bg-[#0F2C5E] rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                  </svg>
-                </div>
-                <p className="font-bold text-lg">{c.nom}</p>
-                <p className="text-slate-300 text-xs mt-1">{c.desc}</p>
-              </div>
+              <motion.div key={c.nom} variants={item} className="bg-white rounded-2xl p-8 text-center space-y-3 border border-gray-100 hover:border-[#F97316] transition-colors">
+                <div className="text-4xl">{c.icon}</div>
+                <h3 className="text-lg font-bold text-[#0F2C5E]">{c.nom}</h3>
+                <p className="text-gray-600 text-sm">{c.desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
+      </section>
 
-        {/* Équipe */}
-        <div>
-          <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>Notre équipe</h2>
-            <p className="mt-3 text-gray-600">Des professionnels passionnés à votre service</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {equipe.map((m) => (
-              <div key={m.nom} className="bg-white rounded-2xl border border-gray-100 p-6 text-center shadow-sm">
-                <div className="w-16 h-16 bg-[#0F2C5E] rounded-full flex items-center justify-center mx-auto mb-4 text-white text-xl font-bold">
-                  {m.nom[0]}
-                </div>
-                <h3 className="font-bold text-[#0F2C5E]">{m.nom}</h3>
-                <p className="text-gray-500 text-sm font-medium mt-1">{m.role}</p>
-                <p className="text-gray-400 text-xs mt-2">{m.experience}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center bg-[#F8F7F4] rounded-3xl py-14 px-6">
-          <h2 className="text-2xl font-bold text-[#0F2C5E] mb-4" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            Travaillons ensemble
+      {/* CTA */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">
+            Faites confiance à des experts
           </h2>
-          <p className="text-gray-600 mb-8 max-w-xl mx-auto">
-            Vous avez un projet ? Rencontrons-nous. Le premier rendez-vous est gratuit et sans engagement.
+          <p className="text-gray-700 text-lg">
+            Contactez-nous pour discuter de votre projet. Nos artisans certifiés vous garantissent une qualité professionnelle.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/devis" className="bg-[#0F2C5E] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors">
-              Demander un devis
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              href="/devis"
+              className="bg-[#F97316] text-white font-semibold px-8 py-3 rounded-xl hover:bg-orange-600 transition-colors"
+            >
+              Devis gratuit
             </Link>
-            <Link href="/contact" className="bg-[#0F2C5E] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#1a3f7a] transition-colors">
+            <Link
+              href="/contact"
+              className="border-2 border-[#F97316] text-[#F97316] font-semibold px-8 py-3 rounded-xl hover:bg-[#F97316]/5 transition-colors"
+            >
               Nous contacter
             </Link>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </section>
     </div>
   )
 }

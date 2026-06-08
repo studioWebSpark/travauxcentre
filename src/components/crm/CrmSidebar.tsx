@@ -3,10 +3,6 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar, CalendarDays } from "lucide-react"
-import type { getLevelInfo } from "@/lib/xp"
-
-type XpInfo = ReturnType<typeof getLevelInfo>
-
 const nav = [
   { label: "Dashboard",  href: "/crm",           icon: LayoutDashboard },
   { label: "Leads",      href: "/crm/leads",      icon: Users },
@@ -19,7 +15,7 @@ const nav = [
   { label: "Carte",      href: "/crm/carte",      icon: MapPin },
 ]
 
-export default function CrmSidebar({ xp }: { xp: XpInfo }) {
+export default function CrmSidebar() {
   const pathname = usePathname()
   const router   = useRouter()
 
@@ -50,8 +46,8 @@ export default function CrmSidebar({ xp }: { xp: XpInfo }) {
           const active = href === "/crm" ? pathname === "/crm" : pathname.startsWith(href)
           return (
             <Link key={href} href={href}
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors font-montserrat ${
-                active ? "bg-white/15 text-white" : "text-[#1a1a1a] hover:bg-white/8 hover:text-white"
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium font-montserrat ${
+                active ? "bg-white/15 text-white" : "text-white"
               }`}>
               <Icon className="w-4 h-4 shrink-0" />
               {label}
@@ -60,31 +56,14 @@ export default function CrmSidebar({ xp }: { xp: XpInfo }) {
         })}
       </nav>
 
-      {/* XP Block */}
-      <div className="px-4 py-4 border-t border-white/10">
-        <div className="flex items-center justify-between mb-1.5">
-          <div className="flex items-center gap-1.5">
-            <span className="text-lg">{xp.current.icon}</span>
-            <span className="text-xs font-bold text-white font-montserrat">{xp.current.label}</span>
-          </div>
-          <span className="text-xs font-bold font-montserrat" style={{ color: xp.current.color }}>{xp.totalXp} XP</span>
-        </div>
-        <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-          <div className="h-full rounded-full transition-all" style={{ width: `${xp.progress}%`, background: xp.current.color }} />
-        </div>
-        {xp.next && (
-          <p className="text-xs text-[#404040] mt-1 truncate font-montserrat font-medium">{xp.next.min - xp.totalXp} XP → {xp.next.label}</p>
-        )}
-      </div>
-
       {/* Logout */}
       <div className="px-3 py-3 border-t border-white/10">
         <button onClick={logout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-[#1a1a1a] hover:bg-white/8 hover:text-white transition-colors w-full font-medium">
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white w-full font-medium">
           <LogOut className="w-4 h-4" />
           Déconnexion
         </button>
-        <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-[#404040] hover:text-white transition-colors mt-1 font-medium">
+        <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-white mt-1 font-medium">
           ← Retour au site
         </Link>
       </div>

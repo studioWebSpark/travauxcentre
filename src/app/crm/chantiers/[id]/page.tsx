@@ -46,7 +46,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <Link href="/crm/chantiers" className="inline-flex items-center gap-1 text-gray-400 hover:text-[#0F2C5E] text-sm mb-2 transition-colors">
+          <Link href="/crm/chantiers" className="inline-flex items-center gap-1 text-gray-400 text-sm mb-2 ">
             <ArrowLeft className="w-3.5 h-3.5" /> Retour aux chantiers
           </Link>
           <h1 className="text-2xl font-bold text-[#0F2C5E]">{c.titre}</h1>
@@ -57,7 +57,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
         </div>
         <div className="flex gap-2">
           <Link href={`/crm/devis/new?chantierId=${c.id}`}
-            className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+            className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl ">
             <FileText className="w-4 h-4" /> Nouveau devis
           </Link>
         </div>
@@ -74,7 +74,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               <span className="text-2xl font-bold text-[#0F2C5E]">{c.progression}%</span>
             </div>
             <div className="h-3 bg-gray-100 rounded-full overflow-hidden mb-4">
-              <div className="h-full rounded-full transition-all bg-gradient-to-r from-[#0F2C5E] to-[#F97316]"
+              <div className="h-full rounded-full bg-gradient-to-r from-[#0F2C5E] to-[#F97316]"
                 style={{ width: `${c.progression}%` }} />
             </div>
             <div className="grid grid-cols-4 gap-3 text-center">
@@ -117,7 +117,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                     <div key={p.id} className="relative group aspect-square bg-gray-100 rounded-xl overflow-hidden">
                       <img src={p.url} alt={p.description ?? ""} className="w-full h-full object-cover" />
                       {p.description && (
-                        <div className="absolute bottom-0 inset-x-0 bg-black/50 text-white text-xs p-1 text-center truncate">
+                        <div className="absolute bottom-0 inset-x-0 bg-black/50 text-[#1a1a1a] text-xs p-1 text-center truncate">
                           {p.description}
                         </div>
                       )}
@@ -134,7 +134,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-bold text-[#0F2C5E]">Devis & Factures</h2>
               <Link href={`/crm/devis/new?chantierId=${c.id}`}
-                className="text-xs text-[#0F2C5E] hover:underline flex items-center gap-1">
+                className="text-xs text-[#0F2C5E] flex items-center gap-1">
                 <Plus className="w-3 h-3" /> Nouveau devis
               </Link>
             </div>
@@ -157,7 +157,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                           <span className="text-sm font-bold text-[#0F2C5E]">{formatEuro(tot.ttc)}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color}`}>{st.label}</span>
                           <a href={`/api/crm/devis/${d.id}/pdf`} target="_blank"
-                            className="text-xs bg-[#0F2C5E] text-white px-2.5 py-1 rounded-lg hover:bg-[#1a3f7a] transition-colors">
+                            className="text-xs bg-[#0F2C5E] text-[#1a1a1a] px-2.5 py-1 rounded-lg ">
                             PDF
                           </a>
                         </div>
@@ -186,7 +186,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                         <span className="text-sm font-bold text-green-600">{formatEuro(tot.ttc)}</span>
                         <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color}`}>{st.label}</span>
                         <a href={`/api/crm/factures/${f.id}/pdf`} target="_blank"
-                          className="text-xs bg-green-600 text-white px-2.5 py-1 rounded-lg hover:bg-green-700 transition-colors">
+                          className="text-xs bg-green-600 text-[#1a1a1a] px-2.5 py-1 rounded-lg ">
                           PDF
                         </a>
                       </div>
@@ -205,7 +205,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               <div className="mt-4 space-y-3">
                 {c.notes.map((n) => (
                   <div key={n.id} className="flex gap-3">
-                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">
+                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-[#1a1a1a] text-xs font-bold shrink-0">
                       {n.auteur[0]}
                     </div>
                     <div className="flex-1 bg-[#F8F7F4] rounded-xl p-3">
@@ -260,7 +260,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             <h2 className="font-bold text-[#0F2C5E] mb-1">Portail client</h2>
             <p className="text-xs text-gray-400 mb-3">Lien sécurisé que vous envoyez à votre client</p>
             <a href={`/client/${(c as typeof c & { tokenClient: string }).tokenClient}`} target="_blank"
-              className="w-full flex items-center justify-center gap-2 border border-[#0F2C5E] text-[#0F2C5E] font-semibold py-2.5 rounded-xl hover:bg-[#0F2C5E] hover:text-white transition-colors text-sm mb-2">
+              className="w-full flex items-center justify-center gap-2 border border-[#0F2C5E] text-[#0F2C5E] font-semibold py-2.5 rounded-xl text-sm mb-2">
               <ExternalLink className="w-4 h-4" /> Voir le portail
             </a>
             <CopyLinkButton url={`${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/client/${(c as typeof c & { tokenClient: string }).tokenClient}`} />
@@ -282,15 +282,15 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               <p className="font-semibold text-[#0F2C5E]">{c.lead.nom}</p>
               <p className="text-xs text-gray-500">{c.lead.typeTravaux}</p>
               <a href={`tel:${c.lead.telephone}`}
-                className="flex items-center gap-2 text-sm text-[#0F2C5E] hover:underline">
+                className="flex items-center gap-2 text-sm text-[#0F2C5E] ">
                 <Phone className="w-4 h-4" />{c.lead.telephone}
               </a>
               <a href={`mailto:${c.lead.email}`}
-                className="flex items-center gap-2 text-sm text-[#0F2C5E] hover:underline">
+                className="flex items-center gap-2 text-sm text-[#0F2C5E] ">
                 <Mail className="w-4 h-4" />{c.lead.email}
               </a>
               <Link href={`/crm/leads/${c.lead.id}`}
-                className="block text-center text-xs bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl hover:bg-gray-100 transition-colors mt-2">
+                className="block text-center text-xs bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl mt-2">
                 Voir la fiche lead →
               </Link>
             </div>

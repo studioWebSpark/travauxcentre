@@ -40,10 +40,10 @@ export default function DevisActions({ devisId, statut, token, emailEnvoye }: Pr
     <div className="space-y-2">
       {/* Envoyer par email */}
       <button onClick={sendEmail} disabled={sending}
-        className={`w-full flex items-center justify-center gap-2 font-semibold py-2.5 rounded-xl text-sm transition-colors ${
+        className={`w-full flex items-center justify-center gap-2 font-semibold py-2.5 rounded-xl text-sm ${
           sent
             ? "bg-green-50 border border-green-200 text-green-700"
-            : "bg-[#0F2C5E] text-white hover:bg-[#1a3f7a]"
+            : "bg-[#0F2C5E] text-[#1a1a1a] "
         } disabled:opacity-60`}>
         {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : sent ? <CheckCircle className="w-4 h-4" /> : <Send className="w-4 h-4" />}
         {sending ? "Envoi…" : sent ? "Email envoyé — Renvoyer ?" : "Envoyer par email + PDF"}
@@ -52,12 +52,12 @@ export default function DevisActions({ devisId, statut, token, emailEnvoye }: Pr
       {/* Lien partager pour présentation sur place */}
       <div className="flex gap-2">
         <button onClick={copyLink}
-          className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold py-2.5 rounded-xl text-xs hover:bg-gray-50 transition-colors">
+          className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold py-2.5 rounded-xl text-xs ">
           <Copy className="w-3.5 h-3.5" />
           {copied ? "Lien copié !" : "Copier le lien"}
         </button>
         <a href={devisUrl} target="_blank"
-          className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold py-2.5 rounded-xl text-xs hover:bg-gray-50 transition-colors">
+          className="flex-1 flex items-center justify-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold py-2.5 rounded-xl text-xs ">
           <ExternalLink className="w-3.5 h-3.5" />
           Voir (sur place)
         </a>

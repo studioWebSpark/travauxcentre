@@ -120,17 +120,17 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
         <div
           key={day}
           onClick={() => handleDayClick(day)}
-          className={`p-2 min-h-24 rounded-xl border cursor-pointer transition-colors ${
+          className={`p-2 min-h-24 rounded-xl border cursor-pointer ${
             isSelected
               ? "bg-gradient-to-br from-[#F97316] to-orange-600 border-orange-500"
               : isToday
                 ? "bg-blue-500/20 border-blue-500/30"
-                : "bg-white/10 border-white/20 hover:border-white/30"
+                : "bg-white/10 border-white/20 "
           }`}
         >
           <p
             className={`text-xs font-bold mb-1 font-montserrat ${
-              isSelected ? "text-white" : isToday ? "text-blue-200" : "text-[#1a1a1a]"
+              isSelected ? "text-[#1a1a1a]" : isToday ? "text-blue-200" : "text-[#1a1a1a]"
             }`}
           >
             {day}
@@ -143,8 +143,8 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                   key={p.id}
                   className={`text-xs px-1.5 py-0.5 rounded truncate font-medium ${
                     isSelected
-                      ? "bg-white/20 text-white"
-                      : "bg-blue-500/30 text-blue-100"
+                      ? "bg-white/30 text-[#1a1a1a]"
+                      : "bg-[#F97316]/60 text-[#1a1a1a]"
                   }`}
                 >
                   {heure} {p.lead.nom}
@@ -154,7 +154,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
             {dayPlannings.length > 2 && (
               <p
                 className={`text-xs px-1.5 ${
-                  isSelected ? "text-white/70" : "text-[#404040]"
+                  isSelected ? "text-[#1a1a1a]/70" : "text-[#404040]"
                 }`}
               >
                 +{dayPlannings.length - 2} plus
@@ -178,16 +178,16 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white font-montserrat">Calendrier des rendez-vous</h1>
+        <h1 className="text-2xl font-bold text-[#1a1a1a] font-montserrat">Calendrier des rendez-vous</h1>
         <p className="text-[#404040] text-sm mt-0.5">{aVenir.length} RDV à venir</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[
-          { label: "À venir", value: aVenir.length, color: "text-blue-300", bg: "bg-blue-500/20 border-blue-500/30" },
-          { label: "Confirmés", value: confirmed.length, color: "text-green-300", bg: "bg-green-500/20 border-green-500/30" },
-          { label: "En attente", value: pending.length, color: "text-amber-300", bg: "bg-amber-500/20 border-amber-500/30" },
+          { label: "À venir", value: aVenir.length, color: "text-[#F97316]", bg: "bg-blue-500/40 border-blue-500/60" },
+          { label: "Confirmés", value: confirmed.length, color: "text-green-700", bg: "bg-green-500/40 border-green-500/60" },
+          { label: "En attente", value: pending.length, color: "text-amber-700", bg: "bg-amber-500/40 border-amber-500/60" },
         ].map(({ label, value, color, bg }) => (
           <div key={label} className={`glass rounded-[0.875rem] border p-4 ${bg}`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
@@ -204,20 +204,20 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
             <div className="flex gap-2">
               <button
                 onClick={() => setViewMode("month")}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${
                   viewMode === "month"
-                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-white"
-                    : "bg-white/10 text-slate-300 border border-white/20 hover:bg-white/20"
+                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a]"
+                    : "bg-white/10 text-[#1a1a1a] border border-white/20 "
                 }`}
               >
                 Mois
               </button>
               <button
                 onClick={() => setViewMode("week")}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium ${
                   viewMode === "week"
-                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-white"
-                    : "bg-white/10 text-slate-300 border border-white/20 hover:bg-white/20"
+                    ? "bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a]"
+                    : "bg-white/10 text-[#1a1a1a] border border-white/20 "
                 }`}
               >
                 Semaine
@@ -231,12 +231,12 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                     new Date(currentDate.getFullYear(), currentDate.getMonth() - 1)
                   )
                 }
-                className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                className="p-2 rounded-lg "
               >
                 <ChevronLeft className="w-4 h-4 text-[#333333]" />
               </button>
 
-              <h2 className="text-base font-semibold text-white w-32 text-center capitalize font-montserrat">
+              <h2 className="text-base font-semibold text-[#1a1a1a] w-32 text-center capitalize font-montserrat">
                 {monthName}
               </h2>
 
@@ -246,7 +246,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                     new Date(currentDate.getFullYear(), currentDate.getMonth() + 1)
                   )
                 }
-                className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                className="p-2 rounded-lg "
               >
                 <ChevronRight className="w-4 h-4 text-[#333333]" />
               </button>
@@ -271,7 +271,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
           {selectedDay && (
             <>
               <div className="glass rounded-[0.875rem] border border-white/8 p-6">
-                <h3 className="text-base font-bold text-white mb-4 font-montserrat">
+                <h3 className="text-base font-bold text-[#1a1a1a] mb-4 font-montserrat">
                   {selectedDay.toLocaleDateString("fr-FR", {
                     weekday: "long",
                     day: "numeric",
@@ -281,7 +281,7 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
 
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="w-full mb-4 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-[#F97316] to-orange-600 text-white hover:from-orange-500 hover:to-orange-700 transition-all"
+                  className="w-full mb-4 px-4 py-2 rounded-xl text-sm font-medium bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] "
                 >
                   + Ajouter planning
                 </button>
@@ -297,14 +297,14 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                         <Link
                           key={p.id}
                           href={`/crm/leads/${p.lead.id}`}
-                          className="block bg-white/10 rounded-xl border border-white/20 p-3 hover:border-[#F97316] transition-colors group"
+                          className="block bg-[#F97316]/20 rounded-xl border-2 border-[#F97316]/60 p-4"
                         >
-                          <div className="flex items-start justify-between gap-2 mb-2">
+                          <div className="flex items-start justify-between gap-2 mb-3">
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs font-bold text-[#F97316] group-hover:underline">
+                              <p className="text-sm font-bold text-[#F97316]">
                                 {p.lead.nom}
                               </p>
-                              <p className="text-xs text-[#1a1a1a] mt-0.5 font-medium">{p.typeRdv}</p>
+                              <p className="text-xs text-[#1a1a1a] mt-1 font-semibold">{p.typeRdv}</p>
                             </div>
                             <span
                               className={`text-xs font-semibold px-2 py-1 rounded-full border flex items-center gap-1 shrink-0 ${status.color}`}
@@ -313,20 +313,20 @@ export default function CalendarClient({ initialPlannings = [] }: CalendarClient
                             </span>
                           </div>
 
-                          <div className="space-y-1.5 text-xs">
-                            <div className="flex items-center gap-2 text-white">
-                              <Clock className="w-3 h-3 text-[#555555] shrink-0" />
-                              <span className="font-medium">{heure} — {p.duree} min</span>
+                          <div className="space-y-2 text-xs">
+                            <div className="flex items-center gap-2 text-[#1a1a1a] font-medium">
+                              <Clock className="w-4 h-4 text-[#F97316] shrink-0" />
+                              <span>{heure} — {p.duree} min</span>
                             </div>
                             {p.adresse && (
-                              <div className="flex items-start gap-2 text-white">
-                                <MapPin className="w-3 h-3 text-[#555555] shrink-0 mt-0.5" />
-                                <span className="truncate font-medium">{p.adresse}</span>
+                              <div className="flex items-start gap-2 text-[#1a1a1a] font-medium">
+                                <MapPin className="w-4 h-4 text-[#F97316] shrink-0 mt-0.5" />
+                                <span className="truncate">{p.adresse}</span>
                               </div>
                             )}
                             {p.notes && (
-                              <div className="pt-1 border-t border-white/20 mt-1.5">
-                                <p className="text-[#1a1a1a] text-xs font-medium">{p.notes}</p>
+                              <div className="pt-2 border-t border-[#F97316]/40 mt-2">
+                                <p className="text-[#1a1a1a] font-semibold">{p.notes}</p>
                               </div>
                             )}
                           </div>

@@ -1,112 +1,200 @@
-import type { Metadata } from "next"
+'use client'
+
 import Image from "next/image"
 import Link from "next/link"
-
-export const metadata: Metadata = {
-  title: "Nos Services — Rénovation, Maçonnerie, Aménagement",
-  description: "Découvrez tous nos services de travaux à Longuenesse : rénovation intérieure, gros œuvre, aménagement extérieur, second œuvre. Devis gratuit sous 48h.",
-}
+import { motion } from "framer-motion"
 
 const services = [
   {
-    slug:   "renovation-interieure",
-    title:  "Rénovation Intérieure",
-    desc:   "Transformez vos espaces de vie avec nos artisans spécialisés en peinture, carrelage, parquet, plâtrerie et faux-plafonds.",
-    items:  ["Peinture intérieure et décoration", "Carrelage et revêtements de sol", "Parquet massif et stratifié", "Plâtrerie et enduits", "Faux-plafonds et isolation phonique", "Pose de cloisons et doublages"],
-    img:    "/images/renovation-interieure.jpg",
-    seoDesc: "Entreprise de rénovation intérieure à Longuenesse",
+    slug: "renovation-interieure",
+    title: "Rénovation Intérieure",
+    desc: "Transformez vos espaces de vie avec nos artisans spécialisés en peinture, carrelage, parquet, plâtrerie et faux-plafonds.",
+    items: ["Peinture intérieure et décoration", "Carrelage et revêtements de sol", "Parquet massif et stratifié", "Plâtrerie et enduits", "Faux-plafonds et isolation phonique", "Pose de cloisons et doublages"],
+    img: "/images/renovation-interieure.jpg",
+    icon: "🏠",
   },
   {
-    slug:   "gros-oeuvre",
-    title:  "Gros Œuvre & Maçonnerie",
-    desc:   "Nos maçons certifiés prennent en charge tous vos travaux de structure : murs porteurs, fondations, extensions et reprises.",
-    items:  ["Murs porteurs et cloisons", "Fondations et dallages", "Extensions et surélévations", "Reprises en sous-œuvre", "Ravalement de façade", "Démolition et déconstruction"],
-    img:    "/images/gros-oeuvre.jpg",
-    seoDesc: "Maçon et gros œuvre à Longuenesse",
+    slug: "gros-oeuvre",
+    title: "Gros Œuvre & Maçonnerie",
+    desc: "Nos maçons certifiés prennent en charge tous vos travaux de structure : murs porteurs, fondations, extensions et reprises.",
+    items: ["Murs porteurs et cloisons", "Fondations et dallages", "Extensions et surélévations", "Reprises en sous-œuvre", "Ravalement de façade", "Démolition et déconstruction"],
+    img: "/images/gros-oeuvre.jpg",
+    icon: "🧱",
   },
   {
-    slug:   "amenagement-exterieur",
-    title:  "Aménagement Extérieur",
-    desc:   "Sublimez vos extérieurs avec nos solutions clés en main : terrasses, allées, clôtures et espaces paysagers.",
-    items:  ["Terrasses en bois et composite", "Allées et dalles béton", "Clôtures et portails", "Murets et bordures", "Dalles et pavés", "Éclairage extérieur"],
-    img:    "/images/amenagement-exterieur.jpg",
-    seoDesc: "Aménagement extérieur à Longuenesse",
+    slug: "amenagement-exterieur",
+    title: "Aménagement Extérieur",
+    desc: "Sublimez vos extérieurs avec nos solutions clés en main : terrasses, allées, clôtures et espaces paysagers.",
+    items: ["Terrasses en bois et composite", "Allées et dalles béton", "Clôtures et portails", "Murets et bordures", "Dalles et pavés", "Éclairage extérieur"],
+    img: "/images/amenagement-exterieur.jpg",
+    icon: "🌳",
   },
   {
-    slug:   "second-oeuvre",
-    title:  "Second Œuvre",
-    desc:   "Électricité, plomberie, isolation — nos techniciens certifiés assurent des installations durables et aux normes.",
-    items:  ["Électricité et tableau électrique", "Plomberie et sanitaires", "Isolation thermique (ITE/ITI)", "Isolation acoustique", "Ventilation (VMC)", "Chauffage et climatisation"],
-    img:    "/images/second-oeuvre.jpg",
-    seoDesc: "Second œuvre : électricité, plomberie, isolation à Longuenesse",
+    slug: "second-oeuvre",
+    title: "Second Œuvre",
+    desc: "Électricité, plomberie, isolation — nos techniciens certifiés assurent des installations durables et aux normes.",
+    items: ["Électricité et tableau électrique", "Plomberie et sanitaires", "Isolation thermique (ITE/ITI)", "Isolation acoustique", "Ventilation (VMC)", "Chauffage et climatisation"],
+    img: "/images/second-oeuvre.jpg",
+    icon: "🔧",
   },
 ]
 
+const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+}
+
+const item = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
+}
+
 export default function ServicesPage() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="bg-white min-h-screen">
       {/* Hero */}
-      <div className="bg-white border-b border-gray-100 py-16 mb-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <p className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#0F2C5E]/40 mb-4">Ce que nous proposons</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-5" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            Tous nos <span className="inline-block bg-[#0F2C5E] text-white px-3 py-1 rounded-sm">services</span> de travaux
-          </h1>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment avec des artisans qualifiés et certifiés.
-          </p>
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            className="space-y-6"
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em]">Ce que nous proposons</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F2C5E]">
+              Tous nos <span className="text-[#F97316]">services</span> de travaux
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+              De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment avec des artisans qualifiés et certifiés.
+            </p>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {services.map((s, i) => (
-          <div key={s.slug} className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}>
-            {/* Visual */}
-            <div className={`${i % 2 === 1 ? "lg:order-2" : ""} relative h-64 lg:h-80 rounded-3xl overflow-hidden`}>
-              <Image src={s.img} alt={s.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-              <div className="absolute inset-0 bg-[#0F2C5E]/30" />
-              <div className="absolute inset-0 flex items-end p-6">
-                <span className="bg-white/10 backdrop-blur-sm border border-white/20 text-white text-sm px-3 py-1 rounded-full">{s.seoDesc}</span>
-              </div>
-            </div>
+      {/* Services Grid */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {services.map((s) => (
+              <motion.div key={s.slug} variants={item}>
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="group bg-white rounded-2xl overflow-hidden border border-gray-100 p-6 h-full flex flex-col hover:shadow-lg hover:border-[#F97316] transition-all"
+                >
+                  <div className="text-5xl mb-4">{s.icon}</div>
+                  <h3 className="text-xl font-bold text-[#0F2C5E] mb-2">{s.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1">{s.desc}</p>
+                  <div className="mt-4 flex items-center gap-2 text-[#F97316] font-semibold text-sm group-hover:gap-3 transition-all">
+                    En savoir plus <span>→</span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-            {/* Content */}
-            <div className={i % 2 === 1 ? "lg:order-1" : ""}>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#0F2C5E] mb-4" style={{ fontFamily: "var(--font-playfair), serif" }}>{s.title}</h2>
-              <p className="text-gray-600 leading-relaxed mb-6">{s.desc}</p>
-              <ul className="space-y-2 mb-8">
-                {s.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-gray-700">
-                    <span className="w-5 h-5 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs shrink-0">✓</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="flex gap-3">
-                <Link href={`/services/${s.slug}`} className="bg-[#0F2C5E] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm">
-                  En savoir plus
-                </Link>
-                <Link href="/devis" className="bg-[#0F2C5E] text-white font-semibold px-5 py-2.5 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors text-sm">
-                  Devis gratuit
-                </Link>
+      {/* Detailed Services */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto space-y-20">
+          {services.map((s, i) => (
+            <motion.div
+              key={s.slug}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "lg:flex-row-reverse" : ""}`}
+            >
+              {/* Image */}
+              <div className={`${i % 2 === 1 ? "lg:order-2" : ""} relative h-64 lg:h-80 rounded-2xl overflow-hidden`}>
+                <Image
+                  src={s.img}
+                  alt={s.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                <div className="absolute inset-0 bg-[#0F2C5E]/20" />
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+
+              {/* Content */}
+              <div className={i % 2 === 1 ? "lg:order-1" : ""}>
+                <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">{s.title}</h2>
+                <p className="text-gray-700 leading-relaxed mb-6 text-lg">{s.desc}</p>
+                <ul className="space-y-3 mb-8">
+                  {s.items.map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-gray-700">
+                      <span className="w-2 h-2 bg-[#F97316] rounded-full shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex gap-3">
+                  <Link
+                    href={`/services/${s.slug}`}
+                    className="bg-[#F97316] text-white font-semibold px-6 py-3 rounded-xl hover:bg-orange-600 transition-colors"
+                  >
+                    En savoir plus
+                  </Link>
+                  <Link
+                    href="/devis"
+                    className="border-2 border-[#F97316] text-[#F97316] font-semibold px-6 py-3 rounded-xl hover:bg-[#F97316]/5 transition-colors"
+                  >
+                    Devis gratuit
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
       {/* CTA */}
-      <div className="mt-20 bg-[#F8F7F4] py-16">
-        <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#0F2C5E] mb-4" style={{ fontFamily: "var(--font-playfair), serif" }}>
-            Votre projet ne rentre pas dans une case ?
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30"
+        >
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">
+            Prêt à démarrer votre projet ?
           </h2>
-          <p className="text-gray-600 mb-8">Contactez-nous pour discuter de votre besoin spécifique. Nous avons l&apos;expertise pour tout type de chantier.</p>
-          <Link href="/devis" className="inline-flex bg-[#0F2C5E] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0F2C5E]/90 transition-colors">
-            Demander un devis personnalisé
-          </Link>
-        </div>
-      </div>
+          <p className="text-gray-700 text-lg">
+            Contactez-nous pour un devis gratuit. Nous répondons en moins de 48h.
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              href="/devis"
+              className="bg-[#F97316] text-white font-semibold px-8 py-3 rounded-xl hover:bg-orange-600 transition-colors"
+            >
+              Demander un devis
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-[#F97316] text-[#F97316] font-semibold px-8 py-3 rounded-xl hover:bg-[#F97316]/5 transition-colors"
+            >
+              Nous contacter
+            </Link>
+          </div>
+        </motion.div>
+      </section>
     </div>
   )
 }

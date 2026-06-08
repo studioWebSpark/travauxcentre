@@ -14,7 +14,7 @@ export default function CopyLinkButton({ url }: { url: string }) {
 
   return (
     <button onClick={copy}
-      className="w-full flex items-center justify-center gap-2 bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl hover:bg-gray-100 transition-colors text-xs">
+      className="w-full flex items-center justify-center gap-2 bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl text-xs">
       {copied ? <CheckCircle className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
       {copied ? "Lien copié !" : "Copier le lien portail"}
     </button>

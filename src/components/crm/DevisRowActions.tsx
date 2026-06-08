@@ -40,7 +40,7 @@ export default function DevisRowActions({ devisId, token, statut, emailEnvoye, h
           <CheckCircle className="w-3.5 h-3.5" /> Accepté
         </span>
         <a href={`/api/crm/devis/${devisId}/pdf`} target="_blank"
-          className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+          className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
           <FileText className="w-3.5 h-3.5" /> PDF
         </a>
       </div>
@@ -52,10 +52,10 @@ export default function DevisRowActions({ devisId, token, statut, emailEnvoye, h
       {/* Bouton principal : Envoyer email */}
       {hasEmail && (
         <button onClick={sendEmail} disabled={sending}
-          className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors ${
+          className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs ${
             sent
               ? "bg-green-50 border border-green-200 text-green-700"
-              : "bg-[#0F2C5E] text-white hover:bg-[#1a3f7a]"
+              : "bg-[#0F2C5E] text-[#1a1a1a] "
           } disabled:opacity-60`}>
           {sending ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
            : sent   ? <CheckCircle className="w-3.5 h-3.5" />
@@ -66,20 +66,20 @@ export default function DevisRowActions({ devisId, token, statut, emailEnvoye, h
 
       {/* Copier lien */}
       <button onClick={copyLink}
-        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
         <Copy className="w-3.5 h-3.5" />
         {copied ? "Copié !" : "Lien"}
       </button>
 
       {/* Voir sur place */}
       <a href={devisUrl} target="_blank"
-        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
         <Eye className="w-3.5 h-3.5" /> Voir
       </a>
 
       {/* PDF */}
       <a href={`/api/crm/devis/${devisId}/pdf`} target="_blank"
-        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
         <FileText className="w-3.5 h-3.5" /> PDF
       </a>
     </div>

@@ -9,14 +9,14 @@ export default async function XpBar() {
       <div className="flex items-center justify-between mb-1.5">
         <div className="flex items-center gap-1.5">
           <span className="text-base">{current.icon}</span>
-          <span className="text-xs font-bold text-white">{current.label}</span>
+          <span className="text-xs font-bold text-[#1a1a1a]">{current.label}</span>
           <span className="text-xs text-slate-500 font-semibold">Niv.{current.level}</span>
         </div>
-        <span className="text-xs text-slate-400 font-semibold">{totalXp} XP</span>
+        <span className="text-xs text-[#1a1a1a] font-semibold">{totalXp} XP</span>
       </div>
       <div className="h-2 bg-white/10 rounded-full overflow-hidden">
         <div
-          className="h-full rounded-full transition-all duration-700"
+          className="h-full rounded-full duration-700"
           style={{ width: `${progress}%`, background: current.color }}
         />
       </div>

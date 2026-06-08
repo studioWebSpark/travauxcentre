@@ -118,37 +118,62 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0F1E]">
-        {/* Background image */}
-        <Image
-          src="/images/hero.jpg"
-          alt="Chantier de rénovation Travaux Centre"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        {/* Gradient overlay */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(15,44,94,0.55) 0%, rgba(10,15,30,0.88) 70%)" }}
-          aria-hidden
-        />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white via-white to-gray-50">
+        {/* Animated background shapes */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Floating circles */}
+          <motion.div
+            className="absolute w-80 h-80 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0) 70%)" }}
+            animate={{ x: [0, 30, 0], y: [0, 50, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="w-full h-full" />
+          </motion.div>
+          <motion.div
+            className="absolute w-96 h-96 rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(15,44,94,0.1) 0%, rgba(15,44,94,0) 70%)" }}
+            animate={{ x: [50, 0, 50], y: [30, -20, 30] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="w-full h-full" />
+          </motion.div>
 
-        <div className="relative z-10 text-center text-white px-4 sm:px-6 max-w-4xl mx-auto">
+          {/* Floating card shapes */}
+          <motion.div
+            className="absolute top-20 right-10 w-40 h-48 rounded-3xl border-2 border-[#F97316]/20"
+            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02))" }}
+          />
+          <motion.div
+            className="absolute bottom-32 left-10 w-32 h-40 rounded-2xl border-2 border-[#0F2C5E]/20"
+            animate={{ y: [0, 25, 0], rotate: [0, -4, 0] }}
+            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+            style={{ background: "linear-gradient(135deg, rgba(15,44,94,0.08), rgba(15,44,94,0.02))" }}
+          />
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-24 h-32 rounded-xl border-2 border-[#F97316]/15"
+            animate={{ y: [0, 30, 0], x: [0, 15, 0] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.06), transparent)" }}
+          />
+        </div>
+
+        <div className="relative z-10 text-center text-[#0F2C5E] px-4 sm:px-6 max-w-4xl mx-auto">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: easeOut }}
-            className="inline-flex items-center gap-2 glass rounded-full px-4 py-2 text-sm font-[500] mb-8"
+            className="inline-flex items-center gap-2 bg-white/90 backdrop-blur rounded-full px-4 py-2 text-sm font-[500] mb-8 border border-gray-200"
           >
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
             Artisans certifiés RGE — Garantie décennale
           </motion.div>
 
           {/* Title */}
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl leading-[1.05] mb-4">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl leading-[1.05] mb-4 font-bold">
             <span className="flex flex-wrap justify-center gap-x-4 mb-2">
               {titleWords.map((word, i) => (
                 <motion.span
@@ -163,7 +188,7 @@ export default function Home() {
               ))}
             </span>
             <motion.span
-              className="gradient-text inline-block"
+              className="text-[#F97316]"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6, ease: easeOut }}
@@ -174,7 +199,7 @@ export default function Home() {
 
           {/* Subtitle */}
           <motion.p
-            className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed font-[400]"
+            className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed font-[400]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.85 }}
@@ -202,7 +227,7 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
               <Link
                 href="/services"
-                className="glass inline-flex items-center justify-center gap-2 text-white font-[600] px-8 py-4 rounded-full text-lg hover:bg-white/10 transition-colors"
+                className="glass inline-flex items-center justify-center gap-2 text-[#0F2C5E] font-[600] px-8 py-4 rounded-full text-lg hover:bg-white/20 transition-colors border border-white/50"
               >
                 Nos Services
               </Link>
@@ -224,7 +249,7 @@ export default function Home() {
               <motion.div
                 key={label}
                 variants={item}
-                className="flex items-center gap-2 text-slate-300 text-sm font-[500]"
+                className="flex items-center gap-2 text-[#0F2C5E] text-sm font-[500] bg-white/80 px-4 py-2 rounded-full"
               >
                 <span className="text-[#F97316]">{icon}</span>
                 {label}
@@ -235,7 +260,7 @@ export default function Home() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#0F2C5E]/40"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -246,7 +271,7 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES ─────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0D1B2A]">
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section header */}
           <motion.div
@@ -257,8 +282,8 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Ce que nous faisons</p>
-            <h2 className="text-3xl sm:text-4xl text-white mb-4">Nos domaines d&apos;expertise</h2>
-            <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos domaines d&apos;expertise</h2>
+            <p className="text-gray-600 max-w-xl mx-auto text-sm leading-relaxed">
               De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment.
             </p>
           </motion.div>
@@ -276,7 +301,7 @@ export default function Home() {
                 <TiltCard className="h-full">
                   <Link
                     href={s.href}
-                    className="group glass h-full flex flex-col rounded-2xl overflow-hidden hover:bg-white/8 transition-colors duration-300"
+                    className="group bg-white h-full flex flex-col rounded-2xl overflow-hidden hover:shadow-lg hover:border-[#F97316] transition-all border border-gray-100"
                   >
                     {/* Image */}
                     <div className="relative h-44 overflow-hidden flex-shrink-0">
@@ -287,18 +312,17 @@ export default function Home() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
-                      <div className="absolute inset-0 bg-[#0A0F1E]/40 group-hover:bg-[#0A0F1E]/20 transition-colors" />
-                      <div className="absolute top-3 left-3 w-10 h-10 glass rounded-xl flex items-center justify-center text-[#F97316]">
+                      <div className="absolute inset-0 bg-[#0F2C5E]/10 group-hover:bg-[#0F2C5E]/5 transition-colors" />
+                      <div className="absolute top-3 left-3 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#F97316] shadow-sm">
                         {s.icon}
                       </div>
                     </div>
                     {/* Content */}
                     <div className="p-5 flex flex-col flex-1">
-                      <h3 className="font-[700] text-white text-base mb-2">{s.title}</h3>
-                      <p className="text-slate-400 text-sm leading-relaxed flex-1">{s.desc}</p>
+                      <h3 className="font-[700] text-[#0F2C5E] text-base mb-2">{s.title}</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed flex-1">{s.desc}</p>
                       <div className="mt-4 flex items-center gap-1 text-[#F97316] text-sm font-[600] group-hover:gap-2 transition-all">
-                        En savoir plus
-                        <IconArrow />
+                        Découvrir <IconArrow />
                       </div>
                     </div>
                   </Link>
@@ -309,8 +333,44 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── COMMENT ÇA MARCHE ────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#111827]">
+      {/* ── AVANTAGES ────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos avantages</h2>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+          >
+            {avantages.map((a) => (
+              <motion.div key={a.title} variants={item}>
+                <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center group hover:shadow-lg hover:border-[#F97316] transition-all">
+                  <div className="flex justify-center mb-4 text-[#F97316]">
+                    {a.icon}
+                  </div>
+                  <h3 className="font-bold text-[#0F2C5E] mb-2">{a.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{a.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── ÉTAPES ───────────────────────────────────────────────────────– */}
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -320,32 +380,29 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche</p>
-            <h2 className="text-3xl sm:text-4xl text-white">Notre processus en 4 étapes</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Notre process</h2>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
             variants={container}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-80px" }}
           >
             {etapes.map((e, i) => (
-              <motion.div key={e.num} variants={item} className="relative">
-                {/* Connector line */}
-                {i < etapes.length - 1 && (
-                  <div className="hidden lg:block absolute top-7 left-[calc(50%+28px)] right-0 h-px bg-white/10" />
-                )}
-                <div className="text-center">
-                  {/* Number circle */}
-                  <div
-                    className="w-14 h-14 rounded-full mx-auto mb-6 flex items-center justify-center font-[800] text-white text-lg relative z-10"
-                    style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)", boxShadow: "0 0 24px rgba(249,115,22,0.35)" }}
-                  >
-                    {e.num}
+              <motion.div key={e.num} variants={item}>
+                <div className="relative">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 rounded-full bg-[#F97316] text-white font-bold flex items-center justify-center flex-shrink-0">
+                      {e.num}
+                    </div>
+                    {i < etapes.length - 1 && (
+                      <div className="hidden lg:block absolute left-14 top-0 w-[calc(100%+2rem)] h-0.5 bg-gradient-to-r from-[#F97316] to-transparent" style={{ width: "calc(100% + 2rem)" }} />
+                    )}
                   </div>
-                  <h3 className="font-[700] text-white text-base mb-3">{e.title}</h3>
-                  <p className="text-slate-400 text-sm leading-relaxed">{e.desc}</p>
+                  <h3 className="font-bold text-[#0F2C5E] mb-2">{e.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">{e.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -353,85 +410,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── AVANTAGES ────────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0A0F1E] relative overflow-hidden">
-        {/* Subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-          aria-hidden
-        />
+      {/* ── ZONES ────────────────────────────────────────────────────────– */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Zone d'intervention</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nous intervenons dans la région</h2>
+            <p className="text-gray-600 max-w-xl mx-auto">
+              Basés à Longuenesse, nous couvrons un rayon de 80km autour de nos locaux.
+            </p>
+          </motion.div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left: text + CTA */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <motion.div
+              className="lg:col-span-2 bg-gray-100 rounded-2xl overflow-hidden h-96 border border-gray-200"
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true }}
             >
-              <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir</p>
-              <h2 className="text-3xl sm:text-4xl text-white mb-6">
-                L&apos;artisanat local au service<br />de votre projet
-              </h2>
-              <p className="text-slate-400 leading-relaxed mb-8 text-sm">
-                Depuis notre création, nous mettons la qualité d&apos;exécution, la transparence et la satisfaction client
-                au cœur de chaque chantier. Nos artisans sont sélectionnés pour leur expertise et leur rigueur.
-              </p>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                className="inline-block"
-              >
-                <Link
-                  href="/devis"
-                  className="btn-shine inline-flex items-center gap-2 text-white font-[600] px-6 py-3 rounded-full text-sm shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-shadow"
-                  style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-                >
-                  Obtenir un devis gratuit
-                  <IconArrow />
-                </Link>
-              </motion.div>
+              <ZoneMapCompactLoader />
             </motion.div>
 
-            {/* Right: 2x2 advantage cards */}
             <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+              className="flex flex-col gap-4"
               variants={container}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, margin: "-80px" }}
+              viewport={{ once: true }}
             >
-              {avantages.map((a) => (
-                <motion.div
-                  key={a.title}
-                  variants={item}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="glass rounded-2xl p-6"
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white mb-4"
-                    style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-                  >
-                    {a.icon}
-                  </div>
-                  <h3 className="font-[700] text-white text-sm mb-2">{a.title}</h3>
-                  <p className="text-slate-400 text-xs leading-relaxed">{a.desc}</p>
+              <p className="text-sm text-gray-600 mb-2 font-semibold text-[#0F2C5E]">Principales villes couvertes :</p>
+              {villes.map((ville) => (
+                <motion.div key={ville} variants={item} className="flex items-center gap-3">
+                  <span className="w-2 h-2 bg-[#F97316] rounded-full" />
+                  <span className="text-gray-700">{ville}</span>
                 </motion.div>
               ))}
+              <Link href="/zones-intervention" className="mt-4 inline-flex text-[#F97316] font-semibold text-sm gap-1 hover:gap-2 transition-all">
+                Voir toutes les villes <IconArrow />
+              </Link>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── TÉMOIGNAGES ──────────────────────────────────────────────────── */}
-      <section className="py-24 bg-[#0D1B2A]">
+      {/* ── TESTIMONIES ──────────────────────────────────────────────────– */}
+      <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -441,7 +471,7 @@ export default function Home() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Avis clients</p>
-            <h2 className="text-3xl sm:text-4xl text-white">Ce que disent nos clients</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Ce que pensent nos clients</h2>
           </motion.div>
 
           <motion.div
@@ -452,29 +482,20 @@ export default function Home() {
             viewport={{ once: true, margin: "-80px" }}
           >
             {temoignages.map((t) => (
-              <motion.div
-                key={t.nom}
-                variants={item}
-                whileHover={{ scale: 1.02, y: -4 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="glass rounded-2xl p-7"
-              >
-                {/* Stars */}
-                <div className="flex text-[#F97316] mb-4 gap-0.5">
-                  {Array.from({ length: t.note }).map((_, i) => <IconStar key={i} />)}
-                </div>
-                <p className="text-slate-300 leading-relaxed mb-6 italic text-sm">&ldquo;{t.texte}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-[700] text-sm"
-                    style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-                  >
-                    {t.nom[0]}
+              <motion.div key={t.nom} variants={item}>
+                <div className="bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-lg hover:border-[#F97316] transition-all h-full flex flex-col">
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <h3 className="font-bold text-[#0F2C5E]">{t.nom}</h3>
+                      <p className="text-xs text-gray-500">{t.ville}</p>
+                    </div>
+                    <div className="flex gap-1">
+                      {Array.from({ length: t.note }).map((_, i) => (
+                        <IconStar key={i} />
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-[600] text-white text-sm">{t.nom}</p>
-                    <p className="text-slate-500 text-xs">{t.ville}</p>
-                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1">&ldquo;{t.texte}&rdquo;</p>
                 </div>
               </motion.div>
             ))}
@@ -482,151 +503,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── ZONES D'INTERVENTION ─────────────────────────────────────────── */}
-      <section className="py-24 bg-[#111827]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Zone géographique</p>
-            <h2 className="text-3xl sm:text-4xl text-white mb-4">
-              Nous intervenons dans un rayon de 80km
-            </h2>
-            <p className="text-slate-400 max-w-xl mx-auto text-sm leading-relaxed">
-              Basés à <strong className="text-white">Longuenesse (62219)</strong>, nous couvrons l&apos;ensemble du Nord-Pas-de-Calais.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-stretch"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
-            {/* Map */}
-            <div className="lg:col-span-3 relative rounded-2xl overflow-hidden glass" style={{ minHeight: 340 }}>
-              <ZoneMapCompactLoader />
-            </div>
-
-            {/* Info */}
-            <div className="lg:col-span-2 flex flex-col justify-between gap-6">
-              <div>
-                <p className="text-slate-400 mb-5 leading-relaxed text-sm">
-                  Nous couvrons <strong className="text-white">26 communes</strong> et toutes les localités environnantes.
-                </p>
-                <div className="space-y-2 mb-6">
-                  {[
-                    { color: "#22c55e", label: "Zone proche", sub: "< 20 km" },
-                    { color: "#F97316", label: "Zone intermédiaire", sub: "20 à 45 km" },
-                    { color: "#94a3b8", label: "Zone étendue", sub: "45 à 80 km" },
-                  ].map(({ color, label, sub }) => (
-                    <div key={label} className="flex items-center gap-2 text-sm">
-                      <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: color }} />
-                      <span className="text-slate-400">
-                        <strong className="text-white">{label}</strong> — {sub}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* City badges */}
-                <motion.div
-                  className="flex flex-wrap gap-2"
-                  variants={container}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                >
-                  {villes.map((v) => (
-                    <motion.span
-                      key={v}
-                      variants={item}
-                      className="glass text-slate-300 text-xs font-[500] px-3 py-1.5 rounded-full"
-                    >
-                      {v}
-                    </motion.span>
-                  ))}
-                </motion.div>
-              </div>
-
-              <div className="flex flex-col gap-3">
-                <Link
-                  href="/zones-intervention"
-                  className="glass inline-flex items-center justify-center gap-2 text-white font-[600] px-5 py-3 rounded-full text-sm hover:bg-white/8 transition-colors"
-                >
-                  Voir toutes nos zones
-                  <IconArrow />
-                </Link>
-                <Link
-                  href="/devis"
-                  className="btn-shine inline-flex items-center justify-center gap-2 text-white font-[600] px-5 py-3 rounded-full text-sm shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-shadow"
-                  style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-                >
-                  Devis gratuit sous 48h
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-28 bg-[#0A0F1E] relative overflow-hidden">
-        {/* Glow */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(249,115,22,0.12) 0%, transparent 70%)" }}
-          aria-hidden
-        />
-
+      {/* ── CTA FINAL ────────────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
         <motion.div
-          className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative"
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30 px-4"
         >
-          <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-4">Prêt à commencer ?</p>
-          <h2 className="text-4xl sm:text-5xl text-white mb-6 leading-tight">
-            Démarrez votre projet{" "}
-            <span className="gradient-text">dès aujourd&apos;hui</span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">
+            Prêt à démarrer votre projet ?
           </h2>
-          <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-            Contactez-nous pour obtenir votre devis gratuit. Nos artisans se déplacent chez vous
-            et vous remettent un chiffrage détaillé sous 48h, sans engagement.
+          <p className="text-gray-700 text-lg">
+            Contactez-nous pour un devis gratuit. Nous répondons en moins de 48h.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Link
+              href="/devis"
+              className="bg-[#F97316] text-white font-semibold px-8 py-3 rounded-xl hover:bg-orange-600 transition-colors"
             >
-              <Link
-                href="/rendez-vous"
-                className="btn-shine inline-flex items-center justify-center gap-2 text-white font-[600] px-8 py-4 rounded-full text-lg shadow-xl shadow-orange-500/30 hover:shadow-orange-500/40 transition-shadow"
-                style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-              >
-                Prendre Rendez-vous
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              Demander un devis
+            </Link>
+            <Link
+              href="/contact"
+              className="border-2 border-[#F97316] text-[#F97316] font-semibold px-8 py-3 rounded-xl hover:bg-[#F97316]/5 transition-colors"
             >
-              <a
-                href="tel:+33300000000"
-                className="glass inline-flex items-center justify-center gap-2 text-white font-[600] px-8 py-4 rounded-full text-lg hover:bg-white/8 transition-colors"
-              >
-                <IconPhone />
-                03 XX XX XX XX
-              </a>
-            </motion.div>
+              Nous contacter
+            </Link>
           </div>
         </motion.div>
       </section>

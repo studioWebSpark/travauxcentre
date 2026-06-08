@@ -38,11 +38,11 @@ export default function ChantiersClient({
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white font-montserrat">Chantiers</h1>
-          <p className="text-slate-300 text-sm mt-0.5">{initialChantiers.length} chantier{initialChantiers.length > 1 ? "s" : ""}</p>
+          <h1 className="text-2xl font-bold text-[#1a1a1a] font-montserrat">Chantiers</h1>
+          <p className="text-[#1a1a1a] text-sm mt-0.5">{initialChantiers.length} chantier{initialChantiers.length > 1 ? "s" : ""}</p>
         </div>
         <Link href="/crm/chantiers/new"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl hover:from-orange-500 hover:to-orange-700 transition-all text-sm">
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
           <Plus className="w-4 h-4" /> Nouveau chantier
         </Link>
       </div>
@@ -53,11 +53,11 @@ export default function ChantiersClient({
           { label: "Total",    value: initialChantiers.length, color: "text-[#F97316]", bg: "bg-orange-50/20 border-orange-500/30" },
           { label: "En cours", value: enCours,                 color: "text-amber-400",  bg: "bg-amber-500/20 border-amber-500/30" },
           { label: "Terminés", value: termine,                 color: "text-green-400",  bg: "bg-green-500/20 border-green-500/30" },
-          { label: "CA total", value: formatEuro(caTotal),    color: "text-white",      bg: "bg-white/5 border-white/20" },
+          { label: "CA total", value: formatEuro(caTotal),    color: "text-[#1a1a1a]",      bg: "bg-white/5 border-white/20" },
         ].map(({ label, value, color, bg }) => (
           <div key={label} className={`glass rounded-[0.875rem] border ${bg} p-4`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-300 mt-0.5 font-medium uppercase tracking-wide">{label}</p>
+            <p className="text-xs text-[#1a1a1a] mt-0.5 font-medium uppercase tracking-wide">{label}</p>
           </div>
         ))}
       </div>
@@ -65,7 +65,7 @@ export default function ChantiersClient({
       {/* Search & Filter */}
       <div className="glass rounded-[0.875rem] border border-white/8 p-4 flex flex-wrap gap-3 items-end">
         <div className="flex-1 min-w-48">
-          <label className="block text-xs font-medium text-slate-300 mb-1 uppercase tracking-wide">Recherche</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1 uppercase tracking-wide">Recherche</label>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
             <input
@@ -73,12 +73,12 @@ export default function ChantiersClient({
               placeholder="Titre ou adresse…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 pl-9 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
+              className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 pl-9 text-sm text-[#1a1a1a] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#1a1a1a] "
               >
                 <X className="w-4 h-4" />
               </button>
@@ -86,11 +86,11 @@ export default function ChantiersClient({
           </div>
         </div>
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1 uppercase tracking-wide">Statut</label>
+          <label className="block text-xs font-medium text-[#1a1a1a] mb-1 uppercase tracking-wide">Statut</label>
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
+            className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
           >
             {STATUTS_FILTER.map((st) => {
               const label = st === "Tous" ? "Tous" : STATUTS_CHANTIER[st as keyof typeof STATUTS_CHANTIER]?.label || st
@@ -119,7 +119,7 @@ export default function ChantiersClient({
                 setSearchQuery("")
                 setSelectedStatus("Tous")
               }}
-              className="text-[#F97316] text-sm font-semibold hover:underline"
+              className="text-[#F97316] text-sm font-semibold "
             >
               Réinitialiser les filtres
             </button>
@@ -132,7 +132,7 @@ export default function ChantiersClient({
             const etapesDone = c.etapes.filter((e) => e.statut === "TERMINEE").length
             return (
               <Link key={c.id} href={`/crm/chantiers/${c.id}`} className="group">
-                <div className="glass rounded-[0.875rem] border border-white/8 shadow-sm hover:shadow-md hover:border-[#F97316]/30 transition-all h-full overflow-hidden">
+                <div className="glass rounded-[0.875rem] border border-white/8 shadow-sm h-full overflow-hidden">
                   {/* Photo ou placeholder */}
                   <div className="h-36 bg-gradient-to-br from-[#F97316]/10 to-[#F97316]/5 relative overflow-hidden">
                     {c.photos[0] ? (
@@ -149,7 +149,7 @@ export default function ChantiersClient({
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-bold text-white mb-1 group-hover:text-[#F97316] transition-colors">{c.titre}</h3>
+                    <h3 className="font-bold text-[#1a1a1a] mb-1 ">{c.titre}</h3>
                     {c.lead && <p className="text-xs text-[#404040] mb-2">Client : {c.lead.nom}</p>}
 
                     <div className="flex items-center gap-1.5 text-xs text-[#404040] mb-3">
@@ -164,7 +164,7 @@ export default function ChantiersClient({
                         <span className="text-xs font-bold text-[#F97316]">{c.progression}%</span>
                       </div>
                       <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-[#F97316] to-orange-400 rounded-full transition-all"
+                        <div className="h-full bg-gradient-to-r from-[#F97316] to-orange-400 rounded-full "
                           style={{ width: `${c.progression}%` }} />
                       </div>
                     </div>

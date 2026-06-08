@@ -44,7 +44,7 @@ export default async function ObjectifsWidget() {
                     </div>
                     <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                       <div
-                        className={`h-full rounded-full transition-all duration-500 ${obj.done ? "bg-green-500" : "bg-[#0F2C5E]"}`}
+                        className={`h-full rounded-full duration-500 ${obj.done ? "bg-green-500" : "bg-[#0F2C5E]"}`}
                         style={{ width: `${pct}%` }}
                       />
                     </div>

@@ -31,10 +31,10 @@ export default function CrmLogin() {
     <div className="min-h-screen bg-[#0F2C5E] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <span className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-playfair), serif" }}>
+          <span className="text-3xl font-bold text-[#1a1a1a]" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Travaux<span className="text-[#F97316]">Centre</span>
           </span>
-          <p className="text-slate-400 text-sm mt-2">Espace CRM — accès privé</p>
+          <p className="text-[#1a1a1a] text-sm mt-2">Espace CRM — accès privé</p>
         </div>
         <form onSubmit={submit} className="bg-white rounded-2xl p-8 shadow-2xl">
           <h1 className="text-lg font-bold text-[#0F2C5E] mb-5">Connexion</h1>
@@ -56,7 +56,7 @@ export default function CrmLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0F2C5E] text-white font-semibold py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors disabled:opacity-60"
+            className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-3 rounded-xl disabled:opacity-60"
           >
             {loading ? "Connexion…" : "Accéder au CRM"}
           </button>

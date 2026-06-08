@@ -51,11 +51,11 @@ export default async function DevisListPage({
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white font-montserrat">Devis</h1>
+          <h1 className="text-2xl font-bold text-[#1a1a1a] font-montserrat">Devis</h1>
           <p className="text-[#404040] text-sm mt-0.5">{devis.length} résultat{devis.length > 1 ? "s" : ""}</p>
         </div>
         <Link href="/crm/devis/new"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl hover:from-orange-500 hover:to-orange-700 transition-all text-sm">
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
           <Plus className="w-4 h-4" /> Nouveau devis
         </Link>
       </div>
@@ -65,7 +65,7 @@ export default async function DevisListPage({
         {stats.map(({ label, value, color, bg }) => (
           <div key={label} className={`glass rounded-[0.875rem] border border-white/8 p-4 ${bg.replace('bg-', 'bg-opacity-20 ').replace('border-', 'border-opacity-20 ')}`}>
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs text-slate-400 mt-0.5">{label}</p>
+            <p className="text-xs text-[#1a1a1a] mt-0.5">{label}</p>
           </div>
         ))}
       </div>
@@ -78,20 +78,20 @@ export default async function DevisListPage({
             name="q"
             defaultValue={q}
             placeholder="Numéro ou client…"
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
           />
         </div>
         <div>
           <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Statut</label>
-          <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
+          <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             <option className="bg-[#0D1B2A]">Tous</option>
             {Object.entries(STATUTS_DEVIS).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
           </select>
         </div>
-        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
+        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2 rounded-xl text-sm ">
           Filtrer
         </button>
-        <Link href="/crm/devis" className="text-sm text-[#404040] hover:text-[#1a1a1a] transition-colors py-2">Réinitialiser</Link>
+        <Link href="/crm/devis" className="text-sm text-[#404040] py-2">Réinitialiser</Link>
       </form>
 
       {/* Table */}
@@ -100,7 +100,7 @@ export default async function DevisListPage({
           <FileText className="w-10 h-10 text-[#555555] mx-auto mb-3" />
           <p className="text-[#404040] mb-4">Aucun devis pour l&apos;instant</p>
           <Link href="/crm/devis/new"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm ">
             <Plus className="w-4 h-4" /> Créer le premier devis
           </Link>
         </div>
@@ -110,12 +110,12 @@ export default async function DevisListPage({
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-white/8 bg-white/5">
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Numéro</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Client</th>
-                  <th className="text-left px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden md:table-cell font-montserrat">Chantier</th>
-                  <th className="text-right px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Montant TTC</th>
-                  <th className="text-center px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Statut</th>
-                  <th className="px-5 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Actions</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider font-montserrat">Numéro</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider font-montserrat">Client</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider hidden md:table-cell font-montserrat">Chantier</th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider font-montserrat">Montant TTC</th>
+                  <th className="text-center px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider font-montserrat">Statut</th>
+                  <th className="px-5 py-3 text-xs font-semibold text-[#1a1a1a] uppercase tracking-wider font-montserrat">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/8">
@@ -123,7 +123,7 @@ export default async function DevisListPage({
                   const st  = STATUTS_DEVIS[d.statut] ?? STATUTS_DEVIS.BROUILLON
                   const tot = calcTotaux(d.lignes, d.tva)
                   return (
-                    <tr key={d.id} className="hover:bg-white/5 transition-colors">
+                    <tr key={d.id} className="hover:bg-white/5 ">
                       <td className="px-5 py-4">
                         <p className="font-bold text-[#F97316]">{d.numero}</p>
                         <p className="text-xs text-[#404040] mt-0.5">
@@ -131,11 +131,11 @@ export default async function DevisListPage({
                         </p>
                       </td>
                       <td className="px-5 py-4">
-                        <p className="font-medium text-white">{d.lead?.nom ?? "—"}</p>
+                        <p className="font-medium text-[#1a1a1a]">{d.lead?.nom ?? "—"}</p>
                         <p className="text-xs text-[#404040]">{d.lead?.email ?? ""}</p>
                       </td>
                       <td className="px-5 py-4 hidden md:table-cell">
-                        <p className="text-white text-xs font-medium">{d.chantier?.titre ?? "—"}</p>
+                        <p className="text-[#1a1a1a] text-xs font-medium">{d.chantier?.titre ?? "—"}</p>
                       </td>
                       <td className="px-5 py-4 text-right">
                         <p className="font-bold text-[#F97316]">{formatEuro(tot.ttc)}</p>

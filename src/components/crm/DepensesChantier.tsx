@@ -182,7 +182,7 @@ export default function DepensesChantier({ chantierId, budget }: Props) {
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex items-center gap-2 bg-[#0F2C5E] hover:bg-[#1a3d7a] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-60"
+          className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] text-sm font-semibold px-4 py-2 rounded-lg disabled:opacity-60"
         >
           {saving ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Euro className="w-3.5 h-3.5" />}
           {saving ? "Enregistrement…" : "Ajouter"}
@@ -223,7 +223,7 @@ export default function DepensesChantier({ chantierId, budget }: Props) {
                 <button
                   onClick={() => handleDelete(d.id)}
                   disabled={deletingId === d.id}
-                  className="shrink-0 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                  className="shrink-0 p-1.5 text-gray-400 rounded-lg disabled:opacity-50"
                   title="Supprimer"
                 >
                   {deletingId === d.id ? (

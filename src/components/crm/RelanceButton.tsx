@@ -69,7 +69,7 @@ export default function RelanceButton({ type, id, statut, hasEmail }: Props) {
       <button
         onClick={handleClick}
         disabled={loading}
-        className="inline-flex items-center gap-1 text-xs font-semibold bg-amber-100 hover:bg-amber-200 text-amber-800 px-2.5 py-1 rounded-full transition-colors disabled:opacity-60"
+        className="inline-flex items-center gap-1 text-xs font-semibold bg-amber-100 text-amber-800 px-2.5 py-1 rounded-full disabled:opacity-60"
       >
         {loading ? (
           <Loader2 className="w-3 h-3 animate-spin" />

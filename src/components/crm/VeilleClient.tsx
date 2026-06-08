@@ -101,15 +101,15 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
         </div>
         <div className="flex gap-2 flex-wrap">
           <a href="/crm/veille/bookmarklet"
-            className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm">
+            className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl text-sm">
             <Bookmark className="w-4 h-4" /> Bookmarklet
           </a>
           <button onClick={() => setShowPaste(true)}
-            className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm">
+            className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl text-sm">
             <Plus className="w-4 h-4" /> Coller une annonce
           </button>
           <button onClick={scan} disabled={scanning}
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm disabled:opacity-60">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm disabled:opacity-60">
             {scanning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
             {scanning ? "Scan en cours…" : "Scanner maintenant"}
           </button>
@@ -154,7 +154,7 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
           <Search className="w-10 h-10 text-gray-200 mx-auto mb-3" />
           <p className="text-gray-400 mb-4">Aucune annonce — lancez un scan pour démarrer</p>
           <button onClick={scan} disabled={scanning}
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-5 py-3 rounded-xl text-sm">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-5 py-3 rounded-xl text-sm">
             <Search className="w-4 h-4" /> Lancer le premier scan
           </button>
         </div>
@@ -185,18 +185,18 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
                   {/* Actions */}
                   <div className="flex flex-col gap-2 shrink-0">
                     <button onClick={() => importer(a.id)} disabled={importing === a.id}
-                      className="inline-flex items-center gap-1.5 bg-green-600 text-white font-semibold px-3 py-1.5 rounded-lg text-xs hover:bg-green-700 transition-colors disabled:opacity-60">
+                      className="inline-flex items-center gap-1.5 bg-green-600 text-[#1a1a1a] font-semibold px-3 py-1.5 rounded-lg text-xs disabled:opacity-60">
                       {importing === a.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle className="w-3.5 h-3.5" />}
                       Importer lead
                     </button>
                     {isDirectUrl(a.url) && (
                       <a href={a.url!} target="_blank"
-                        className="inline-flex items-center gap-1.5 border border-gray-200 text-[#0F2C5E] font-semibold px-3 py-1.5 rounded-lg text-xs hover:bg-gray-50 transition-colors">
+                        className="inline-flex items-center gap-1.5 border border-gray-200 text-[#0F2C5E] font-semibold px-3 py-1.5 rounded-lg text-xs ">
                         <ExternalLink className="w-3.5 h-3.5" /> Voir l&apos;annonce
                       </a>
                     )}
                     <button onClick={() => ignorer(a.id)} disabled={ignoring === a.id}
-                      className="inline-flex items-center gap-1.5 border border-gray-200 text-gray-400 font-semibold px-3 py-1.5 rounded-lg text-xs hover:bg-gray-50 transition-colors disabled:opacity-60">
+                      className="inline-flex items-center gap-1.5 border border-gray-200 text-gray-400 font-semibold px-3 py-1.5 rounded-lg text-xs disabled:opacity-60">
                       <X className="w-3.5 h-3.5" /> Ignorer
                     </button>
                   </div>
@@ -214,7 +214,7 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
           <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-lg">
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <h2 className="font-bold text-[#0F2C5E]">Coller une annonce</h2>
-              <button onClick={() => setShowPaste(false)} className="text-gray-400 hover:text-gray-600">
+              <button onClick={() => setShowPaste(false)} className="text-gray-400 ">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -248,12 +248,12 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
               </div>
               <div className="flex gap-3 pt-1">
                 <button type="submit" disabled={pasting}
-                  className="flex-1 bg-[#0F2C5E] text-white font-bold py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+                  className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
                   {pasting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                   {pasting ? "Analyse IA en cours…" : "Analyser avec l'IA"}
                 </button>
                 <button type="button" onClick={() => setShowPaste(false)}
-                  className="px-5 border border-gray-200 text-gray-500 font-semibold rounded-xl hover:bg-gray-50">
+                  className="px-5 border border-gray-200 text-gray-500 font-semibold rounded-xl ">
                   Annuler
                 </button>
               </div>

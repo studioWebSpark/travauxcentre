@@ -92,11 +92,11 @@ function CaptureForm() {
               <p className="text-gray-500 text-sm mb-8">La fiche lead est prête dans votre CRM.</p>
               <div className="flex flex-col gap-3">
                 <button onClick={() => { router.push(`/crm/leads/${result.leadId}`); window.close() }}
-                  className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm">
+                  className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">
                   Ouvrir la fiche lead →
                 </button>
                 <button onClick={() => window.close()}
-                  className="border border-gray-200 text-gray-500 font-semibold px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors text-sm">
+                  className="border border-gray-200 text-gray-500 font-semibold px-6 py-3 rounded-xl text-sm">
                   Fermer
                 </button>
               </div>
@@ -106,7 +106,7 @@ function CaptureForm() {
               <h2 className="text-xl font-bold text-[#0F2C5E] mb-2">Déjà dans la Veille !</h2>
               <p className="text-gray-500 text-sm mb-8">Cette annonce est déjà enregistrée.</p>
               <button onClick={() => window.close()}
-                className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl text-sm">Fermer</button>
+                className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">Fermer</button>
             </>
           ) : (
             <>
@@ -117,11 +117,11 @@ function CaptureForm() {
               <p className="text-gray-400 text-xs mb-8">Visible dans Veille → CRM</p>
               <div className="flex flex-col gap-3">
                 <button onClick={() => { router.push("/crm/veille"); window.close() }}
-                  className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl text-sm">
+                  className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">
                   Voir dans la Veille →
                 </button>
                 <button onClick={() => window.close()}
-                  className="border border-gray-200 text-gray-500 font-semibold px-6 py-3 rounded-xl text-sm hover:bg-gray-50">
+                  className="border border-gray-200 text-gray-500 font-semibold px-6 py-3 rounded-xl text-sm ">
                   Fermer
                 </button>
               </div>
@@ -145,14 +145,14 @@ function CaptureForm() {
         {/* Onglets mode */}
         <div className="flex gap-2 mb-4">
           <button onClick={() => setMode("capture")}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors border ${
-              mode === "capture" ? "bg-[#0F2C5E] text-white border-[#0F2C5E]" : "border-gray-200 text-gray-600 bg-white hover:bg-gray-50"
+            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold border ${
+              mode === "capture" ? "bg-[#0F2C5E] text-[#1a1a1a] border-[#0F2C5E]" : "border-gray-200 text-gray-600 bg-white "
             }`}>
             Enregistrer dans Veille
           </button>
           <button onClick={() => setMode("lead")}
-            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold transition-colors border ${
-              mode === "lead" ? "bg-[#F97316] text-white border-[#F97316]" : "border-gray-200 text-gray-600 bg-white hover:bg-gray-50"
+            className={`flex-1 py-2.5 rounded-xl text-sm font-semibold border ${
+              mode === "lead" ? "bg-[#F97316] text-[#1a1a1a] border-[#F97316]" : "border-gray-200 text-gray-600 bg-white "
             }`}>
             Créer un Lead directement
           </button>
@@ -244,10 +244,10 @@ function CaptureForm() {
             <button
               onClick={mode === "lead" ? saveLead : saveAnnonce}
               disabled={saving || !titre}
-              className={`flex-1 font-bold py-3 rounded-xl transition-colors disabled:opacity-60 flex items-center justify-center gap-2 ${
+              className={`flex-1 font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2 ${
                 mode === "lead"
-                  ? "bg-[#F97316] text-white hover:bg-orange-600"
-                  : "bg-[#0F2C5E] text-white hover:bg-[#1a3f7a]"
+                  ? "bg-[#F97316] text-[#1a1a1a] "
+                  : "bg-[#0F2C5E] text-[#1a1a1a] "
               }`}>
               {saving
                 ? <><Loader2 className="w-4 h-4 animate-spin" /> Traitement…</>
@@ -257,7 +257,7 @@ function CaptureForm() {
               }
             </button>
             <button onClick={() => window.close()}
-              className="px-4 border border-gray-200 text-gray-500 rounded-xl hover:bg-gray-50 transition-colors">
+              className="px-4 border border-gray-200 text-gray-500 rounded-xl ">
               <X className="w-4 h-4" />
             </button>
           </div>

@@ -65,7 +65,7 @@ export default function NouveauLeadModal() {
   return (
     <>
       <button onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm">
+        className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm">
         <UserPlus className="w-4 h-4" /> Nouveau lead
       </button>
 
@@ -79,7 +79,7 @@ export default function NouveauLeadModal() {
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-3xl z-10">
               <h2 className="text-lg font-bold text-[#0F2C5E]">Nouveau lead</h2>
-              <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+              <button onClick={() => setOpen(false)} className="text-gray-400 ">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -180,12 +180,12 @@ export default function NouveauLeadModal() {
               {/* Actions */}
               <div className="flex gap-3 pt-2">
                 <button type="submit" disabled={loading}
-                  className="flex-1 bg-[#0F2C5E] text-white font-bold py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors disabled:opacity-60 flex items-center justify-center gap-2">
+                  className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2">
                   {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <UserPlus className="w-4 h-4" />}
                   {loading ? "Création…" : "Créer le lead"}
                 </button>
                 <button type="button" onClick={() => setOpen(false)}
-                  className="px-5 py-3 border border-gray-200 text-gray-500 font-semibold rounded-xl hover:bg-gray-50 transition-colors">
+                  className="px-5 py-3 border border-gray-200 text-gray-500 font-semibold rounded-xl ">
                   Annuler
                 </button>
               </div>

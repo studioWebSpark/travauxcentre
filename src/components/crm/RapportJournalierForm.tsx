@@ -149,7 +149,7 @@ export default function RapportJournalierForm({ chantierId, clientEmail }: Props
               onChange={(e) => setEnvoyer(e.target.checked)}
               className="w-4 h-4 rounded border-gray-300 text-[#0F2C5E] focus:ring-[#0F2C5E]"
             />
-            <span className="text-xs text-gray-600 group-hover:text-gray-800 transition-colors flex items-center gap-1">
+            <span className="text-xs text-gray-600 flex items-center gap-1">
               <Send className="w-3 h-3" />
               Envoyer automatiquement au client par email
               <span className="text-gray-400">({clientEmail})</span>
@@ -160,7 +160,7 @@ export default function RapportJournalierForm({ chantierId, clientEmail }: Props
         <button
           type="submit"
           disabled={saving || !description}
-          className="inline-flex items-center gap-2 bg-[#0F2C5E] hover:bg-[#1a3d7a] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors disabled:opacity-60"
+          className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] text-sm font-semibold px-4 py-2 rounded-lg disabled:opacity-60"
         >
           {saving ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />

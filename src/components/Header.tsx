@@ -69,16 +69,16 @@ export default function Header() {
       initial={false}
       animate={
         scrolled
-          ? { backgroundColor: "rgba(10,15,30,0.85)" }
-          : { backgroundColor: "rgba(10,15,30,0)" }
+          ? { backgroundColor: "rgba(15,44,94,0.95)" }
+          : { backgroundColor: "rgba(15,44,94,0)" }
       }
       transition={{ duration: 0.3, ease: "easeOut" }}
-      style={{ backdropFilter: scrolled ? "blur(20px)" : "blur(0px)", WebkitBackdropFilter: scrolled ? "blur(20px)" : "blur(0px)", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent" }}
+      style={{ backdropFilter: scrolled ? "blur(10px)" : "blur(0px)", WebkitBackdropFilter: scrolled ? "blur(10px)" : "blur(0px)", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-[#F97316] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#0F2C5E] flex items-center justify-center">
             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 21V12h6v9" />
@@ -100,7 +100,7 @@ export default function Header() {
             <motion.div key={item.href} variants={navItemVariants}>
               <Link
                 href={item.href}
-                className="text-sm font-[500] text-slate-300 hover:text-white transition-colors duration-200"
+                className="text-sm font-[500] text-black hover:text-[#F97316] transition-colors duration-200"
               >
                 {item.label}
               </Link>
@@ -157,7 +157,7 @@ export default function Header() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="md:hidden glass-strong border-t border-white/8 px-4 pb-5 pt-3"
+            className="md:hidden bg-[#0F2C5E] border-t border-white/10 px-4 pb-5 pt-3"
           >
             <motion.div
               className="flex flex-col gap-1"
@@ -169,14 +169,14 @@ export default function Header() {
                 <motion.div key={item.href} variants={mobileLinkVariants}>
                   <Link
                     href={item.href}
-                    className="block text-slate-300 font-[500] px-3 py-3 rounded-xl hover:bg-white/8 hover:text-white transition-colors text-sm"
+                    className="block text-black font-[500] px-3 py-3 rounded-xl hover:bg-white/10 hover:text-[#F97316] transition-colors text-sm"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-              <motion.div variants={mobileLinkVariants} className="pt-2 mt-1 border-t border-white/8">
+              <motion.div variants={mobileLinkVariants} className="pt-2 mt-1 border-t border-white/10">
                 <Link
                   href="/devis"
                   className="btn-shine block w-full text-center rounded-full py-3 text-sm font-[600] text-white"

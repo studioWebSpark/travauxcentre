@@ -73,7 +73,7 @@ export default function PlanningModal({ isOpen, onClose, selectedDate, onSubmit 
                 <h2 className="text-lg font-bold text-[#0F2C5E]">Ajouter un planning</h2>
                 <button
                   onClick={onClose}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 "
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -148,14 +148,14 @@ export default function PlanningModal({ isOpen, onClose, selectedDate, onSubmit 
                   <button
                     type="button"
                     onClick={onClose}
-                    className="flex-1 px-4 py-2 rounded-xl text-sm font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors"
+                    className="flex-1 px-4 py-2 rounded-xl text-sm font-medium text-gray-600 bg-gray-50 "
                   >
                     Annuler
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1 px-4 py-2 rounded-xl text-sm font-medium text-white bg-[#0F2C5E] hover:bg-[#1a3f7a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-4 py-2 rounded-xl text-sm font-medium text-[#1a1a1a] bg-[#0F2C5E] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? "Ajout..." : "Ajouter"}
                   </button>

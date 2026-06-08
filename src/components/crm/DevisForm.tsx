@@ -68,12 +68,12 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
         <p className="text-gray-500 text-sm mb-8">Téléchargez le PDF ou retournez au chantier.</p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <a href={`/api/crm/devis/${createdId}/pdf`} target="_blank"
-            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#1a3f7a] transition-colors">
+            className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl ">
             <FileText className="w-4 h-4" /> Télécharger le PDF
           </a>
           {chantierId && (
             <button onClick={() => router.push(`/crm/chantiers/${chantierId}`)}
-              className="inline-flex items-center justify-center border border-gray-200 text-[#0F2C5E] font-semibold px-6 py-3 rounded-xl hover:bg-gray-50 transition-colors">
+              className="inline-flex items-center justify-center border border-gray-200 text-[#0F2C5E] font-semibold px-6 py-3 rounded-xl ">
               Retour au chantier →
             </button>
           )}
@@ -149,7 +149,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
               <input type="number" min={0} step={0.01} value={l.prixUnitaire} onChange={(e) => setLigne(i, "prixUnitaire", e.target.value)}
                 className="col-span-3 sm:col-span-2 border border-gray-200 rounded-xl px-3 py-2 text-sm text-right focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
               <button type="button" onClick={() => removeLigne(i)}
-                className="col-span-1 text-gray-300 hover:text-red-400 transition-colors flex justify-center">
+                className="col-span-1 text-gray-300 flex justify-center">
                 <Trash2 className="w-4 h-4" />
               </button>
             </div>
@@ -157,7 +157,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
         </div>
 
         <button type="button" onClick={addLigne}
-          className="mt-4 w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 text-gray-400 hover:text-[#0F2C5E] hover:border-[#0F2C5E] py-2.5 rounded-xl text-sm transition-colors">
+          className="mt-4 w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 text-gray-400 py-2.5 rounded-xl text-sm ">
           <Plus className="w-4 h-4" /> Ajouter une ligne
         </button>
 
@@ -186,7 +186,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
       </div>
 
       <button type="submit" disabled={loading || lignes.length === 0}
-        className="w-full bg-[#0F2C5E] text-white font-bold py-4 rounded-2xl hover:bg-[#1a3f7a] transition-colors disabled:opacity-60 flex items-center justify-center gap-2 text-base">
+        className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-bold py-4 rounded-2xl disabled:opacity-60 flex items-center justify-center gap-2 text-base">
         {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
         {loading ? "Création…" : "Créer le devis et générer le PDF"}
       </button>

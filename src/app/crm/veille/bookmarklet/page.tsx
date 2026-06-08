@@ -66,15 +66,15 @@ window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=6
       {/* Étape 1 : Copier le code */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-7 h-7 bg-[#0F2C5E] text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">1</div>
+          <div className="w-7 h-7 bg-[#0F2C5E] text-[#1a1a1a] rounded-full flex items-center justify-center text-sm font-bold shrink-0">1</div>
           <h2 className="font-bold text-[#0F2C5E]">Copiez le code du bookmarklet</h2>
         </div>
         <div className="bg-gray-50 rounded-xl p-3 font-mono text-xs text-gray-500 break-all mb-3 max-h-24 overflow-hidden">
           {bookmarkletCode.slice(0, 120)}…
         </div>
         <button onClick={copy}
-          className={`w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl transition-colors ${
-            copied ? "bg-green-50 border border-green-200 text-green-700" : "bg-[#0F2C5E] text-white hover:bg-[#1a3f7a]"
+          className={`w-full flex items-center justify-center gap-2 font-semibold py-3 rounded-xl ${
+            copied ? "bg-green-50 border border-green-200 text-green-700" : "bg-[#0F2C5E] text-[#1a1a1a] "
           }`}>
           {copied ? <CheckCircle className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
           {copied ? "✓ Code copié !" : "Copier le code"}
@@ -84,21 +84,21 @@ window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=6
       {/* Étape 2 : Choisir le navigateur */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-7 h-7 bg-[#0F2C5E] text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">2</div>
+          <div className="w-7 h-7 bg-[#0F2C5E] text-[#1a1a1a] rounded-full flex items-center justify-center text-sm font-bold shrink-0">2</div>
           <h2 className="font-bold text-[#0F2C5E]">Créer le favori dans votre navigateur</h2>
         </div>
 
         {/* Sélecteur navigateur */}
         <div className="flex gap-2 mb-5">
           <button onClick={() => setStep("chrome")}
-            className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-colors border ${
-              step === "chrome" ? "bg-[#0F2C5E] text-white border-[#0F2C5E]" : "border-gray-200 text-gray-600 hover:bg-gray-50"
+            className={`flex-1 py-2 rounded-xl text-sm font-semibold border ${
+              step === "chrome" ? "bg-[#0F2C5E] text-[#1a1a1a] border-[#0F2C5E]" : "border-gray-200 text-gray-600 "
             }`}>
             Chrome
           </button>
           <button onClick={() => setStep("opera")}
-            className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-colors border ${
-              step === "opera" ? "bg-[#0F2C5E] text-white border-[#0F2C5E]" : "border-gray-200 text-gray-600 hover:bg-gray-50"
+            className={`flex-1 py-2 rounded-xl text-sm font-semibold border ${
+              step === "opera" ? "bg-[#0F2C5E] text-[#1a1a1a] border-[#0F2C5E]" : "border-gray-200 text-gray-600 "
             }`}>
             Opera
           </button>
@@ -150,7 +150,7 @@ window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=6
       {/* Étape 3 : Utilisation */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="flex items-center gap-2 mb-4">
-          <div className="w-7 h-7 bg-[#0F2C5E] text-white rounded-full flex items-center justify-center text-sm font-bold shrink-0">3</div>
+          <div className="w-7 h-7 bg-[#0F2C5E] text-[#1a1a1a] rounded-full flex items-center justify-center text-sm font-bold shrink-0">3</div>
           <h2 className="font-bold text-[#0F2C5E]">Utilisez-le sur n&apos;importe quel site</h2>
         </div>
         <div className="space-y-3">
@@ -185,7 +185,7 @@ window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=6
         <a
           href={`/crm/veille/capture?titre=Test annonce renovation maison&description=Particulier cherche artisan pour renovation complete salon 40m2 peinture carrelage&url=https://test.com/annonce/123&source=leboncoin`}
           target="_blank"
-          className="inline-flex items-center gap-2 bg-green-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:bg-green-700 transition-colors">
+          className="inline-flex items-center gap-2 bg-green-600 text-[#1a1a1a] font-semibold px-4 py-2 rounded-xl text-sm ">
           <Bookmark className="w-4 h-4" /> Tester la capture →
         </a>
       </div>

@@ -67,7 +67,7 @@ export default function PipelineBoard({ columns }: { columns: Column[] }) {
                           <span className={`text-xs ${pr.color}`}>{pr.label}</span>
                         </div>
                         <Link href={`/crm/leads/${lead.id}`}
-                          className="font-bold text-[#0F2C5E] text-sm hover:underline leading-tight block">
+                          className="font-bold text-[#0F2C5E] text-sm leading-tight block">
                           {lead.nom}
                         </Link>
                       </div>
@@ -104,7 +104,7 @@ export default function PipelineBoard({ columns }: { columns: Column[] }) {
                             <button
                               key={k}
                               onClick={() => moveToStatut(lead.id, k as StatutLead)}
-                              className={`text-xs px-2 py-0.5 rounded-full border ${v.bg} ${v.color} hover:opacity-80 transition-opacity`}
+                              className={`text-xs px-2 py-0.5 rounded-full border ${v.bg} ${v.color} 
                             >
                               {v.label}
                             </button>
@@ -116,7 +116,7 @@ export default function PipelineBoard({ columns }: { columns: Column[] }) {
                       <span className="text-xs text-gray-300">{formatDate(lead.createdAt)}</span>
                       <div className="flex gap-1">
                         <a href={`tel:${lead.id}`}
-                          className="w-6 h-6 bg-gray-50 rounded-lg flex items-center justify-center hover:bg-[#0F2C5E] hover:text-white transition-colors">
+                          className="w-6 h-6 bg-gray-50 rounded-lg flex items-center justify-center ">
                           <Phone className="w-3 h-3" />
                         </a>
                       </div>

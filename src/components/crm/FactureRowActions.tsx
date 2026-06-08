@@ -39,7 +39,7 @@ export default function FactureRowActions({ factureId, statut, emailEnvoye, hasE
           <CheckCircle className="w-3.5 h-3.5" /> Payée
         </span>
         <a href={`/api/crm/factures/${factureId}/pdf`} target="_blank"
-          className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+          className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
           <FileText className="w-3.5 h-3.5" /> PDF
         </a>
       </div>
@@ -51,10 +51,10 @@ export default function FactureRowActions({ factureId, statut, emailEnvoye, hasE
       {/* Envoyer email */}
       {hasEmail && (
         <button onClick={sendEmail} disabled={sending}
-          className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors ${
+          className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs ${
             sent
               ? "bg-green-50 border border-green-200 text-green-700"
-              : "bg-amber-500 text-white hover:bg-amber-600"
+              : "bg-amber-500 text-[#1a1a1a] "
           } disabled:opacity-60`}>
           {sending ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
            : sent   ? <CheckCircle className="w-3.5 h-3.5" />
@@ -65,10 +65,10 @@ export default function FactureRowActions({ factureId, statut, emailEnvoye, hasE
 
       {/* Marquer comme payée */}
       <button onClick={markAsPaid} disabled={marking}
-        className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs transition-colors ${
+        className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs ${
           marked
             ? "bg-green-50 border border-green-200 text-green-700"
-            : "bg-green-600 text-white hover:bg-green-700"
+            : "bg-green-600 text-[#1a1a1a] "
         } disabled:opacity-60`}>
         {marking ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
          : marked ? <CheckCircle className="w-3.5 h-3.5" />
@@ -78,7 +78,7 @@ export default function FactureRowActions({ factureId, statut, emailEnvoye, hasE
 
       {/* PDF */}
       <a href={`/api/crm/factures/${factureId}/pdf`} target="_blank"
-        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg hover:bg-gray-50 transition-colors">
+        className="inline-flex items-center gap-1 text-xs border border-gray-200 text-[#0F2C5E] px-2.5 py-1.5 rounded-lg ">
         <FileText className="w-3.5 h-3.5" /> PDF
       </a>
     </div>

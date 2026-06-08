@@ -33,7 +33,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
       {/* Header */}
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <Link href="/crm/leads" className="inline-flex items-center gap-1 text-gray-400 hover:text-[#0F2C5E] text-sm mb-3 transition-colors">
+          <Link href="/crm/leads" className="inline-flex items-center gap-1 text-gray-400 text-sm mb-3 ">
             <ArrowLeft className="w-3.5 h-3.5" /> Retour aux leads
           </Link>
           <h1 className="text-2xl font-bold text-[#0F2C5E]">{lead.nom}</h1>
@@ -45,10 +45,10 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
         </div>
         {/* Boutons action */}
         <div className="flex gap-2 flex-wrap">
-          <a href={`tel:${lead.telephone}`} className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors">
+          <a href={`tel:${lead.telephone}`} className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] text-sm font-semibold px-4 py-2.5 rounded-xl ">
             <Phone className="w-4 h-4" /> Appeler
           </a>
-          <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors">
+          <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl ">
             <Mail className="w-4 h-4" /> Email libre
           </a>
           <EmailConfirmButton leadId={lead.id} statut={lead.statut} />
@@ -65,7 +65,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
             const active = lead.statut === step
             return (
               <div key={step} className="flex items-center gap-2">
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border ${
                   active  ? `${s.bg} ${s.color} ring-2 ring-offset-1 ring-current` :
                   done    ? "bg-green-50 border-green-200 text-green-700" :
                             "bg-gray-50 border-gray-100 text-gray-400"
@@ -103,7 +103,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                   <div>
                     <p className="text-xs text-gray-400 font-medium">{label}</p>
                     {href ? (
-                      <a href={href} className="text-sm font-semibold text-[#0F2C5E] hover:underline">{value}</a>
+                      <a href={href} className="text-sm font-semibold text-[#0F2C5E] ">{value}</a>
                     ) : (
                       <p className="text-sm font-semibold text-gray-700">{value}</p>
                     )}
@@ -144,7 +144,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               <div className="mt-5 space-y-3">
                 {lead.notes.map((note) => (
                   <div key={note.id} className="flex gap-3">
-                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5">
+                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-[#1a1a1a] text-xs font-bold shrink-0 mt-0.5">
                       {note.auteur[0]}
                     </div>
                     <div className="flex-1 bg-[#F8F7F4] rounded-xl p-3">

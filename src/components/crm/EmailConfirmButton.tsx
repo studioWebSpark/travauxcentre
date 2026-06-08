@@ -41,12 +41,12 @@ export default function EmailConfirmButton({ leadId, statut }: { leadId: string;
     <button
       onClick={send}
       disabled={state === "loading" || state === "sent"}
-      className={`flex items-center gap-2 w-full justify-center font-semibold px-4 py-2.5 rounded-xl text-sm transition-all ${
+      className={`flex items-center gap-2 w-full justify-center font-semibold px-4 py-2.5 rounded-xl text-sm ${
         state === "sent"
           ? "bg-green-50 border border-green-200 text-green-700 cursor-default"
           : state === "error"
           ? "bg-red-50 border border-red-200 text-red-600"
-          : "bg-white border border-gray-200 text-[#0F2C5E] hover:bg-[#F8F7F4]"
+          : "bg-white border border-gray-200 text-[#0F2C5E] "
       }`}
     >
       {state === "loading" && <Loader2 className="w-4 h-4 animate-spin" />}

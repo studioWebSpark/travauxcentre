@@ -41,7 +41,7 @@ export default async function LeadsPage({
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white font-montserrat">Leads</h1>
+          <h1 className="text-2xl font-bold text-[#1a1a1a] font-montserrat">Leads</h1>
           <p className="text-[#404040] text-sm mt-0.5">{leads.length} résultat{leads.length > 1 ? "s" : ""}</p>
         </div>
         <NouveauLeadModal />
@@ -55,26 +55,26 @@ export default async function LeadsPage({
             name="q"
             defaultValue={q}
             placeholder="Nom, email, ville…"
-            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
+            className="w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent"
           />
         </div>
         <div>
           <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Statut</label>
-          <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
+          <select name="statut" defaultValue={statut ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             <option className="bg-[#0D1B2A]">Tous</option>
             {Object.entries(STATUTS).map(([k, v]) => <option key={k} value={k} className="bg-[#0D1B2A]">{v.label}</option>)}
           </select>
         </div>
         <div>
           <label className="block text-xs font-medium text-[#1a1a1a] mb-1">Type de travaux</label>
-          <select name="type" defaultValue={type ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
+          <select name="type" defaultValue={type ?? "Tous"} className="bg-white/10 border border-white/20 rounded-xl px-3 py-2 text-sm text-[#1a1a1a] focus:outline-none focus:ring-2 focus:ring-[#F97316] focus:border-transparent">
             {TYPES.map((t) => <option key={t} className="bg-[#0D1B2A]">{t}</option>)}
           </select>
         </div>
-        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2 rounded-xl text-sm hover:from-orange-500 hover:to-orange-700 transition-all">
+        <button type="submit" className="bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2 rounded-xl text-sm ">
           Filtrer
         </button>
-        <Link href="/crm/leads" className="text-sm text-[#404040] hover:text-[#1a1a1a] transition-colors py-2">Réinitialiser</Link>
+        <Link href="/crm/leads" className="text-sm text-[#404040] py-2">Réinitialiser</Link>
       </form>
 
       {/* Table */}
@@ -83,11 +83,11 @@ export default async function LeadsPage({
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-white/8 bg-white/5">
-                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Client</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Travaux</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden md:table-cell font-montserrat">Budget</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider font-montserrat">Statut</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-white uppercase tracking-wider hidden lg:table-cell font-montserrat">Date</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#F97316] uppercase tracking-wider font-montserrat">Client</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#F97316] uppercase tracking-wider font-montserrat">Travaux</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#F97316] uppercase tracking-wider hidden md:table-cell font-montserrat">Budget</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#F97316] uppercase tracking-wider font-montserrat">Statut</th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-[#F97316] uppercase tracking-wider hidden lg:table-cell font-montserrat">Date</th>
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -98,30 +98,30 @@ export default async function LeadsPage({
               {leads.map((lead) => {
                 const pr = PRIORITES[lead.priorite]
                 return (
-                  <tr key={lead.id} className="hover:bg-white/5 transition-colors group border-white/8">
+                  <tr key={lead.id} className="hover:bg-white/5 group border-white/8">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2.5">
                         <span className={`w-2 h-2 rounded-full ${pr.dot} shrink-0`} />
                         <div>
-                          <p className="font-semibold text-white">{lead.nom}</p>
+                          <p className="font-semibold text-[#1a1a1a]">{lead.nom}</p>
                           <p className="text-[#404040] text-xs">{lead.ville} ({lead.codePostal})</p>
                         </div>
                       </div>
                       <div className="flex gap-3 mt-1 ml-4.5">
-                        <a href={`tel:${lead.telephone}`} className="text-[#333333] hover:text-[#F97316] transition-colors">
+                        <a href={`tel:${lead.telephone}`} className="text-[#F97316]">
                           <Phone className="w-3.5 h-3.5" />
                         </a>
-                        <a href={`mailto:${lead.email}`} className="text-[#333333] hover:text-[#F97316] transition-colors">
+                        <a href={`mailto:${lead.email}`} className="text-[#F97316]">
                           <Mail className="w-3.5 h-3.5" />
                         </a>
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-white text-sm font-medium">{lead.typeTravaux}</p>
+                      <p className="text-[#1a1a1a] text-sm font-medium">{lead.typeTravaux}</p>
                       {lead.surface && <p className="text-[#404040] text-xs">{lead.surface} m²</p>}
                     </td>
                     <td className="px-4 py-3 hidden md:table-cell">
-                      <p className="text-white font-medium">{lead.budget || "—"}</p>
+                      <p className="text-[#1a1a1a] font-medium">{lead.budget || "—"}</p>
                       {lead.montantDevis && <p className="text-green-400 text-xs font-semibold">{formatEuro(lead.montantDevis)}</p>}
                     </td>
                     <td className="px-4 py-3">
@@ -132,7 +132,7 @@ export default async function LeadsPage({
                     </td>
                     <td className="px-4 py-3">
                       <Link href={`/crm/leads/${lead.id}`}
-                        className="text-xs font-semibold text-[#F97316] hover:underline opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        className="text-xs font-semibold text-[#F97316] whitespace-nowrap">
                         Ouvrir →
                       </Link>
                     </td>

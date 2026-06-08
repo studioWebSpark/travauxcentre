@@ -51,7 +51,7 @@ export default function FactureButton({ chantierId, statut }: Props) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full flex items-center justify-center gap-2 bg-green-600 text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-green-700 transition-colors"
+        className="w-full flex items-center justify-center gap-2 bg-green-600 text-[#1a1a1a] font-semibold py-2.5 rounded-xl text-sm "
       >
         <FileText className="w-4 h-4" /> Générer une facture
       </button>
@@ -109,14 +109,14 @@ export default function FactureButton({ chantierId, statut }: Props) {
         <button
           onClick={generate}
           disabled={loading}
-          className="flex-1 bg-green-600 text-white font-semibold py-2 rounded-lg text-xs disabled:opacity-60 flex items-center justify-center gap-1.5 hover:bg-green-700 transition-colors"
+          className="flex-1 bg-green-600 text-[#1a1a1a] font-semibold py-2 rounded-lg text-xs disabled:opacity-60 flex items-center justify-center gap-1.5 "
         >
           {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <FileText className="w-3.5 h-3.5" />}
           {loading ? "Création…" : "Générer"}
         </button>
         <button
           onClick={() => setOpen(false)}
-          className="px-3 py-2 text-xs text-gray-500 border border-gray-200 rounded-lg hover:bg-gray-50"
+          className="px-3 py-2 text-xs text-gray-500 border border-gray-200 rounded-lg "
         >
           Annuler
         </button>

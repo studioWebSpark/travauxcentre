@@ -44,11 +44,11 @@ export default function EtapesList({ chantierId, etapes }: { chantierId: string;
       {etapes.map((e) => {
         const st = STATUTS_ETAPE[e.statut] ?? STATUTS_ETAPE.A_FAIRE
         return (
-          <div key={e.id} className="flex items-center gap-3 p-3 bg-[#F8F7F4] rounded-xl hover:bg-gray-100/50 transition-colors">
+          <div key={e.id} className="flex items-center gap-3 p-3 bg-[#F8F7F4] rounded-xl ">
             <button
               onClick={() => toggleEtape(e.id, e.statut)}
               disabled={busy === e.id}
-              className="text-lg shrink-0 hover:scale-110 transition-transform disabled:opacity-50"
+              className="text-lg shrink-0 disabled:opacity-50"
               title="Cliquer pour changer le statut"
             >
               {busy === e.id ? <Loader2 className="w-5 h-5 animate-spin text-gray-400" /> : st.icon}
@@ -81,19 +81,19 @@ export default function EtapesList({ chantierId, etapes }: { chantierId: string;
             className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
           <div className="flex gap-2">
             <button onClick={addEtape} disabled={saving}
-              className="flex-1 bg-[#0F2C5E] text-white font-semibold py-2 rounded-xl text-sm disabled:opacity-60 flex items-center justify-center gap-2">
+              className="flex-1 bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-2 rounded-xl text-sm disabled:opacity-60 flex items-center justify-center gap-2">
               {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
               {saving ? "Ajout…" : "Ajouter"}
             </button>
             <button onClick={() => setAdding(false)}
-              className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700 border border-gray-200 rounded-xl">
+              className="px-4 py-2 text-sm text-gray-500 border border-gray-200 rounded-xl">
               Annuler
             </button>
           </div>
         </div>
       ) : (
         <button onClick={() => setAdding(true)}
-          className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 text-gray-400 hover:text-[#0F2C5E] hover:border-[#0F2C5E] py-2.5 rounded-xl text-sm transition-colors">
+          className="w-full flex items-center justify-center gap-2 border border-dashed border-gray-200 text-gray-400 py-2.5 rounded-xl text-sm ">
           <Plus className="w-4 h-4" /> Ajouter une étape
         </button>
       )}
