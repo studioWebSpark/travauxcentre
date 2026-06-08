@@ -1,21 +1,19 @@
 import Anthropic from "@anthropic-ai/sdk"
 
 const MOTS_CLES = [
-  "rénovation", "renovation", "peinture", "carrelage", "parquet", "cloison",
-  "isolation", "salle de bain", "cuisine", "placo", "enduit", "ravalement",
-  "facade", "maçonnerie", "maconnerie", "extension", "agrandissement",
-  "toiture", "charpente", "électricité", "electricite", "plomberie",
-  "chauffage", "terrasse", "dallage", "béton", "beton", "artisan",
-  "travaux", "chantier", "devis", "entrepreneur"
+  "rénovation","renovation","peinture","carrelage","parquet","cloison",
+  "isolation","salle de bain","cuisine","placo","enduit","ravalement",
+  "facade","maçonnerie","maconnerie","extension","agrandissement",
+  "toiture","charpente","électricité","electricite","plomberie",
+  "chauffage","terrasse","dallage","béton","beton","artisan",
+  "travaux","chantier","devis","entrepreneur","menuiserie","fenêtre",
 ]
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 export type RawAnnonce = {
-  source:      "leboncoin" | "habitissimo" | "quotatis" | "travaux" | "hellocasa" | "allovoisin" | "facebook" | "manuel"
+  source:      "leboncoin" | "vivastreet" | "facebook" | "allovoisin" | "manuel"
   titre:       string
   description: string
-  url:         string | null
+  url:         string | null   // URL directe vers l'annonce
   ville:       string | null
   prix:        string | null
 }
@@ -27,253 +25,195 @@ export type AnalyseIA = {
   budgetEstime: string | null
 }
 
-// ─── LeBonCoin RSS ────────────────────────────────────────────────────────────
-// Catégorie 30 = Services > Réparation/Travaux (particuliers cherchent artisans)
-// Région 10 = Nord-Pas-de-Calais
-
-const LBC_QUERIES = [
-  "rénovation intérieure",
-  "maçonnerie extension",
-  "peinture travaux",
-  "carrelage pose",
-  "isolation combles",
-  "salle de bain rénovation",
-  "toiture couverture",
-  "chantier artisan devis",
-]
+// ─── LeBonCoin via Playwright ─────────────────────────────────────────────────
 
 export async function fetchLeBonCoin(): Promise<RawAnnonce[]> {
   const results: RawAnnonce[] = []
 
-  for (const q of LBC_QUERIES) {
-    try {
-      const url = `https://www.leboncoin.fr/recherche.rss?category=30&text=${encodeURIComponent(q)}&region=10`
-      const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-        signal:  AbortSignal.timeout(8000),
-      })
-      if (!res.ok) continue
-
-      const xml   = await res.text()
-      const items = parseRSS(xml, "leboncoin")
-      results.push(...items.slice(0, 6))
-    } catch { /* continue */ }
-  }
-
-  return dedup(results)
-}
-
-// ─── Habitissimo ─────────────────────────────────────────────────────────────
-// Particuliers postent leurs projets de rénovation
-
-export async function fetchHabitissimo(): Promise<RawAnnonce[]> {
-  const results: RawAnnonce[] = []
-  const regions = ["nord-pas-de-calais", "hauts-de-france"]
-
-  const categories = [
-    "renovation-interieure",
-    "maconnerie",
-    "peinture",
-    "plomberie",
-    "chauffage",
-  ]
-
-  for (const cat of categories) {
-    for (const region of regions.slice(0, 1)) {
-      try {
-        const url = `https://www.habitissimo.fr/devis/${cat}/${region}`
-        const res = await fetch(url, {
-          headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            "Accept":     "text/html,application/xhtml+xml",
-          },
-          signal: AbortSignal.timeout(8000),
-        })
-        if (!res.ok) continue
-
-        const html  = await res.text()
-        const items = parseHabitissimo(html)
-        results.push(...items)
-      } catch { /* continue */ }
-    }
-  }
-
-  return dedup(results)
-}
-
-function parseHabitissimo(html: string): RawAnnonce[] {
-  const items: RawAnnonce[] = []
-
-  // Extraction des titres de demandes de devis
-  const patterns = [
-    /<h[23][^>]*class="[^"]*(?:title|name|project)[^"]*"[^>]*>([^<]{15,150})<\/h[23]>/gi,
-    /<span[^>]*class="[^"]*(?:title|description)[^"]*"[^>]*>([^<]{15,200})<\/span>/gi,
-    /data-title="([^"]{15,150})"/gi,
-  ]
-
-  for (const pattern of patterns) {
-    let match
-    while ((match = pattern.exec(html)) !== null) {
-      const titre = stripHtml(match[1]).trim()
-      if (titre.length > 15 && isRelevant(titre)) {
-        items.push({
-          source:      "habitissimo",
-          titre,
-          description: titre,
-          url:         "https://www.habitissimo.fr",
-          ville:       extractVille(titre + " " + html.slice(match.index - 200, match.index + 200)),
-          prix:        null,
-        })
-      }
-    }
-  }
-
-  return items.slice(0, 8)
-}
-
-// ─── Quotatis ─────────────────────────────────────────────────────────────────
-
-export async function fetchQuotatis(): Promise<RawAnnonce[]> {
-  const results: RawAnnonce[] = []
-  const travaux = ["renovation", "maconnerie", "peinture", "isolation", "plomberie"]
-
-  for (const t of travaux) {
-    try {
-      const url = `https://www.quotatis.fr/travaux/${t}/nord`
-      const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-        signal:  AbortSignal.timeout(8000),
-      })
-      if (!res.ok) continue
-
-      const html  = await res.text()
-      const items = parseGenericListings(html, "quotatis", `https://www.quotatis.fr/travaux/${t}/nord`)
-      results.push(...items)
-    } catch { /* continue */ }
-  }
-
-  return dedup(results)
-}
-
-// ─── Travaux.com ──────────────────────────────────────────────────────────────
-
-export async function fetchTravauxCom(): Promise<RawAnnonce[]> {
-  const results: RawAnnonce[] = []
-
   try {
-    const url = "https://www.travaux.com/devis/demandes?region=nord-pas-de-calais"
-    const res = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-      signal:  AbortSignal.timeout(8000),
-    })
-    if (res.ok) {
-      const html  = await res.text()
-      const items = parseGenericListings(html, "travaux", "https://www.travaux.com")
-      results.push(...items)
-    }
-  } catch { /* continue */ }
+    // Playwright est déjà installé dans le projet
+    const { chromium } = await import("playwright")
+    const browser = await chromium.launch({ headless: true })
+    const page    = await browser.newPage()
 
-  return results
+    // Bloquer images/CSS pour aller plus vite
+    await page.route("**/*.{png,jpg,jpeg,gif,css,woff,woff2}", r => r.abort())
+
+    const queries = [
+      "rénovation intérieure",
+      "maçonnerie extension",
+      "peinture travaux maison",
+      "isolation chantier",
+    ]
+
+    for (const q of queries) {
+      try {
+        await page.goto(
+          `https://www.leboncoin.fr/recherche?category=30&text=${encodeURIComponent(q)}&locations=Nord-Pas-de-Calais`,
+          { waitUntil: "domcontentloaded", timeout: 15000 }
+        )
+        await page.waitForTimeout(2000)
+
+        // Extraire les annonces via JSON embarqué ou via le DOM
+        const ads = await page.evaluate(() => {
+          // Essayer __NEXT_DATA__
+          const scripts = document.querySelectorAll("script[id='__NEXT_DATA__']")
+          for (const s of scripts) {
+            try {
+              const data = JSON.parse(s.textContent || "")
+              const ads  = data?.props?.pageProps?.searchData?.ads
+                        || data?.props?.pageProps?.initialProps?.searchData?.ads
+                        || []
+              if (ads.length) return ads.map((a: Record<string, string>) => ({
+                titre:       a.subject  || a.title || "",
+                description: a.body     || a.description || a.subject || "",
+                url:         a.url      || `https://www.leboncoin.fr${a.relative_url || ""}`,
+                ville:       a.location?.city || a.city || null,
+                prix:        a.price?.[0] ? `${a.price[0]} €` : null,
+              }))
+            } catch { /* continue */ }
+          }
+
+          // Fallback : extraire via DOM
+          const items: { titre: string; description: string; url: string | null; ville: string | null; prix: string | null }[] = []
+          document.querySelectorAll("a[data-qa-id='aditem_container']").forEach(el => {
+            const titre = el.querySelector("[data-qa-id='aditem_title']")?.textContent?.trim() || ""
+            const desc  = el.querySelector("[data-qa-id='aditem_description']")?.textContent?.trim() || titre
+            const ville = el.querySelector("[data-qa-id='aditem_location']")?.textContent?.trim() || null
+            const prix  = el.querySelector("[data-qa-id='aditem_price']")?.textContent?.trim() || null
+            const href  = (el as HTMLAnchorElement).href || null
+            if (titre.length > 10) items.push({ titre, description: desc, url: href, ville, prix })
+          })
+          return items
+        })
+
+        for (const ad of (ads || []).slice(0, 8)) {
+          if (ad.titre && isRelevant(ad.titre + " " + (ad.description || ""))) {
+            results.push({ source: "leboncoin", ...ad })
+          }
+        }
+      } catch { /* continue next query */ }
+    }
+
+    await browser.close()
+  } catch (e) {
+    console.error("LeBonCoin fetch error:", e)
+  }
+
+  return dedup(results)
+}
+
+// ─── Vivastreet (annonces HTML publiques) ─────────────────────────────────────
+
+export async function fetchVivastreet(): Promise<RawAnnonce[]> {
+  const results: RawAnnonce[] = []
+  const queries = ["renovation-maison", "travaux-artisan", "maconnerie"]
+
+  for (const q of queries) {
+    try {
+      const url = `https://www.vivastreet.com/petites+annonces/${q}/hauts-de-france`
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "Accept-Language": "fr-FR,fr;q=0.9",
+        },
+        signal: AbortSignal.timeout(8000),
+      })
+      if (!res.ok) continue
+
+      const html = await res.text()
+
+      // Extraire les annonces avec URL directe
+      const linkRegex = /href="(https:\/\/www\.vivastreet\.com\/annonce[^"]+)"[^>]*>\s*<[^>]+>\s*([^<]{15,120})/g
+      let m
+      while ((m = linkRegex.exec(html)) !== null) {
+        const annonceUrl = m[1]
+        const titre      = stripHtml(m[2]).trim()
+        if (titre.length > 15 && isRelevant(titre)) {
+          results.push({
+            source:      "vivastreet",
+            titre,
+            description: titre,
+            url:         annonceUrl,
+            ville:       extractVille(html.slice(m.index - 500, m.index + 500)),
+            prix:        extractPrix(html.slice(m.index, m.index + 300)),
+          })
+        }
+      }
+
+      // Fallback : chercher les titres avec data-attributes
+      const attrRegex = /data-(?:title|name)="([^"]{15,120})"/g
+      while ((m = attrRegex.exec(html)) !== null) {
+        const titre = stripHtml(m[1]).trim()
+        if (titre.length > 15 && isRelevant(titre) && !results.some(r => r.titre === titre)) {
+          results.push({ source: "vivastreet", titre, description: titre, url: url, ville: null, prix: null })
+        }
+      }
+    } catch { /* continue */ }
+  }
+
+  return dedup(results).slice(0, 15)
 }
 
 // ─── AlloVoisin ───────────────────────────────────────────────────────────────
 
 export async function fetchAlloVoisin(): Promise<RawAnnonce[]> {
   const results: RawAnnonce[] = []
+  const queries = ["rénovation", "travaux maison", "peinture"]
 
-  const queries = ["rénovation", "peinture travaux", "maçonnerie"]
   for (const q of queries) {
     try {
       const url = `https://www.allovoisin.com/recherche?q=${encodeURIComponent(q)}&location=hauts-de-france`
       const res = await fetch(url, {
-        headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-        signal:  AbortSignal.timeout(8000),
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "Accept-Language": "fr-FR,fr;q=0.9",
+        },
+        signal: AbortSignal.timeout(8000),
       })
       if (!res.ok) continue
-      const html  = await res.text()
-      const items = parseGenericListings(html, "allovoisin", "https://www.allovoisin.com")
-      results.push(...items)
+
+      const html = await res.text()
+
+      // Chercher les liens d'annonces directes
+      const linkRegex = /href="(https:\/\/www\.allovoisin\.com\/(?:annonce|service|demande)[^"]+)"[^>]*>([^<]{15,120})</g
+      let m
+      while ((m = linkRegex.exec(html)) !== null) {
+        const titre = stripHtml(m[2]).trim()
+        if (titre.length > 10 && isRelevant(titre)) {
+          results.push({ source: "allovoisin", titre, description: titre, url: m[1], ville: extractVille(html.slice(m.index - 300, m.index + 300)), prix: null })
+        }
+      }
+
+      // Fallback titres h2/h3
+      const titleRegex = /<h[23][^>]*>([^<]{20,150})<\/h[23]>/gi
+      while ((m = titleRegex.exec(html)) !== null) {
+        const titre = stripHtml(m[1]).trim()
+        if (isRelevant(titre) && !results.some(r => r.titre === titre)) {
+          results.push({ source: "allovoisin", titre, description: titre, url: null, ville: extractVille(html.slice(m.index - 200, m.index + 200)), prix: null })
+        }
+      }
     } catch { /* continue */ }
   }
 
-  return dedup(results)
+  return dedup(results).slice(0, 10)
 }
 
-// ─── Hellocasa ────────────────────────────────────────────────────────────────
+// ─── Scan complet ─────────────────────────────────────────────────────────────
 
-export async function fetchHellocasa(): Promise<RawAnnonce[]> {
-  const results: RawAnnonce[] = []
+export async function scanToutes(): Promise<RawAnnonce[]> {
+  // LeBonCoin séparé (Playwright, plus lent) + les autres en parallèle
+  const [lbc, viva, allo] = await Promise.allSettled([
+    fetchLeBonCoin(),
+    fetchVivastreet(),
+    fetchAlloVoisin(),
+  ])
 
-  try {
-    const url = "https://www.hellocasa.fr/demandes?region=nord"
-    const res = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" },
-      signal:  AbortSignal.timeout(8000),
-    })
-    if (res.ok) {
-      const html  = await res.text()
-      const items = parseGenericListings(html, "hellocasa" as RawAnnonce["source"], "https://www.hellocasa.fr")
-      results.push(...items)
-    }
-  } catch { /* continue */ }
-
-  return results
-}
-
-// ─── Parsers communs ─────────────────────────────────────────────────────────
-
-function parseRSS(xml: string, source: RawAnnonce["source"]): RawAnnonce[] {
-  const items: RawAnnonce[] = []
-  const itemRegex = /<item>([\s\S]*?)<\/item>/g
-  let match
-
-  while ((match = itemRegex.exec(xml)) !== null) {
-    const block       = match[1]
-    const titre       = stripHtml(extractTag(block, "title"))
-    const url         = extractTag(block, "link") || extractTag(block, "guid")
-    const description = stripHtml(extractTag(block, "description") || "")
-    const ville       = extractVille(description + " " + titre)
-
-    if (titre && description.length > 10 && isRelevant(titre + " " + description)) {
-      items.push({ source, titre, description: description.slice(0, 600), url: url || null, ville, prix: null })
-    }
-  }
-  return items
-}
-
-function parseGenericListings(html: string, source: RawAnnonce["source"], baseUrl: string): RawAnnonce[] {
-  const items: RawAnnonce[] = []
-
-  // Patterns communs aux sites de demandes de travaux
-  const titlePatterns = [
-    /<h[123][^>]*>([^<]{20,200})<\/h[123]>/gi,
-    /class="[^"]*(?:title|titre|name|project-name|demand)[^"]*"[^>]*>\s*([^<]{20,200})\s*</gi,
-    /data-(?:title|name)="([^"]{20,150})"/gi,
-    /<(?:p|div)[^>]*class="[^"]*(?:description|desc|summary)[^"]*"[^>]*>([^<]{30,300})<\/(?:p|div)>/gi,
-  ]
-
-  for (const pattern of titlePatterns) {
-    let match
-    while ((match = pattern.exec(html)) !== null) {
-      const titre = stripHtml(match[1]).trim()
-      if (titre.length >= 20 && isRelevant(titre)) {
-        // Éviter les doublons dans ce batch
-        if (!items.some(i => i.titre === titre)) {
-          items.push({
-            source,
-            titre,
-            description: titre,
-            url:         baseUrl,
-            ville:       extractVille(html.slice(Math.max(0, match.index - 300), match.index + 300)),
-            prix:        extractPrix(html.slice(Math.max(0, match.index - 200), match.index + 200)),
-          })
-        }
-      }
-    }
-    if (items.length >= 8) break
-  }
-
-  return items.slice(0, 8)
+  return dedup([
+    ...(lbc.status  === "fulfilled" ? lbc.value  : []),
+    ...(viva.status === "fulfilled" ? viva.value : []),
+    ...(allo.status === "fulfilled" ? allo.value : []),
+  ])
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -284,8 +224,9 @@ function extractTag(xml: string, tag: string): string {
 }
 
 function stripHtml(s: string): string {
-  return s.replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&lt;/g, "<")
-          .replace(/&gt;/g, ">").replace(/&nbsp;/g, " ").replace(/&#39;/g, "'")
+  return s.replace(/<[^>]+>/g, " ")
+          .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+          .replace(/&nbsp;/g, " ").replace(/&#39;/g, "'").replace(/&quot;/g, '"')
           .replace(/\s+/g, " ").trim()
 }
 
@@ -294,19 +235,19 @@ function extractVille(text: string): string | null {
     "Longuenesse","Saint-Omer","Boulogne-sur-Mer","Calais","Arras","Lens",
     "Béthune","Valenciennes","Douai","Lille","Dunkerque","Hazebrouck",
     "Aire-sur-la-Lys","Bruay-la-Buissière","Liévin","Hénin-Beaumont",
-    "Maubeuge","Cambrai","Saint-Quentin","Amiens","Abbeville",
-    "Liège","Roubaix","Tourcoing","Villeneuve-d'Ascq","Marcq-en-Barœul",
+    "Maubeuge","Cambrai","Roubaix","Tourcoing","Villeneuve-d'Ascq",
+    "Amiens","Abbeville","Boulogne","Calais","Armentières",
   ]
+  const t = text.toLowerCase()
   for (const v of villes) {
-    if (text.toLowerCase().includes(v.toLowerCase())) return v
+    if (t.includes(v.toLowerCase())) return v
   }
-  // Chercher code postal 59xxx ou 62xxx
   const cp = text.match(/\b(59|62)\d{3}\b/)
   return cp ? cp[0] : null
 }
 
 function extractPrix(text: string): string | null {
-  const m = text.match(/(\d[\d\s]{2,6})(?:\s*€|\s*euros?)/i)
+  const m = text.match(/(\d[\d\s]{1,6})(?:\s*€|\s*euros?)/i)
   return m ? m[0].trim() : null
 }
 
@@ -318,35 +259,13 @@ function isRelevant(text: string): boolean {
 function dedup(items: RawAnnonce[]): RawAnnonce[] {
   const seen = new Set<string>()
   return items.filter(i => {
-    const key = i.url && i.url !== "https://www.habitissimo.fr"
+    const key = i.url && !["https://www.allovoisin.com","https://www.vivastreet.com"].includes(i.url)
       ? i.url
       : i.titre.slice(0, 60).toLowerCase()
     if (seen.has(key)) return false
     seen.add(key)
     return true
   })
-}
-
-// ─── Scan complet ─────────────────────────────────────────────────────────────
-
-export async function scanToutes(): Promise<RawAnnonce[]> {
-  const [lbc, hab, quo, trv, allo, hello] = await Promise.allSettled([
-    fetchLeBonCoin(),
-    fetchHabitissimo(),
-    fetchQuotatis(),
-    fetchTravauxCom(),
-    fetchAlloVoisin(),
-    fetchHellocasa(),
-  ])
-
-  return dedup([
-    ...(lbc.status   === "fulfilled" ? lbc.value   : []),
-    ...(hab.status   === "fulfilled" ? hab.value   : []),
-    ...(quo.status   === "fulfilled" ? quo.value   : []),
-    ...(trv.status   === "fulfilled" ? trv.value   : []),
-    ...(allo.status  === "fulfilled" ? allo.value  : []),
-    ...(hello.status === "fulfilled" ? hello.value : []),
-  ])
 }
 
 // ─── Analyse IA ──────────────────────────────────────────────────────────────
@@ -357,21 +276,20 @@ export async function analyserAvecIA(annonce: RawAnnonce): Promise<AnalyseIA> {
 
   try {
     const client = new Anthropic({ apiKey })
-    const msg    = await client.messages.create({
+    const msg = await client.messages.create({
       model:      "claude-haiku-4-5-20251001",
       max_tokens: 250,
       messages: [{
-        role: "user",
-        content: `Tu es un assistant pour Travaux Centre (artisans, Longuenesse 62219, Nord-Pas-de-Calais).
+        role:    "user",
+        content: `Tu es un assistant pour Travaux Centre (artisans BTP, Longuenesse 62219, Nord-Pas-de-Calais). Cette annonce est postée par un PARTICULIER qui cherche un artisan.
 
-Annonce postée par un particulier :
 Titre: ${annonce.titre}
 Description: ${annonce.description.slice(0, 400)}
 Ville: ${annonce.ville ?? "?"}
 Source: ${annonce.source}
 
 Réponds UNIQUEMENT en JSON :
-{"score":<0-100 pertinence pour une entreprise de travaux>,"resume":"<1 phrase>","typeTravaux":"<type>","budgetEstime":"<montant ou null>"}`
+{"score":<0-100 pertinence pour une entreprise de travaux>,"resume":"<1 phrase claire sur le projet>","typeTravaux":"<type précis>","budgetEstime":"<fourchette ou null>"}`,
       }],
     })
 
@@ -393,23 +311,20 @@ function analyserHeuristique(annonce: RawAnnonce): AnalyseIA {
   let score   = 30
 
   const hits = MOTS_CLES.filter(m => text.includes(m)).length
-  score += hits * 8
+  score += hits * 7
   if (annonce.ville)                                      score += 15
+  if (annonce.url && !annonce.url.includes("allovoisin.com/\n")) score += 5  // URL directe = meilleure qualité
   if (text.includes("urgent") || text.includes("vite"))  score += 12
   if (text.includes("devis") || text.includes("budget")) score += 8
-  if (annonce.source === "leboncoin")                     score += 5
+  if (annonce.source === "leboncoin")                     score += 8
 
   const typeTravaux =
-    text.includes("maçon") || text.includes("extension") || text.includes("fondation")
-      ? "Gros œuvre"
-    : text.includes("peinture") || text.includes("enduit")
-      ? "Peinture"
-    : text.includes("carrelage") || text.includes("parquet")
-      ? "Sols & Carrelage"
-    : text.includes("salle de bain") || text.includes("plomberie")
-      ? "Salle de bain"
-    : text.includes("toiture") || text.includes("charpente")
-      ? "Toiture"
+    text.includes("maçon") || text.includes("extension") ? "Gros œuvre"
+    : text.includes("peinture") || text.includes("enduit") ? "Peinture"
+    : text.includes("carrelage") || text.includes("parquet") ? "Sols & Carrelage"
+    : text.includes("salle de bain") || text.includes("plomberie") ? "Salle de bain"
+    : text.includes("toiture") || text.includes("charpente") ? "Toiture"
+    : text.includes("isolation") ? "Isolation"
     : "Rénovation intérieure"
 
   return {

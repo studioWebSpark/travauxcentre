@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { Search, Loader2, Plus, ExternalLink, CheckCircle, X, Zap, RefreshCw } from "lucide-react"
+import { Search, Loader2, Plus, ExternalLink, CheckCircle, X, Zap, Bookmark } from "lucide-react"
 
 type Annonce = {
   id: string; source: string; titre: string; description: string
@@ -14,14 +14,18 @@ type Annonce = {
 type Stats = { total: number; nouveau: number; importe: number; ignore: number }
 
 const SOURCE_BADGE: Record<string, { label: string; color: string; bg: string }> = {
-  leboncoin:  { label: "🟠 LeBonCoin",    color: "text-orange-700", bg: "bg-orange-50 border-orange-200" },
-  habitissimo:{ label: "🏠 Habitissimo",  color: "text-purple-700", bg: "bg-purple-50 border-purple-200" },
-  quotatis:   { label: "📋 Quotatis",     color: "text-cyan-700",   bg: "bg-cyan-50 border-cyan-200" },
-  travaux:    { label: "🔨 Travaux.com",  color: "text-yellow-700", bg: "bg-yellow-50 border-yellow-200" },
-  hellocasa:  { label: "🏡 Hellocasa",   color: "text-pink-700",   bg: "bg-pink-50 border-pink-200" },
+  leboncoin:  { label: "🟠 LeBonCoin",   color: "text-orange-700", bg: "bg-orange-50 border-orange-200" },
+  vivastreet: { label: "🟣 Vivastreet",  color: "text-purple-700", bg: "bg-purple-50 border-purple-200" },
   allovoisin: { label: "👥 AlloVoisin",  color: "text-green-700",  bg: "bg-green-50 border-green-200" },
   facebook:   { label: "🔵 Facebook",    color: "text-blue-700",   bg: "bg-blue-50 border-blue-200" },
   manuel:     { label: "✏️ Manuel",      color: "text-gray-700",   bg: "bg-gray-50 border-gray-200" },
+}
+
+// URL directe vers une annonce (pas juste la homepage)
+function isDirectUrl(url: string | null): boolean {
+  if (!url) return false
+  const homepages = ["https://www.allovoisin.com","https://www.vivastreet.com","https://www.leboncoin.fr"]
+  return !homepages.some(h => url === h || url === h + "/")
 }
 
 function ScoreBadge({ score }: { score: number }) {
@@ -96,9 +100,13 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
           <p className="text-gray-500 text-sm mt-0.5">Agent IA — LeBonCoin · Habitissimo · Quotatis · Travaux.com · Hellocasa · AlloVoisin</p>
         </div>
         <div className="flex gap-2 flex-wrap">
+          <a href="/crm/veille/bookmarklet"
+            className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm">
+            <Bookmark className="w-4 h-4" /> Bookmarklet
+          </a>
           <button onClick={() => setShowPaste(true)}
             className="inline-flex items-center gap-2 border border-gray-200 text-[#0F2C5E] font-semibold px-4 py-2.5 rounded-xl hover:bg-gray-50 transition-colors text-sm">
-            <Plus className="w-4 h-4" /> Coller annonce Facebook
+            <Plus className="w-4 h-4" /> Coller une annonce
           </button>
           <button onClick={scan} disabled={scanning}
             className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-[#1a3f7a] transition-colors text-sm disabled:opacity-60">
@@ -181,8 +189,8 @@ export default function VeilleClient({ annonces: initial, stats }: { annonces: A
                       {importing === a.id ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <CheckCircle className="w-3.5 h-3.5" />}
                       Importer lead
                     </button>
-                    {a.url && (
-                      <a href={a.url} target="_blank"
+                    {isDirectUrl(a.url) && (
+                      <a href={a.url!} target="_blank"
                         className="inline-flex items-center gap-1.5 border border-gray-200 text-[#0F2C5E] font-semibold px-3 py-1.5 rounded-lg text-xs hover:bg-gray-50 transition-colors">
                         <ExternalLink className="w-3.5 h-3.5" /> Voir l&apos;annonce
                       </a>
