@@ -30,7 +30,7 @@ const services = [
 ]
 
 const avantages = [
-  { icon: <IconCheck />,    title: "Artisans locaux certifiés RGE", desc: "Nos équipes sont qualifiées et certifiées RGE pour vous garantir des travaux conformes aux normes." },
+  { icon: <IconCheck />,    title: "Certifiés RGE", desc: "Reconnu Garant de l'Environnement — nos artisans sont qualifiés pour les travaux d'isolation et les projets verts. Accès à MaPrimeRénov' et éco-PTZ." },
   { icon: <IconCalendar />, title: "Devis gratuit sous 48h",        desc: "Nous nous engageons à vous répondre rapidement. Visite sur site et chiffrage entièrement offerts." },
   { icon: <IconShield />,   title: "Garantie décennale",            desc: "Tous nos travaux sont couverts par notre assurance décennale pour votre tranquillité d'esprit." },
   { icon: <IconTrophy />,   title: "+150 chantiers réalisés",       desc: "Des dizaines de clients satisfaits dans la région. Notre réputation se construit chantier après chantier." },
