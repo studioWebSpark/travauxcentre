@@ -3,6 +3,7 @@ import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import { STATUTS_DEVIS, calcTotaux, formatEuro } from "@/lib/chantier"
 import DevisRowActions from "@/components/crm/DevisRowActions"
+import RelanceButton from "@/components/crm/RelanceButton"
 import { Plus, FileText } from "lucide-react"
 
 export const metadata: Metadata = { title: "Devis" }
@@ -108,13 +109,16 @@ export default async function DevisListPage() {
                         )}
                       </td>
                       <td className="px-5 py-4">
-                        <DevisRowActions
-                          devisId={d.id}
-                          token={d.token}
-                          statut={d.statut}
-                          emailEnvoye={d.emailEnvoye}
-                          hasEmail={!!d.lead?.email}
-                        />
+                        <div className="flex flex-col gap-1.5">
+                          <DevisRowActions
+                            devisId={d.id}
+                            token={d.token}
+                            statut={d.statut}
+                            emailEnvoye={d.emailEnvoye}
+                            hasEmail={!!d.lead?.email}
+                          />
+                          <RelanceButton type="devis" id={d.id} statut={d.statut} hasEmail={!!d.lead?.email} />
+                        </div>
                       </td>
                     </tr>
                   )

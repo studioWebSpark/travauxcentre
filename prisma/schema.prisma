@@ -402,26 +402,55 @@ enum CategoriePhoto {
 }
 
 model ChantierCrm {
-  id          String            @id @default(cuid())
-  leadId      String?
-  titre       String
-  description String?
-  adresse     String
-  budget      Float?
-  budgetReel  Float?
-  dateDebut   DateTime?
-  dateFin     DateTime?
-  statut      StatutChantierCrm @default(PLANIFIE)
-  progression Int               @default(0)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(cuid())
+  leadId       String?
+  titre        String
+  description  String?
+  adresse      String
+  budget       Float?
+  budgetReel   Float?
+  dateDebut    DateTime?
+  dateFin      DateTime?
+  statut       StatutChantierCrm @default(PLANIFIE)
+  progression  Int               @default(0)
+  tokenClient  String            @unique @default(cuid())
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
-  lead      Lead?              @relation(fields: [leadId], references: [id], onDelete: SetNull)
-  etapes    EtapeChantierCrm[]
-  photos    PhotoChantierCrm[]
-  notes     NoteChantierCrm[]
-  devis     DevisCrm[]
-  factures  FactureCrm[]
+  lead       Lead?               @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  etapes     EtapeChantierCrm[]
+  photos     PhotoChantierCrm[]
+  notes      NoteChantierCrm[]
+  devis      DevisCrm[]
+  factures   FactureCrm[]
+  depenses   DepenseChantier[]
+  rapports   RapportJournalier[]
+}
+
+model DepenseChantier {
+  id          String      @id @default(cuid())
+  chantierId  String
+  type        String      @default("MATERIAUX")
+  description String
+  montant     Float
+  fournisseur String?
+  date        DateTime    @default(now())
+  createdAt   DateTime    @default(now())
+
+  chantier    ChantierCrm @relation(fields: [chantierId], references: [id], onDelete: Cascade)
+}
+
+model RapportJournalier {
+  id          String      @id @default(cuid())
+  chantierId  String
+  date        DateTime    @default(now())
+  heures      Float       @default(0)
+  description String
+  meteo       String?
+  envoye      Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+
+  chantier    ChantierCrm @relation(fields: [chantierId], references: [id], onDelete: Cascade)
 }
 
 model EtapeChantierCrm {

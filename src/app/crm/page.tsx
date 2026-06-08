@@ -1,180 +1,309 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { prisma } from "@/lib/prisma"
-import { STATUTS, PRIORITES, daysSince, formatDate, formatEuro } from "@/lib/crm"
-import { getTotalXp, getLevelInfo } from "@/lib/xp"
-import ObjectifsWidget from "@/components/crm/ObjectifsWidget"
-import { AlertTriangle, TrendingUp, Euro, Users, ChevronRight, Star } from "lucide-react"
+import { AlertTriangle, Plus, TrendingUp } from "lucide-react"
 
 export const metadata: Metadata = { title: "Dashboard" }
 export const dynamic = "force-dynamic"
 
-export default async function CrmDashboard() {
-  const now   = new Date()
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-  const week  = new Date(today); week.setDate(today.getDate() - 7)
-  const month = new Date(today); month.setDate(1)
+const formatEuro = (n: number) =>
+  new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n)
 
-  const [allLeads, recentLeads, totalXp] = await Promise.all([
-    prisma.lead.findMany({ orderBy: { createdAt: "desc" } }),
+interface StatsData {
+  kpis: {
+    caTotal: number
+    caEnAttente: number
+    caAnnuel: number
+    caMois: number
+    caDevisSigne: number
+    tauxConversion: number
+    totalLeads: number
+    leadsMonth: number
+    leadsGagne: number
+    leadsPerdu: number
+    chantiers: number
+    chantiersEnCours: number
+    chantiersTermines: number
+  }
+  caMoisGlissant: { mois: string; ca: number }[]
+  sources: { source: string; count: number }[]
+  villes: { ville: string; count: number }[]
+  funnel: { label: string; count: number; color: string }[]
+}
+
+export default async function CrmDashboard() {
+  // Fetch stats from API
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
+  const statsRes = await fetch(`${baseUrl}/api/crm/stats`, { cache: "no-store" })
+  const stats: StatsData = await statsRes.json()
+
+  const { kpis, caMoisGlissant, sources, villes, funnel } = stats
+
+  // Alertes: fetch direct via Prisma
+  const now = new Date()
+  const cutoff48h = new Date(now.getTime() - 48 * 60 * 60 * 1000)
+  const cutoff7d = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+  const [leadsNouveau, devisEnRetard, facturesRetard] = await Promise.all([
     prisma.lead.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 8,
-      include: { notes: { orderBy: { createdAt: "desc" }, take: 1 } },
+      where: { statut: "NOUVEAU", createdAt: { lt: cutoff48h } },
+      select: { id: true, nom: true, typeTravaux: true, createdAt: true },
+      orderBy: { createdAt: "asc" },
+      take: 5,
     }),
-    getTotalXp(),
+    prisma.devisCrm.findMany({
+      where: { statut: "ENVOYE", updatedAt: { lt: cutoff7d } },
+      select: { id: true, numero: true, updatedAt: true },
+      orderBy: { updatedAt: "asc" },
+      take: 5,
+    }),
+    prisma.factureCrm.findMany({
+      where: { statut: "ENVOYEE", dateEcheance: { lt: now } },
+      select: { id: true, numero: true, dateEcheance: true },
+      orderBy: { dateEcheance: "asc" },
+      take: 5,
+    }),
   ])
 
-  const total      = allLeads.length
-  const ceJour     = allLeads.filter((l) => l.createdAt >= today).length
-  const cetteSemaine = allLeads.filter((l) => l.createdAt >= week).length
-  const ceMois     = allLeads.filter((l) => l.createdAt >= month).length
-  const gagnes     = allLeads.filter((l) => l.statut === "GAGNE").length
-  const tauxConv   = total > 0 ? Math.round((gagnes / total) * 100) : 0
-  const caTotal    = allLeads.reduce((s, l) => s + (l.montantDevis ?? 0), 0)
+  const alertCount = leadsNouveau.length + devisEnRetard.length + facturesRetard.length
 
-  // Leads urgents : NOUVEAU non contacté depuis +48h
-  const urgents = allLeads.filter((l) => {
-    if (l.statut !== "NOUVEAU") return false
-    const days = daysSince(l.dateContact ?? l.createdAt)
-    return (days ?? 0) >= 2
-  })
+  // Bar chart helpers
+  const maxCa = Math.max(...caMoisGlissant.map((m) => m.ca), 1)
 
-  const xpInfo  = getLevelInfo(totalXp)
-  const pipeline = Object.entries(STATUTS).map(([statut, cfg]) => ({
-    statut, cfg,
-    count: allLeads.filter((l) => l.statut === statut).length,
-  }))
+  // Funnel max
+  const funnelMax = Math.max(...funnel.map((f) => f.count), 1)
+
+  // Sources max
+  const sourcesMax = Math.max(...sources.map((s) => s.count), 1)
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8">
+    <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-[#0F2C5E]">Dashboard</h1>
-        <p className="text-gray-500 text-sm mt-0.5">{formatDate(now)} — Vue d&apos;ensemble de votre activité commerciale</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#0F2C5E]">Tableau de bord</h1>
+          <p className="text-sm text-gray-500 mt-0.5">Vue d&apos;ensemble de votre activité</p>
+        </div>
+        <Link
+          href="/crm/leads"
+          className="inline-flex items-center gap-2 bg-[#F97316] hover:bg-orange-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow"
+        >
+          <Plus className="w-4 h-4" />
+          Nouveau lead
+        </Link>
       </div>
 
-      {/* Alerte urgents */}
-      {urgents.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4 flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
-          <div>
-            <p className="font-semibold text-amber-800 text-sm">
-              {urgents.length} lead{urgents.length > 1 ? "s" : ""} non contacté{urgents.length > 1 ? "s" : ""} depuis +48h
-            </p>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {urgents.map((l) => (
-                <Link key={l.id} href={`/crm/leads/${l.id}`}
-                  className="text-xs bg-amber-100 border border-amber-300 text-amber-800 px-2.5 py-1 rounded-full hover:bg-amber-200 transition-colors">
-                  {l.nom} — {l.ville}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* KPIs */}
+      {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: "Leads total",     value: total,         sub: `${ceJour} aujourd'hui`,   icon: Users,       color: "text-[#0F2C5E]",  bg: "bg-blue-50" },
-          { label: "Cette semaine",   value: cetteSemaine,  sub: `${ceMois} ce mois`,        icon: TrendingUp,  color: "text-purple-600", bg: "bg-purple-50" },
-          { label: "Taux conversion", value: `${tauxConv}%`, sub: `${gagnes} gagné${gagnes > 1 ? "s" : ""}`, icon: TrendingUp, color: "text-green-600", bg: "bg-green-50" },
-          { label: "CA potentiel",    value: formatEuro(caTotal), sub: "devis enregistrés", icon: Euro,        color: "text-[#F97316]",  bg: "bg-orange-50" },
-        ].map(({ label, value, sub, icon: Icon, color, bg }) => (
-          <div key={label} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
-            <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center mb-3`}>
-              <Icon className={`w-4 h-4 ${color}`} />
-            </div>
-            <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-gray-700 text-sm font-medium mt-0.5">{label}</p>
-            <p className="text-gray-400 text-xs mt-0.5">{sub}</p>
-          </div>
-        ))}
-      </div>
-
-      {/* XP Banner */}
-      <div className="bg-[#0F2C5E] rounded-2xl p-5 flex items-center gap-5">
-        <div className="text-4xl shrink-0">{xpInfo.current.icon}</div>
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center justify-between mb-2">
-            <div>
-              <span className="font-bold text-white text-lg">{xpInfo.current.label}</span>
-              <span className="ml-2 text-xs text-slate-400">Niveau {xpInfo.current.level}</span>
-            </div>
-            <span className="text-[#F97316] font-bold text-lg">{totalXp} XP</span>
-          </div>
-          <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${xpInfo.progress}%`, background: xpInfo.current.color }} />
-          </div>
-          {xpInfo.next && (
-            <p className="text-xs text-slate-500 mt-1.5">
-              {xpInfo.next.min - totalXp} XP avant {xpInfo.next.label} {xpInfo.next.icon}
-            </p>
-          )}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">CA encaissé ce mois</p>
+          <p className="text-2xl font-bold text-[#0F2C5E] mt-1">{formatEuro(kpis.caMois)}</p>
+          <p className="text-xs text-gray-400 mt-1">Factures payées</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">CA annuel</p>
+          <p className="text-2xl font-bold text-[#0F2C5E] mt-1">{formatEuro(kpis.caAnnuel)}</p>
+          <p className="text-xs text-gray-400 mt-1">Depuis le 1er janv.</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Leads ce mois</p>
+          <p className="text-2xl font-bold text-[#0F2C5E] mt-1">{kpis.leadsMonth}</p>
+          <p className="text-xs text-gray-400 mt-1">{kpis.totalLeads} au total</p>
+        </div>
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Taux de conversion</p>
+          <p className="text-2xl font-bold text-[#F97316] mt-1">{kpis.tauxConversion}%</p>
+          <p className="text-xs text-gray-400 mt-1">{kpis.leadsGagne} gagnés</p>
         </div>
       </div>
 
+      {/* Charts row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Objectifs */}
-        <ObjectifsWidget />
-
-        {/* Pipeline mini */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-bold text-[#0F2C5E]">Pipeline</h2>
-            <Link href="/crm/pipeline" className="text-xs text-gray-400 hover:text-[#0F2C5E] transition-colors">Voir tout →</Link>
+        {/* CA Bar Chart — spans 2 cols */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <TrendingUp className="w-4 h-4 text-[#0F2C5E]" />
+            <h2 className="text-sm font-semibold text-[#0F2C5E]">CA mensuel (12 mois glissants)</h2>
           </div>
-          <div className="space-y-3">
-            {pipeline.map(({ statut, cfg, count }) => (
-              <div key={statut} className="flex items-center gap-3">
-                <div className="w-24 shrink-0">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${cfg.bg} ${cfg.color}`}>
-                    {cfg.label}
-                  </span>
+          <div className="flex items-end gap-1.5 h-44">
+            {caMoisGlissant.map((m) => {
+              const pct = maxCa > 0 ? Math.max((m.ca / maxCa) * 100, m.ca > 0 ? 2 : 0) : 0
+              return (
+                <div key={m.mois} className="flex-1 flex flex-col items-center gap-1 group">
+                  <div className="relative w-full flex items-end justify-center" style={{ height: "128px" }}>
+                    <div
+                      className="w-full bg-[#0F2C5E] rounded-t hover:bg-[#1a3d7a] transition-colors cursor-default"
+                      style={{ height: `${pct}%` }}
+                      title={`${m.mois}: ${formatEuro(m.ca)}`}
+                    />
+                    {m.ca > 0 && (
+                      <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] text-gray-500 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        {formatEuro(m.ca)}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[9px] text-gray-400 text-center leading-tight">{m.mois}</span>
                 </div>
-                <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
-                  <div
-                    className="h-full rounded-full bg-[#0F2C5E] transition-all"
-                    style={{ width: total > 0 ? `${(count / total) * 100}%` : "0%" }}
-                  />
-                </div>
-                <span className="text-sm font-bold text-gray-700 w-6 text-right">{count}</span>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
 
-        {/* Derniers leads */}
-        <div className="lg:col-span-2 bg-white rounded-2xl border border-gray-100 shadow-sm p-6 lg:col-start-2">
-          <div className="flex items-center justify-between mb-5">
-            <h2 className="font-bold text-[#0F2C5E]">Derniers leads</h2>
-            <Link href="/crm/leads" className="text-xs text-gray-400 hover:text-[#0F2C5E] transition-colors">Voir tous →</Link>
-          </div>
-          <div className="space-y-2">
-            {recentLeads.map((lead) => {
-              const st = STATUTS[lead.statut]
-              const pr = PRIORITES[lead.priorite]
-              const days = daysSince(lead.createdAt)
+        {/* Funnel */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <h2 className="text-sm font-semibold text-[#0F2C5E] mb-4">Entonnoir leads</h2>
+          <div className="space-y-3">
+            {funnel.map((step, i) => {
+              const pct = funnelMax > 0 ? Math.round((step.count / funnelMax) * 100) : 0
               return (
-                <Link key={lead.id} href={`/crm/leads/${lead.id}`}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-colors group">
-                  <span className={`w-2 h-2 rounded-full ${pr.dot} shrink-0`} />
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-[#0F2C5E] text-sm truncate">{lead.nom}</p>
-                    <p className="text-gray-400 text-xs truncate">{lead.typeTravaux} — {lead.ville}</p>
+                <div key={step.label}>
+                  {i > 0 && (
+                    <div className="flex justify-center my-1">
+                      <svg className="w-3 h-3 text-gray-300" fill="currentColor" viewBox="0 0 12 12">
+                        <path d="M6 9L1 4h10L6 9z" />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-600 w-24 shrink-0 truncate">{step.label}</span>
+                    <div className="flex-1 bg-gray-100 rounded-full h-2">
+                      <div
+                        className={`h-2 rounded-full transition-all ${step.color}`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <span className="text-xs font-semibold text-[#0F2C5E] w-7 text-right">{step.count}</span>
                   </div>
-                  <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color} shrink-0`}>{st.label}</span>
-                  <span className="text-xs text-gray-300 shrink-0 hidden sm:block">
-                    {days === 0 ? "auj." : `${days}j`}
-                  </span>
-                  <ChevronRight className="w-3.5 h-3.5 text-gray-200 group-hover:text-gray-400 transition-colors shrink-0" />
-                </Link>
+                </div>
               )
             })}
           </div>
         </div>
       </div>
+
+      {/* Sources + Villes row */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Top sources */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <h2 className="text-sm font-semibold text-[#0F2C5E] mb-4">Sources de leads</h2>
+          <div className="space-y-2.5">
+            {sources.slice(0, 7).map((s) => {
+              const pct = sourcesMax > 0 ? Math.max((s.count / sourcesMax) * 100, 4) : 0
+              return (
+                <div key={s.source} className="flex items-center gap-3">
+                  <span className="text-xs text-gray-600 w-28 shrink-0 truncate">{s.source || "Inconnu"}</span>
+                  <div className="flex-1 bg-gray-100 rounded-full h-2">
+                    <div
+                      className="h-2 rounded-full bg-[#F97316] transition-all"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-semibold text-gray-700 w-6 text-right">{s.count}</span>
+                </div>
+              )
+            })}
+            {sources.length === 0 && (
+              <p className="text-sm text-gray-400 italic">Aucune donnée</p>
+            )}
+          </div>
+        </div>
+
+        {/* Top villes */}
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <h2 className="text-sm font-semibold text-[#0F2C5E] mb-4">Top villes</h2>
+          <div className="flex flex-wrap gap-2">
+            {villes.slice(0, 5).map((v) => (
+              <span
+                key={v.ville}
+                className="inline-flex items-center gap-1.5 bg-[#0F2C5E]/10 text-[#0F2C5E] text-xs font-semibold px-3 py-1.5 rounded-full"
+              >
+                {v.ville}
+                <span className="bg-[#0F2C5E] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  {v.count}
+                </span>
+              </span>
+            ))}
+            {villes.length === 0 && (
+              <span className="text-sm text-gray-400 italic">Aucune donnée</span>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Alertes */}
+      {alertCount > 0 ? (
+        <div className="bg-white rounded-xl border border-orange-200 p-5 shadow-sm">
+          <div className="flex items-center gap-2 mb-4">
+            <AlertTriangle className="w-4 h-4 text-[#F97316]" />
+            <h2 className="text-sm font-semibold text-[#0F2C5E]">
+              Alertes{" "}
+              <span className="ml-1 bg-[#F97316] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                {alertCount}
+              </span>
+            </h2>
+          </div>
+          <div className="space-y-2">
+            {leadsNouveau.map((l) => (
+              <Link
+                key={l.id}
+                href="/crm/leads"
+                className="flex items-start gap-3 p-3 bg-red-50 border border-red-100 rounded-lg hover:bg-red-100 transition-colors"
+              >
+                <span className="shrink-0 w-2 h-2 rounded-full bg-red-400 mt-1.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-red-700">Lead sans contact &gt; 48h</p>
+                  <p className="text-xs text-gray-600 truncate">
+                    {l.nom} — {l.typeTravaux}
+                  </p>
+                </div>
+                <span className="text-[10px] text-gray-400 shrink-0">
+                  {l.createdAt.toLocaleDateString("fr-FR")}
+                </span>
+              </Link>
+            ))}
+            {devisEnRetard.map((d) => (
+              <Link
+                key={d.id}
+                href="/crm/devis"
+                className="flex items-start gap-3 p-3 bg-amber-50 border border-amber-100 rounded-lg hover:bg-amber-100 transition-colors"
+              >
+                <span className="shrink-0 w-2 h-2 rounded-full bg-amber-400 mt-1.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-amber-700">Devis sans réponse &gt; 7 jours</p>
+                  <p className="text-xs text-gray-600 truncate">{d.numero}</p>
+                </div>
+                <span className="text-[10px] text-gray-400 shrink-0">
+                  {d.updatedAt.toLocaleDateString("fr-FR")}
+                </span>
+              </Link>
+            ))}
+            {facturesRetard.map((f) => (
+              <Link
+                key={f.id}
+                href="/crm/factures"
+                className="flex items-start gap-3 p-3 bg-orange-50 border border-orange-100 rounded-lg hover:bg-orange-100 transition-colors"
+              >
+                <span className="shrink-0 w-2 h-2 rounded-full bg-orange-400 mt-1.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs font-semibold text-orange-700">Facture en retard de paiement</p>
+                  <p className="text-xs text-gray-600 truncate">{f.numero}</p>
+                </div>
+                <span className="text-[10px] text-gray-400 shrink-0">
+                  Éch. {f.dateEcheance?.toLocaleDateString("fr-FR") ?? "—"}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="w-4 h-4 text-gray-300" />
+            <h2 className="text-sm font-semibold text-gray-400">Alertes</h2>
+          </div>
+          <p className="text-sm text-gray-400 mt-2 italic">Aucune alerte en cours. Tout est à jour !</p>
+        </div>
+      )}
     </div>
   )
 }

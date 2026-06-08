@@ -3,6 +3,7 @@ import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import { STATUTS_FACTURE, calcTotaux, formatEuro } from "@/lib/chantier"
 import FactureRowActions from "@/components/crm/FactureRowActions"
+import RelanceButton from "@/components/crm/RelanceButton"
 import { FileText } from "lucide-react"
 
 export const metadata: Metadata = { title: "Factures" }
@@ -116,12 +117,15 @@ export default async function FacturesListPage() {
                         )}
                       </td>
                       <td className="px-5 py-4">
-                        <FactureRowActions
-                          factureId={f.id}
-                          statut={f.statut}
-                          emailEnvoye={f.emailEnvoye}
-                          hasEmail={!!client?.email}
-                        />
+                        <div className="flex flex-col gap-1.5">
+                          <FactureRowActions
+                            factureId={f.id}
+                            statut={f.statut}
+                            emailEnvoye={f.emailEnvoye}
+                            hasEmail={!!client?.email}
+                          />
+                          <RelanceButton type="facture" id={f.id} statut={f.statut} hasEmail={!!client?.email} />
+                        </div>
                       </td>
                     </tr>
                   )

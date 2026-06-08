@@ -8,7 +8,9 @@ import NoteChantierForm from "@/components/crm/NoteChantierForm"
 import EtapesList from "@/components/crm/EtapesList"
 import DevisActions from "@/components/crm/DevisActions"
 import FactureButton from "@/components/crm/FactureButton"
-import { ArrowLeft, MapPin, Phone, Mail, FileText, Plus } from "lucide-react"
+import DepensesChantier from "@/components/crm/DepensesChantier"
+import RapportJournalierForm from "@/components/crm/RapportJournalierForm"
+import { ArrowLeft, MapPin, Phone, Mail, FileText, Plus, ExternalLink } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = { title: "Chantier" }
@@ -25,6 +27,8 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
       notes:    { orderBy: { createdAt: "desc" } },
       devis:    { include: { lignes: true }, orderBy: { createdAt: "desc" } },
       factures: { include: { lignes: true }, orderBy: { createdAt: "desc" } },
+      depenses: { orderBy: { date: "desc" } },
+      rapports: { orderBy: { date: "desc" }, take: 10 },
     },
   })
   if (!c) notFound()
@@ -215,6 +219,26 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               </div>
             )}
           </div>
+
+          {/* Dépenses */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <h2 className="font-bold text-[#0F2C5E] mb-4">Dépenses & Marge</h2>
+            <DepensesChantier
+              chantierId={c.id}
+              budget={c.budget}
+              initialDepenses={c.depenses.map(d => ({ id: d.id, type: d.type, description: d.description, montant: d.montant, fournisseur: d.fournisseur, date: d.date.toISOString() }))}
+            />
+          </div>
+
+          {/* Rapport journalier */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <h2 className="font-bold text-[#0F2C5E] mb-4">Rapport journalier</h2>
+            <RapportJournalierForm
+              chantierId={c.id}
+              clientEmail={c.lead?.email ?? null}
+              initialRapports={c.rapports.map(r => ({ id: r.id, date: r.date.toISOString(), heures: r.heures, description: r.description, meteo: r.meteo, envoye: r.envoye }))}
+            />
+          </div>
         </div>
 
         {/* Colonne droite */}
@@ -228,6 +252,22 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               dateDebut: c.dateDebut?.toISOString() ?? null,
               dateFin:   c.dateFin?.toISOString()   ?? null,
             }} />
+          </div>
+
+          {/* Portail client */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
+            <h2 className="font-bold text-[#0F2C5E] mb-1">Portail client</h2>
+            <p className="text-xs text-gray-400 mb-3">Lien sécurisé que vous envoyez à votre client</p>
+            <a href={`/client/${(c as typeof c & { tokenClient: string }).tokenClient}`} target="_blank"
+              className="w-full flex items-center justify-center gap-2 border border-[#0F2C5E] text-[#0F2C5E] font-semibold py-2.5 rounded-xl hover:bg-[#0F2C5E] hover:text-white transition-colors text-sm">
+              <ExternalLink className="w-4 h-4" /> Voir le portail
+            </a>
+            <button
+              onClick={() => {}}
+              className="w-full mt-2 flex items-center justify-center gap-2 bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl hover:bg-gray-100 transition-colors text-xs"
+              title="Copier le lien">
+              Copier le lien portail
+            </button>
           </div>
 
           {/* Facturation */}
