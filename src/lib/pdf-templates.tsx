@@ -145,7 +145,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
         {/* Footer */}
         <View style={s.footer}>
           <Text style={s.footerText}>Travaux Centre • Longuenesse 62219 • SIRET : XXX XXX XXX XXXXX</Text>
-          <Text style={s.footerText}>Garantie décennale • Artisans certifiés RGE</Text>
+          <Text style={s.footerText}>Garantie décennale • Société certifiée RGE</Text>
           <Text style={s.footerText}>{numero}</Text>
         </View>
       </Page>

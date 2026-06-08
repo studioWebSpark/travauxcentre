@@ -21,7 +21,7 @@ export async function generateMetadata({
 
   return {
     title: `Entreprise de travaux à ${zone.nom} — Devis gratuit`,
-    description: `Travaux Centre intervient à ${zone.nom} (${zone.codePostal}) pour vos projets de rénovation intérieure, maçonnerie et aménagement extérieur. Devis gratuit sous 48h. Artisans certifiés RGE.`,
+    description: `Travaux Centre intervient à ${zone.nom} (${zone.codePostal}) pour vos projets de rénovation intérieure, maçonnerie et aménagement extérieur. Devis gratuit sous 48h. Société certifiée RGE.`,
     keywords: [
       `travaux ${zone.nom.toLowerCase()}`,
       `rénovation ${zone.nom.toLowerCase()}`,
@@ -35,7 +35,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title: `Travaux & Rénovation à ${zone.nom} — Travaux Centre`,
-      description: `Artisans certifiés RGE. Devis gratuit sous 48h à ${zone.nom}. Rénovation, maçonnerie, aménagement extérieur.`,
+      description: `Société certifiée RGE. Devis gratuit sous 48h à ${zone.nom}. Rénovation, maçonnerie, aménagement extérieur.`,
     },
   }
 }
@@ -189,7 +189,7 @@ export default async function VillePage({
                   {[
                     { icon: Calendar, titre: "Devis sous 48h",        desc: "Visite sur site et chiffrage détaillé offerts. Réponse garantie sous 48h." },
                     { icon: Shield,   titre: "Garantie décennale",     desc: "Tous nos travaux sont couverts par notre assurance décennale sans exception." },
-                    { icon: Star,     titre: "Artisans certifiés RGE", desc: "Nos équipes sont qualifiées RGE — éligibilité aux aides de l'État assurée." },
+                    { icon: Star,     titre: "Société certifiée RGE", desc: "Travaux Centre est certifiée RGE — travaux d'isolation et rénovation énergétique éligibles aux aides de l'État." },
                     { icon: MapPin,   titre: "Déplacement offert",     desc: `Nous venons chez vous à ${zone.nom} sans frais pour établir votre devis.` },
                   ].map((e) => {
                     const Icon = e.icon

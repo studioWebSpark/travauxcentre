@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Travaux Centre | Entreprise de Travaux à Longuenesse",
-    description: "Devis gratuit sous 48h. Artisans certifiés RGE. Garantie décennale.",
+    description: "Devis gratuit sous 48h. Société certifiée RGE. Garantie décennale.",
     images: ["/og-image.jpg"],
   },
   robots: { index: true, follow: true },

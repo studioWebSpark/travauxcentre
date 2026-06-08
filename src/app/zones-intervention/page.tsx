@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 const engagements = [
   "Devis gratuit sous 48h, sans engagement",
-  "Artisans certifiés RGE — Garantie décennale",
+  "Société certifiée RGE — Garantie décennale",
   "Déplacement offert dans toute la zone",
   "Accompagnement aides MaPrimeRénov' et CEE",
 ]

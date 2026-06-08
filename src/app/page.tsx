@@ -169,7 +169,7 @@ export default function Home() {
             className="inline-flex items-center gap-2 bg-white/90 backdrop-blur rounded-full px-4 py-2 text-sm font-[500] mb-8 border border-gray-200"
           >
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
-            Artisans certifiés RGE — Garantie décennale
+            Société certifiée RGE — Garantie décennale
           </motion.div>
 
           {/* Title */}

@@ -202,7 +202,7 @@ export default function DevisPublicPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Travaux Centre — Longuenesse 62219 — Garantie décennale — Artisans certifiés RGE
+          Travaux Centre — Longuenesse 62219 — Garantie décennale — Société certifiée RGE
         </p>
       </div>
     </div>

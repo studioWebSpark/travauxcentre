@@ -22,12 +22,12 @@ const services: Record<string, {
   "gros-oeuvre": {
     title:    "Gros Œuvre & Maçonnerie",
     subtitle: "Murs · Fondations · Extensions · Façade",
-    metaDesc: "Maçon et gros œuvre à Longuenesse. Extensions, murs porteurs, fondations. Artisans certifiés RGE. Devis gratuit dans un rayon de 80km.",
-    intro:    "Le gros œuvre est le squelette de votre bâtiment. Nos maçons expérimentés et certifiés RGE assurent la solidité et la durabilité de vos ouvrages, qu'il s'agisse d'une reprise en sous-œuvre, d'une extension ou d'un ravalement complet.",
+    metaDesc: "Maçon et gros œuvre à Longuenesse. Extensions, murs porteurs, fondations. Société certifiée RGE. Devis gratuit dans un rayon de 80km.",
+    intro:    "Le gros œuvre est le squelette de votre bâtiment. Nos maçons expérimentés assurent la solidité et la durabilité de vos ouvrages. Travaux Centre est certifiée RGE pour les travaux d'amélioration énergétique.",
     items:    ["Murs porteurs et cloisons maçonnées", "Fondations superficielles et profondes", "Extensions de maison et surélévations", "Reprises en sous-œuvre", "Ravalement et enduits de façade", "Démolition et déconstruction sélective", "Dallages et planchers béton", "Réparation de fissures structurelles"],
     avantages: [
       { titre: "Garantie décennale", desc: "Tous nos travaux de gros œuvre sont couverts par notre assurance décennale." },
-      { titre: "Certification RGE", desc: "Nos artisans sont certifiés RGE pour les travaux d'amélioration énergétique." },
+      { titre: "Société certifiée RGE", desc: "Travaux Centre est certifiée RGE pour les travaux d'isolation et rénovation énergétique. Accès à MaPrimeRénov'." },
       { titre: "Suivi de chantier", desc: "Un chef de chantier dédié assure la coordination et le suivi quotidien." },
       { titre: "Permis de construire", desc: "Nous vous accompagnons dans vos démarches administratives si nécessaire." },
     ],
@@ -49,10 +49,10 @@ const services: Record<string, {
     title:    "Second Œuvre",
     subtitle: "Électricité · Plomberie · Isolation · VMC",
     metaDesc: "Électricité, plomberie, isolation à Longuenesse. Artisans certifiés. Travaux aux normes NF C15-100. Devis gratuit dans un rayon de 80km.",
-    intro:    "Le second œuvre regroupe tous les corps de métier techniques qui donnent vie à votre habitat : électricité, plomberie, isolation, ventilation. Nos techniciens certifiés assurent des installations conformes aux normes en vigueur et durables dans le temps.",
+    intro:    "Le second œuvre regroupe tous les corps de métier techniques qui donnent vie à votre habitat : électricité, plomberie, isolation, ventilation. Nos techniciens assurent des installations conformes aux normes. Travaux Centre est certifiée RGE pour l'isolation et la rénovation énergétique.",
     items:    ["Électricité aux normes NF C15-100", "Mise aux normes du tableau électrique", "Plomberie et installation sanitaire", "Chauffage central et radiateurs", "Climatisation réversible", "Isolation thermique par l'intérieur (ITI)", "Isolation thermique par l'extérieur (ITE)", "Ventilation mécanique contrôlée (VMC)"],
     avantages: [
-      { titre: "Artisans certifiés", desc: "Nos techniciens détiennent les certifications Qualibat et RGE obligatoires." },
+      { titre: "Société certifiée RGE", desc: "Travaux Centre dispose des certifications Qualibat et RGE pour garantir la conformité de tous les travaux." },
       { titre: "Aides financières", desc: "Nous vous guidons pour obtenir MaPrimeRénov' et les CEE disponibles." },
       { titre: "Conformité garantie", desc: "Tous nos travaux respectent les normes DTU et RT en vigueur." },
       { titre: "SAV réactif", desc: "En cas de problème, notre service après-vente intervient rapidement." },

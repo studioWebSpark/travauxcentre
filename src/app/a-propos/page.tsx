@@ -99,8 +99,7 @@ export default function AProposPage() {
                   et d&apos;affiner notre savoir-faire.
                 </p>
                 <p>
-                  Aujourd&apos;hui, notre équipe de professionnels qualifiés et certifiés RGE intervient dans un rayon de
-                  80km autour de Longuenesse, couvrant l&apos;ensemble du Nord-Pas-de-Calais.
+                  Aujourd&apos;hui, notre équipe de professionnels qualifiés intervient dans un rayon de 80km autour de Longuenesse, couvrant l&apos;ensemble du Nord-Pas-de-Calais. Travaux Centre est certifiée RGE (Reconnu Garant de l&apos;Environnement) pour les travaux d&apos;isolation et rénovation énergétique.
                 </p>
               </div>
             </div>
@@ -217,7 +216,7 @@ export default function AProposPage() {
             Faites confiance à des experts
           </h2>
           <p className="text-gray-700 text-lg">
-            Contactez-nous pour discuter de votre projet. Nos artisans certifiés vous garantissent une qualité professionnelle.
+            Contactez-nous pour discuter de votre projet. Travaux Centre est certifiée pour vous garantir une qualité professionnelle et des travaux conformes aux normes.
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
