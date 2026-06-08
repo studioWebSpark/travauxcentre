@@ -55,7 +55,7 @@ export default function DevisRowActions({ devisId, token, statut, emailEnvoye, h
           className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg text-xs ${
             sent
               ? "bg-green-50 border border-green-200 text-green-700"
-              : "bg-[#0F2C5E] text-[#1a1a1a] "
+              : "bg-[#0F2C5E] text-white "
           } disabled:opacity-60`}>
           {sending ? <Loader2 className="w-3.5 h-3.5 animate-spin" />
            : sent   ? <CheckCircle className="w-3.5 h-3.5" />

@@ -43,7 +43,7 @@ export default function DevisActions({ devisId, statut, token, emailEnvoye }: Pr
         className={`w-full flex items-center justify-center gap-2 font-semibold py-2.5 rounded-xl text-sm ${
           sent
             ? "bg-green-50 border border-green-200 text-green-700"
-            : "bg-[#0F2C5E] text-[#1a1a1a] "
+            : "bg-[#0F2C5E] text-white "
         } disabled:opacity-60`}>
         {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : sent ? <CheckCircle className="w-4 h-4" /> : <Send className="w-4 h-4" />}
         {sending ? "Envoi…" : sent ? "Email envoyé — Renvoyer ?" : "Envoyer par email + PDF"}
