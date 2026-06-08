@@ -10,6 +10,7 @@ import DevisActions from "@/components/crm/DevisActions"
 import FactureButton from "@/components/crm/FactureButton"
 import DepensesChantier from "@/components/crm/DepensesChantier"
 import RapportJournalierForm from "@/components/crm/RapportJournalierForm"
+import CopyLinkButton from "@/components/crm/CopyLinkButton"
 import { ArrowLeft, MapPin, Phone, Mail, FileText, Plus, ExternalLink } from "lucide-react"
 import Link from "next/link"
 
@@ -259,15 +260,10 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             <h2 className="font-bold text-[#0F2C5E] mb-1">Portail client</h2>
             <p className="text-xs text-gray-400 mb-3">Lien sécurisé que vous envoyez à votre client</p>
             <a href={`/client/${(c as typeof c & { tokenClient: string }).tokenClient}`} target="_blank"
-              className="w-full flex items-center justify-center gap-2 border border-[#0F2C5E] text-[#0F2C5E] font-semibold py-2.5 rounded-xl hover:bg-[#0F2C5E] hover:text-white transition-colors text-sm">
+              className="w-full flex items-center justify-center gap-2 border border-[#0F2C5E] text-[#0F2C5E] font-semibold py-2.5 rounded-xl hover:bg-[#0F2C5E] hover:text-white transition-colors text-sm mb-2">
               <ExternalLink className="w-4 h-4" /> Voir le portail
             </a>
-            <button
-              onClick={() => {}}
-              className="w-full mt-2 flex items-center justify-center gap-2 bg-[#F8F7F4] text-[#0F2C5E] font-semibold py-2 rounded-xl hover:bg-gray-100 transition-colors text-xs"
-              title="Copier le lien">
-              Copier le lien portail
-            </button>
+            <CopyLinkButton url={`${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/client/${(c as typeof c & { tokenClient: string }).tokenClient}`} />
           </div>
 
           {/* Facturation */}
