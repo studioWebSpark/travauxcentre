@@ -3,6 +3,7 @@ import Link from "next/link"
 import { prisma } from "@/lib/prisma"
 import { STATUTS, PRIORITES, formatDate, formatEuro } from "@/lib/crm"
 import LeadStatusSelect from "@/components/crm/LeadStatusSelect"
+import NouveauLeadModal from "@/components/crm/NouveauLeadModal"
 import { Phone, Mail } from "lucide-react"
 
 export const metadata: Metadata = { title: "Leads" }
@@ -43,6 +44,7 @@ export default async function LeadsPage({
           <h1 className="text-2xl font-bold text-[#0F2C5E]">Leads</h1>
           <p className="text-gray-500 text-sm mt-0.5">{leads.length} résultat{leads.length > 1 ? "s" : ""}</p>
         </div>
+        <NouveauLeadModal />
       </div>
 
       {/* Filtres */}
