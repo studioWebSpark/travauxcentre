@@ -100,7 +100,7 @@ export default async function DevisListPage({
           <FileText className="w-10 h-10 text-[#555555] mx-auto mb-3" />
           <p className="text-[#404040] mb-4">Aucun devis pour l&apos;instant</p>
           <Link href="/crm/devis/new"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-[#1a1a1a] font-semibold px-4 py-2.5 rounded-xl text-sm ">
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#F97316] to-orange-600 text-white font-semibold px-4 py-2.5 rounded-xl text-sm ">
             <Plus className="w-4 h-4" /> Créer le premier devis
           </Link>
         </div>
