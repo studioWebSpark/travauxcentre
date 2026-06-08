@@ -5,10 +5,12 @@ import { useParams } from "next/navigation"
 import { CheckCircle, XCircle, Loader2, FileText, MapPin, Phone, Mail, Calendar } from "lucide-react"
 
 type Ligne = { description: string; quantite: number; unite: string; prixUnitaire: number }
+type EtapePaiement = { id: string; pourcentage: number; description: string | null; dateEcheance: string | null; ordre: number }
 type DevisData = {
   id: string; numero: string; statut: string; token: string
   dateEmission: string; dateValidite: string | null; tva: number; notes: string | null
   lignes: Ligne[]
+  etapesPaiement: EtapePaiement[]
   lead: { nom: string; email: string; telephone: string; ville: string; codePostal: string } | null
   chantier: { titre: string; adresse: string } | null
 }
@@ -159,13 +161,54 @@ export default function DevisPublicPage() {
               </div>
             </div>
 
-            {/* Notes */}
-            {data?.notes && (
-              <div className="bg-[#F8F7F4] rounded-2xl p-5 mb-8">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Conditions</p>
-                <p className="text-sm text-gray-600 leading-relaxed">{data.notes}</p>
-              </div>
-            )}
+            {/* Conditions de paiement & Notes */}
+            <div className="space-y-5 mb-8">
+              {/* Étapes de paiement */}
+              {data?.etapesPaiement && data.etapesPaiement.length > 0 && (
+                <div className="bg-[#F8F7F4] rounded-2xl p-5">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">💳 Conditions de paiement</p>
+                  <div className="space-y-3">
+                    {data.etapesPaiement.map((etape, idx) => {
+                      const montantEtape = Math.round((etape.pourcentage / 100) * ttc * 100) / 100
+                      const dateEcheance = etape.dateEcheance ? new Date(etape.dateEcheance).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : ""
+                      return (
+                        <div key={etape.id} className="pb-3 border-b border-gray-200 last:border-b-0 last:pb-0">
+                          <div className="flex justify-between items-start mb-1">
+                            <p className="font-semibold text-[#0F2C5E]">{idx + 1}. {etape.pourcentage}% — {fmt(montantEtape)}</p>
+                          </div>
+                          <div className="space-y-1">
+                            {etape.description && (
+                              <p className="text-sm text-gray-600">{etape.description}</p>
+                            )}
+                            {dateEcheance && (
+                              <p className="text-xs text-gray-500">📅 {dateEcheance}</p>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Points importants */}
+                  <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded mt-4">
+                    <p className="font-semibold text-yellow-800 text-sm mb-2">⚠️ Points importants :</p>
+                    <ul className="text-sm text-yellow-700 space-y-1">
+                      <li>• Les travaux ne commenceront qu'après réception du premier acompte</li>
+                      <li>• Le solde doit être réglé avant la fin des travaux</li>
+                      <li>• Tout retard de paiement entraînera l'arrêt des travaux</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* Notes personnalisées */}
+              {data?.notes && (
+                <div className="bg-[#F8F7F4] rounded-2xl p-5">
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">📝 Notes additionnelles</p>
+                  <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{data.notes}</div>
+                </div>
+              )}
+            </div>
 
             {/* CTA */}
             {state === "ready" && (
