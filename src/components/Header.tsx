@@ -72,7 +72,7 @@ export default function Header() {
             </svg>
           </div>
           <span className="text-xl font-[800]" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
-            <span className="text-[#0F2C5E]">Travaux</span><span className="text-black">Centre</span>
+            <span className="text-[#0F2C5E]">Travaux</span><span className="text-[#F97316]">Centre</span>
           </span>
         </Link>
 
