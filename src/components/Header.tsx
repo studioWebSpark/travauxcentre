@@ -65,7 +65,7 @@ export default function Header() {
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-50"
+      className="fixed inset-x-0 top-0 z-[9999]"
       initial={false}
       animate={
         scrolled
