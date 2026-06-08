@@ -17,6 +17,7 @@ export async function PUT(
     data: {
       statut:             body.statut            ?? undefined,
       priorite:           body.priorite          ?? undefined,
+      description:        body.description       !== undefined ? body.description : undefined,
       montantDevis:       body.montantDevis       !== undefined ? Number(body.montantDevis) || null : undefined,
       dateContact:        body.dateContact        !== undefined ? (body.dateContact ? new Date(body.dateContact) : null) : undefined,
       dateRdv:            body.dateRdv            !== undefined ? (body.dateRdv ? new Date(body.dateRdv) : null) : undefined,

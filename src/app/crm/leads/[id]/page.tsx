@@ -6,6 +6,7 @@ import LeadActions from "@/components/crm/LeadActions"
 import NoteForm from "@/components/crm/NoteForm"
 import EmailConfirmButton from "@/components/crm/EmailConfirmButton"
 import PlanningForm from "@/components/crm/PlanningForm"
+import ProjectDescriptionEditor from "@/components/crm/ProjectDescriptionEditor"
 import { Phone, Mail, MapPin, Calendar, Euro, FileText, Clock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import type { StatutLead } from "@/generated/prisma"
@@ -130,10 +131,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                 </div>
               ))}
             </div>
-            <div>
-              <p className="text-xs text-gray-400 font-medium mb-2">Description du projet</p>
-              <p className="text-sm text-gray-700 leading-relaxed bg-[#F8F7F4] rounded-xl p-4">{lead.description}</p>
-            </div>
+            <ProjectDescriptionEditor leadId={lead.id} initialDescription={lead.description} />
           </div>
 
           {/* Notes / Timeline */}
