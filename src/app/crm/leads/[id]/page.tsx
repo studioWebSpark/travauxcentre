@@ -144,7 +144,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               <div className="mt-5 space-y-3">
                 {lead.notes.map((note) => (
                   <div key={note.id} className="flex gap-3">
-                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-[#1a1a1a] text-xs font-bold shrink-0 mt-0.5">
+                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0 mt-0.5">
                       {note.auteur[0]}
                     </div>
                     <div className="flex-1 bg-[#F8F7F4] rounded-xl p-3">

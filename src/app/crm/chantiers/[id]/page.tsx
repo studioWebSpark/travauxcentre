@@ -157,7 +157,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                           <span className="text-sm font-bold text-[#0F2C5E]">{formatEuro(tot.ttc)}</span>
                           <span className={`text-xs px-2 py-0.5 rounded-full border ${st.bg} ${st.color}`}>{st.label}</span>
                           <a href={`/api/crm/devis/${d.id}/pdf`} target="_blank"
-                            className="text-xs bg-[#0F2C5E] text-[#1a1a1a] px-2.5 py-1 rounded-lg ">
+                            className="text-xs bg-[#0F2C5E] text-white px-2.5 py-1 rounded-lg ">
                             PDF
                           </a>
                         </div>
@@ -205,7 +205,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               <div className="mt-4 space-y-3">
                 {c.notes.map((n) => (
                   <div key={n.id} className="flex gap-3">
-                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-[#1a1a1a] text-xs font-bold shrink-0">
+                    <div className="w-7 h-7 bg-[#0F2C5E] rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">
                       {n.auteur[0]}
                     </div>
                     <div className="flex-1 bg-[#F8F7F4] rounded-xl p-3">

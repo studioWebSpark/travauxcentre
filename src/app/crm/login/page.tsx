@@ -56,7 +56,7 @@ export default function CrmLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#0F2C5E] text-[#1a1a1a] font-semibold py-3 rounded-xl disabled:opacity-60"
+            className="w-full bg-[#0F2C5E] text-white font-semibold py-3 rounded-xl disabled:opacity-60"
           >
             {loading ? "Connexion…" : "Accéder au CRM"}
           </button>

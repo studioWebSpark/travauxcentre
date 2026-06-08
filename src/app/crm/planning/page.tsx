@@ -75,7 +75,7 @@ export default async function PlanningPage() {
               <div key={i} className={`p-2 border-r last:border-r-0 border-gray-50 space-y-1.5 ${isToday(day) ? "bg-[#0F2C5E]/3" : ""}`}>
                 {dayPlannings.map(p => (
                   <Link key={p.id} href={`/crm/leads/${p.leadId}`}
-                    className="block bg-[#0F2C5E] text-[#1a1a1a] rounded-lg p-2 ">
+                    className="block bg-[#0F2C5E] text-white rounded-lg p-2 ">
                     <p className="text-xs font-bold truncate">{p.lead.nom}</p>
                     <p className="text-xs opacity-70">{fmtHour(p.date)}</p>
                     <p className="text-xs opacity-60 truncate">{p.typeRdv}</p>

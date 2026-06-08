@@ -92,7 +92,7 @@ function CaptureForm() {
               <p className="text-gray-500 text-sm mb-8">La fiche lead est prête dans votre CRM.</p>
               <div className="flex flex-col gap-3">
                 <button onClick={() => { router.push(`/crm/leads/${result.leadId}`); window.close() }}
-                  className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">
+                  className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl text-sm">
                   Ouvrir la fiche lead →
                 </button>
                 <button onClick={() => window.close()}
@@ -106,7 +106,7 @@ function CaptureForm() {
               <h2 className="text-xl font-bold text-[#0F2C5E] mb-2">Déjà dans la Veille !</h2>
               <p className="text-gray-500 text-sm mb-8">Cette annonce est déjà enregistrée.</p>
               <button onClick={() => window.close()}
-                className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">Fermer</button>
+                className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl text-sm">Fermer</button>
             </>
           ) : (
             <>
@@ -117,7 +117,7 @@ function CaptureForm() {
               <p className="text-gray-400 text-xs mb-8">Visible dans Veille → CRM</p>
               <div className="flex flex-col gap-3">
                 <button onClick={() => { router.push("/crm/veille"); window.close() }}
-                  className="bg-[#0F2C5E] text-[#1a1a1a] font-semibold px-6 py-3 rounded-xl text-sm">
+                  className="bg-[#0F2C5E] text-white font-semibold px-6 py-3 rounded-xl text-sm">
                   Voir dans la Veille →
                 </button>
                 <button onClick={() => window.close()}
@@ -146,7 +146,7 @@ function CaptureForm() {
         <div className="flex gap-2 mb-4">
           <button onClick={() => setMode("capture")}
             className={`flex-1 py-2.5 rounded-xl text-sm font-semibold border ${
-              mode === "capture" ? "bg-[#0F2C5E] text-[#1a1a1a] border-[#0F2C5E]" : "border-gray-200 text-gray-600 bg-white "
+              mode === "capture" ? "bg-[#0F2C5E] text-white border-[#0F2C5E]" : "border-gray-200 text-gray-600 bg-white "
             }`}>
             Enregistrer dans Veille
           </button>
@@ -247,7 +247,7 @@ function CaptureForm() {
               className={`flex-1 font-bold py-3 rounded-xl disabled:opacity-60 flex items-center justify-center gap-2 ${
                 mode === "lead"
                   ? "bg-[#F97316] text-[#1a1a1a] "
-                  : "bg-[#0F2C5E] text-[#1a1a1a] "
+                  : "bg-[#0F2C5E] text-white "
               }`}>
               {saving
                 ? <><Loader2 className="w-4 h-4 animate-spin" /> Traitement…</>
