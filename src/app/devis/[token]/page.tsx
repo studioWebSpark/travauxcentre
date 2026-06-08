@@ -66,7 +66,7 @@ export default function DevisPublicPage() {
           <span className="text-3xl font-bold text-[#0F2C5E]">
             Travaux<span className="text-[#F97316]">Centre</span>
           </span>
-          <p className="text-gray-500 text-sm mt-1">Longuenesse (62219) — 03 XX XX XX XX</p>
+          <p className="text-gray-500 text-sm mt-1">Longuenesse (62219) — 07 67 17 57 24</p>
         </div>
 
         {/* Carte principale */}
@@ -180,7 +180,7 @@ export default function DevisPublicPage() {
                   <FileText className="w-4 h-4" /> Télécharger le PDF
                 </a>
                 <p className="text-center text-xs text-gray-400">
-                  Des questions ? Appelez-nous : <a href="tel:+33300000000" className="text-[#0F2C5E] font-semibold">03 XX XX XX XX</a>
+                  Des questions ? Appelez-nous : <a href="tel:+33767175724" className="text-[#0F2C5E] font-semibold">07 67 17 57 24</a>
                 </p>
               </div>
             )}

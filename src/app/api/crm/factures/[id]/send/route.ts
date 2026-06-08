@@ -73,7 +73,7 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
           </p>
           <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
           <p style="color:#aaa;font-size:12px;text-align:center">
-            Travaux Centre — Longuenesse (62219) — contact@travauxcentre.fr
+            Travaux Centre — Longuenesse (62219) — contact.travauxcentre@gmail.com
           </p>
         </div>
       </div>

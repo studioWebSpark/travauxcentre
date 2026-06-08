@@ -30,7 +30,7 @@ export async function sendDevisConfirmation(data: {
         <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
         <p style="color:#888;font-size:13px">
           Travaux Centre — Longuenesse (62219)<br/>
-          Tél : <a href="tel:+33XXXXXXXXX">03 XX XX XX XX</a><br/>
+          Tél : <a href="tel:+33767175724">07 67 17 57 24</a><br/>
           <a href="https://travauxcentre.fr">travauxcentre.fr</a>
         </p>
       </div>

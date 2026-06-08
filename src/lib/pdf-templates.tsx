@@ -76,7 +76,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
           <View style={s.logoBox}>
             <View>
               <Text style={s.logoText}>Travaux<Text style={s.logoOrange}>Centre</Text></Text>
-              <Text style={s.tagline}>Longuenesse (62219) — 03 XX XX XX XX — contact@travauxcentre.fr</Text>
+              <Text style={s.tagline}>Longuenesse (62219) — 07 67 17 57 24 — contact.travauxcentre@gmail.com</Text>
             </View>
           </View>
           <View style={s.docInfo}>
@@ -170,7 +170,7 @@ export function FacturePDF({ numero, dateEmission, dateEcheance, client, chantie
           <View style={s.logoBox}>
             <View>
               <Text style={s.logoText}>Travaux<Text style={s.logoOrange}>Centre</Text></Text>
-              <Text style={s.tagline}>Longuenesse (62219) — 03 XX XX XX XX — contact@travauxcentre.fr</Text>
+              <Text style={s.tagline}>Longuenesse (62219) — 07 67 17 57 24 — contact.travauxcentre@gmail.com</Text>
             </View>
           </View>
           <View style={s.docInfo}>

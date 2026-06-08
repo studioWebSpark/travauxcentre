@@ -64,7 +64,7 @@ export default async function VillePage({
       "@type": "LocalBusiness",
       name: "Travaux Centre",
       url: "https://travauxcentre.fr",
-      telephone: "+33300000000",
+      telephone: "+33767175724",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Longuenesse",
@@ -243,11 +243,11 @@ export default async function VillePage({
                   <h3 className="font-semibold text-[#0F2C5E] mb-1 text-sm">Nous appeler</h3>
                   <p className="text-gray-400 text-xs mb-4">Lun – Ven, 8h – 18h</p>
                   <a
-                    href="tel:+33300000000"
+                    href="tel:+33767175724"
                     className="flex items-center justify-center gap-2 w-full border border-gray-200 text-[#0F2C5E] font-medium py-2.5 rounded-xl hover:bg-[#F8F7F4] transition-colors text-sm"
                   >
                     <Phone className="w-4 h-4" />
-                    03 XX XX XX XX
+                    07 67 17 57 24
                   </a>
                 </div>
 

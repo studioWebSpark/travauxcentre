@@ -169,16 +169,16 @@ export default function Footer() {
                 {
                   icon: Phone,
                   content: (
-                    <a href="tel:+33300000000" className="hover:text-white transition-colors">
-                      03 XX XX XX XX
+                    <a href="tel:+33767175724" className="hover:text-white transition-colors">
+                      07 67 17 57 24
                     </a>
                   ),
                 },
                 {
                   icon: Mail,
                   content: (
-                    <a href="mailto:contact@travauxcentre.fr" className="hover:text-white transition-colors">
-                      contact@travauxcentre.fr
+                    <a href="mailto:contact.travauxcentre@gmail.com" className="hover:text-white transition-colors">
+                      contact.travauxcentre@gmail.com
                     </a>
                   ),
                 },

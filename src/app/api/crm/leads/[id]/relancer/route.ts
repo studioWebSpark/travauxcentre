@@ -26,7 +26,7 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
           <p>Je reviens vers vous au sujet de votre projet de <strong>${lead.typeTravaux}</strong>.</p>
           <p>Avez-vous avancé dans votre réflexion ? Je suis disponible pour répondre à vos questions et établir un devis gratuit.</p>
           <div style="text-align:center;margin:28px 0">
-            <a href="tel:+33300000000" style="display:inline-block;background:#0F2C5E;color:white;font-weight:bold;padding:12px 28px;border-radius:10px;text-decoration:none">
+            <a href="tel:+33767175724" style="display:inline-block;background:#0F2C5E;color:white;font-weight:bold;padding:12px 28px;border-radius:10px;text-decoration:none">
               📞 Me rappeler
             </a>
           </div>

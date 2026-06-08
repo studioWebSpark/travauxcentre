@@ -18,8 +18,8 @@ export default function MentionsLegalesPage() {
           Entreprise individuelle / SARL [à compléter]<br/>
           Siège social : Longuenesse, 62219 — Nord-Pas-de-Calais<br/>
           SIRET : [à compléter]<br/>
-          Email : contact@travauxcentre.fr<br/>
-          Tél : 03 XX XX XX XX</p>
+          Email : contact.travauxcentre@gmail.com<br/>
+          Tél : 07 67 17 57 24</p>
         </section>
         <section>
           <h2 className="text-lg font-bold text-[#0F2C5E] mb-2">Hébergement</h2>
@@ -31,7 +31,7 @@ export default function MentionsLegalesPage() {
         </section>
         <section>
           <h2 className="text-lg font-bold text-[#0F2C5E] mb-2">Données personnelles</h2>
-          <p>Les données collectées via les formulaires sont utilisées uniquement pour traiter vos demandes. Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression. Contactez-nous à contact@travauxcentre.fr.</p>
+          <p>Les données collectées via les formulaires sont utilisées uniquement pour traiter vos demandes. Conformément au RGPD, vous disposez d&apos;un droit d&apos;accès, de rectification et de suppression. Contactez-nous à contact.travauxcentre@gmail.com.</p>
         </section>
         <section>
           <h2 className="text-lg font-bold text-[#0F2C5E] mb-2">Cookies</h2>

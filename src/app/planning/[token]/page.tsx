@@ -86,7 +86,7 @@ export default function ConfirmationPage() {
             <div className="p-8 text-center">
               <XCircle className="w-14 h-14 text-red-400 mx-auto mb-4" />
               <h1 className="text-xl font-bold text-[#0F2C5E] mb-2">Lien invalide</h1>
-              <p className="text-gray-500 text-sm">Ce lien est expiré ou invalide. Contactez-nous au 03 XX XX XX XX.</p>
+              <p className="text-gray-500 text-sm">Ce lien est expiré ou invalide. Contactez-nous au 07 67 17 57 24.</p>
             </div>
           )}
 
@@ -131,7 +131,7 @@ export default function ConfirmationPage() {
 
                 <p className="text-center text-xs text-gray-400">
                   Ce créneau ne vous convient pas ?<br />
-                  Appelez-nous : <a href="tel:+33300000000" className="text-[#0F2C5E] font-semibold">03 XX XX XX XX</a>
+                  Appelez-nous : <a href="tel:+33767175724" className="text-[#0F2C5E] font-semibold">07 67 17 57 24</a>
                 </p>
               </div>
             </>

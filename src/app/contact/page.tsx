@@ -190,12 +190,12 @@ export default function ContactPage() {
                 {
                   icon: "📞",
                   title: "Téléphone",
-                  content: "03 XX XX XX XX",
+                  content: "07 67 17 57 24",
                 },
                 {
                   icon: "✉️",
                   title: "Email",
-                  content: "contact@travauxcentre.fr",
+                  content: "contact.travauxcentre@gmail.com",
                 },
                 {
                   icon: "🕐",

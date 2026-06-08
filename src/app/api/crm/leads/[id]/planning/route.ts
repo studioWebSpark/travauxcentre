@@ -69,7 +69,7 @@ export async function POST(
 
           <p style="color:#888;font-size:13px;text-align:center">
             Si ce créneau ne vous convient pas, répondez à cet email ou appelez-nous.<br/>
-            <strong>03 XX XX XX XX</strong>
+            <strong>07 67 17 57 24</strong>
           </p>
           <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
           <p style="color:#aaa;font-size:12px;text-align:center">Travaux Centre — Longuenesse (62219) — travauxcentre.fr</p>

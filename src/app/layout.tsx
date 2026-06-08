@@ -74,8 +74,8 @@ const jsonLd = {
   "@type": "LocalBusiness",
   name: "Travaux Centre",
   url: siteUrl,
-  telephone: "+33300000000",
-  email: "contact@travauxcentre.fr",
+  telephone: "+33767175724",
+  email: "contact.travauxcentre@gmail.com",
   address: {
     "@type": "PostalAddress",
     streetAddress: "",

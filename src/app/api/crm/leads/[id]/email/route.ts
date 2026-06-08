@@ -20,8 +20,8 @@ const TEMPLATES: Record<StatutLead, { sujet: string; html: (nom: string, typeTra
           <p>En attendant, n'hésitez pas à nous contacter si vous avez des questions.</p>
           <div style="background:#F8F7F4;padding:16px;border-radius:8px;margin:24px 0">
             <p style="margin:0;font-size:13px;color:#555">
-              📞 03 XX XX XX XX<br/>
-              ✉️ contact@travauxcentre.fr<br/>
+              📞 07 67 17 57 24<br/>
+              ✉️ contact.travauxcentre@gmail.com<br/>
               🌐 travauxcentre.fr
             </p>
           </div>

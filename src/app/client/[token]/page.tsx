@@ -201,7 +201,7 @@ export default async function PortailClientPage({ params }: { params: Promise<{ 
         )}
 
         <p className="text-center text-xs text-gray-400 pb-4">
-          Travaux Centre — Longuenesse (62219) — contact@travauxcentre.fr
+          Travaux Centre — Longuenesse (62219) — contact.travauxcentre@gmail.com
         </p>
       </div>
     </div>
