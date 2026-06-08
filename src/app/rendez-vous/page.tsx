@@ -120,7 +120,7 @@ export default function RendezVousPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Créneaux disponibles : Lundi – Vendredi, 7h – 20h. Confirmation par email sous 24h.
+          Créneaux disponibles : Lundi – Samedi, 7h – 20h. Confirmation par email sous 24h.
         </p>
       </div>
     </div>

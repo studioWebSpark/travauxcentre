@@ -182,7 +182,7 @@ export default function Footer() {
                     </a>
                   ),
                 },
-                { icon: Clock, content: "Lun – Ven : 7h – 20h" },
+                { icon: Clock, content: "Lun – Sam : 7h – 20h" },
               ].map(({ icon: Icon, content }, i) => (
                 <li key={i} className="flex items-start gap-2.5 text-sm text-white/70">
                   <Icon className="w-4 h-4 mt-0.5 text-[#F97316] shrink-0" />
