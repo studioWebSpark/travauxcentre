@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Plus, Trash2, Loader2, FileText } from "lucide-react"
 import { calcTotaux, formatEuro } from "@/lib/chantier"
@@ -28,10 +28,45 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
   const [dateValidite, setDateVal]  = useState("")
   const [lignes, setLignes]         = useState<Ligne[]>(LIGNES_PRESET)
   const [etapes, setEtapes]         = useState<EtapePaiement[]>([])
+  const [autoGenerateNotes, setAutoGenerateNotes] = useState(true)
   const [loading, setLoading]       = useState(false)
   const [createdId, setCreatedId]   = useState<string | null>(null)
 
   const totaux = calcTotaux(lignes, tva)
+
+  // Générer automatiquement les conditions basées sur les étapes
+  function generateConditions(): string {
+    if (etapes.length === 0) {
+      return "Devis valable 30 jours. Acompte de 30% à la commande."
+    }
+
+    const montantTotal = totaux.ttc
+    const validiteText = dateValidite ? `Devis valable jusqu'au ${new Date(dateValidite).toLocaleDateString("fr-FR")}.` : "Devis valable 30 jours."
+
+    let conditions = validiteText + "\n\n"
+    conditions += "CONDITIONS DE PAIEMENT :\n"
+
+    const etapesTriees = [...etapes].sort((a, b) => a.ordre - b.ordre)
+
+    etapesTriees.forEach((etape, idx) => {
+      const montant = Math.round((etape.pourcentage / 100) * montantTotal * 100) / 100
+      const dateText = etape.dateEcheance
+        ? new Date(etape.dateEcheance).toLocaleDateString("fr-FR")
+        : idx === 0
+        ? "À la signature"
+        : "À la fin des travaux"
+
+      conditions += `${idx + 1}. ${etape.pourcentage}% (${montant.toFixed(2)}€) ${etape.description ? "- " + etape.description : "- " + dateText}\n`
+    })
+
+    conditions += `\nMontant total TTC: ${montantTotal.toFixed(2)}€\n\n`
+    conditions += "REMARQUES IMPORTANTES :\n"
+    conditions += "- Les travaux ne commenceront qu'après réception du premier acompte\n"
+    conditions += "- Le solde doit être réglé avant la fin des travaux\n"
+    conditions += "- Tout retard de paiement entraînera l'arrêt des travaux\n"
+
+    return conditions
+  }
 
   function addLigne() {
     setLignes((l) => [...l, { description: "", quantite: 1, unite: "forfait", prixUnitaire: 0 }])
@@ -44,16 +79,35 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
   }
 
   function addEtape() {
-    setEtapes((e) => [...e, { pourcentage: 0, description: "", dateEcheance: "" }])
+    const newEtapes = [...etapes, { pourcentage: 0, description: "", dateEcheance: "" }]
+    setEtapes(newEtapes)
+    if (autoGenerateNotes) {
+      // Sera mis à jour via useEffect
+    }
   }
 
   function removeEtape(i: number) {
-    setEtapes((e) => e.filter((_, j) => j !== i))
+    const newEtapes = etapes.filter((_, j) => j !== i)
+    setEtapes(newEtapes)
+    if (autoGenerateNotes) {
+      // Sera mis à jour via useEffect
+    }
   }
 
   function setEtape(i: number, k: keyof EtapePaiement, v: string | number) {
-    setEtapes((e) => e.map((etape, j) => j === i ? { ...etape, [k]: k === "description" ? v : v } : etape))
+    const newEtapes = etapes.map((etape, j) => j === i ? { ...etape, [k]: k === "description" ? v : v } : etape)
+    setEtapes(newEtapes)
+    if (autoGenerateNotes) {
+      // Sera mis à jour via useEffect
+    }
   }
+
+  // Mettre à jour les notes automatiquement quand les étapes changent
+  useEffect(() => {
+    if (autoGenerateNotes) {
+      setNotes(generateConditions())
+    }
+  }, [etapes, totaux.ttc, dateValidite, autoGenerateNotes])
 
   async function submit(e: React.FormEvent) {
     e.preventDefault()
@@ -233,9 +287,43 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
 
       {/* Notes */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <label className="block text-xs font-medium text-gray-500 mb-1.5">Conditions & notes</label>
-        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3}
-          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] resize-none" />
+        <div className="flex items-center justify-between mb-3">
+          <label className="block text-xs font-medium text-gray-500">Conditions & notes</label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={autoGenerateNotes}
+              onChange={(e) => {
+                setAutoGenerateNotes(e.target.checked)
+                if (e.target.checked) {
+                  setNotes(generateConditions())
+                }
+              }}
+              className="rounded"
+            />
+            <span className="text-xs text-gray-500">Auto-générer depuis les étapes</span>
+          </label>
+        </div>
+
+        {autoGenerateNotes && etapes.length > 0 && (
+          <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded-lg text-xs text-blue-700">
+            <strong>ℹ️ Les conditions sont générées automatiquement</strong> à partir des étapes de paiement que vous avez configurées.
+            Décochez le checkbox pour les modifier manuellement.
+          </div>
+        )}
+
+        <textarea
+          value={notes}
+          onChange={(e) => {
+            setNotes(e.target.value)
+            if (autoGenerateNotes) {
+              setAutoGenerateNotes(false) // Si utilisateur modifie, passer en mode manuel
+            }
+          }}
+          rows={6}
+          className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] resize-none"
+          placeholder="Les conditions s'affichent ici..."
+        />
       </div>
 
       <button type="submit" disabled={loading || lignes.length === 0}
