@@ -17,9 +17,10 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
   const devis  = await prisma.devisCrm.findUnique({
     where:   { id },
     include: {
-      lignes:   true,
-      lead:     { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } },
-      chantier: { select: { titre: true, adresse: true } },
+      lignes:           true,
+      etapesPaiement:   { orderBy: { ordre: "asc" } },
+      lead:             { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } },
+      chantier:         { select: { titre: true, adresse: true } },
     },
   })
   if (!devis) return NextResponse.json({ error: "Introuvable" }, { status: 404 })
@@ -78,6 +79,35 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
             </a>
           </div>
           <p style="color:#888;font-size:13px">Vous pouvez également télécharger le PDF en pièce jointe.</p>
+
+          ${devis.etapesPaiement && devis.etapesPaiement.length > 0 ? `
+          <hr style="border:none;border-top:1px solid #eee;margin:28px 0"/>
+          <h4 style="color:#0F2C5E;margin:0 0 16px;font-size:16px">💳 Conditions de paiement</h4>
+
+          <div style="background:#f9f9f9;border:1px solid #e5e5e5;border-radius:8px;padding:16px;margin:16px 0">
+            ${devis.etapesPaiement.map((etape, idx) => {
+              const montantEtape = Math.round((etape.pourcentage / 100) * ttc * 100) / 100
+              const dateEcheance = etape.dateEcheance ? new Date(etape.dateEcheance).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : ""
+              return `
+              <div style="margin:0 0 12px;padding-bottom:12px;border-bottom:1px solid #e0e0e0">
+                <p style="margin:0 0 4px;font-weight:bold;color:#0F2C5E">${idx + 1}. ${etape.pourcentage}% — ${fmt(montantEtape)} TTC</p>
+                ${etape.description ? `<p style="margin:0 0 4px;color:#666;font-size:14px">${etape.description}</p>` : ""}
+                ${dateEcheance ? `<p style="margin:0;color:#999;font-size:13px">📅 Échéance : ${dateEcheance}</p>` : ""}
+              </div>
+              `
+            }).join("")}
+          </div>
+
+          <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:12px 16px;border-radius:0 4px 4px 0;margin:16px 0;font-size:13px">
+            <p style="margin:0 0 8px;color:#856404;font-weight:bold">⚠️ Points importants :</p>
+            <ul style="margin:0;padding-left:20px;color:#856404">
+              <li>Les travaux ne commenceront qu'après réception du premier acompte</li>
+              <li>Le solde doit être réglé avant la fin des travaux</li>
+              <li>Tout retard de paiement entraînera l'arrêt des travaux</li>
+            </ul>
+          </div>
+          ` : ""}
+
           <hr style="border:none;border-top:1px solid #eee;margin:24px 0"/>
           <p style="color:#aaa;font-size:12px;text-align:center">
             Travaux Centre — Longuenesse (62219)<br/>
