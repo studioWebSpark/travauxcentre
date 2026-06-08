@@ -39,7 +39,10 @@ const socials = [
 
 export default function Footer() {
   const pathname = usePathname()
-  if (pathname.startsWith("/crm")) return null
+  if (pathname.startsWith("/crm"))      return null
+  if (pathname.startsWith("/client"))   return null
+  if (pathname.startsWith("/devis"))    return null
+  if (pathname.startsWith("/planning")) return null
 
   return (
     <footer className="bg-[#0a1f42] text-white">

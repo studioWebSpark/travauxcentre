@@ -20,7 +20,10 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen]         = useState(false)
 
-  if (pathname.startsWith("/crm")) return null
+  if (pathname.startsWith("/crm"))      return null
+  if (pathname.startsWith("/client"))   return null
+  if (pathname.startsWith("/devis"))    return null
+  if (pathname.startsWith("/planning")) return null
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
