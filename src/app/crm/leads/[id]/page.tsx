@@ -45,7 +45,7 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
         </div>
         {/* Boutons action */}
         <div className="flex gap-2 flex-wrap">
-          <a href={`tel:${lead.telephone}`} className="inline-flex items-center gap-2 bg-[#0F2C5E] text-[#1a1a1a] text-sm font-semibold px-4 py-2.5 rounded-xl ">
+          <a href={`tel:${lead.telephone}`} className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white text-sm font-semibold px-4 py-2.5 rounded-xl ">
             <Phone className="w-4 h-4" /> Appeler
           </a>
           <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl ">
