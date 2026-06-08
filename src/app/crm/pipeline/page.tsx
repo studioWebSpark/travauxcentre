@@ -22,6 +22,7 @@ export default async function PipelinePage() {
         nom:         l.nom,
         ville:       l.ville,
         typeTravaux: l.typeTravaux,
+        telephone:   l.telephone,
         budget:      l.budget,
         montantDevis: l.montantDevis,
         priorite:    l.priorite,

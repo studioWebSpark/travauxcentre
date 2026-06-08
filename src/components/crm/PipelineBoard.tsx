@@ -8,7 +8,7 @@ import type { StatutLead, PrioriteLead } from "@/generated/prisma"
 import { Phone, MapPin, ChevronDown } from "lucide-react"
 
 type LeadCard = {
-  id: string; nom: string; ville: string; typeTravaux: string
+  id: string; nom: string; ville: string; typeTravaux: string; telephone: string
   budget: string | null; montantDevis: number | null
   priorite: PrioriteLead; createdAt: string; dateContact: string | null
   lastNote: string | null
@@ -104,7 +104,7 @@ export default function PipelineBoard({ columns }: { columns: Column[] }) {
                             <button
                               key={k}
                               onClick={() => moveToStatut(lead.id, k as StatutLead)}
-                              className={`text-xs px-2 py-0.5 rounded-full border ${v.bg} ${v.color} 
+                              className={`text-xs px-2 py-0.5 rounded-full border ${v.bg} ${v.color}`}
                             >
                               {v.label}
                             </button>
@@ -115,7 +115,7 @@ export default function PipelineBoard({ columns }: { columns: Column[] }) {
                     <div className="flex items-center justify-between mt-2">
                       <span className="text-xs text-gray-300">{formatDate(lead.createdAt)}</span>
                       <div className="flex gap-1">
-                        <a href={`tel:${lead.id}`}
+                        <a href={"tel:" + lead.telephone}
                           className="w-6 h-6 bg-gray-50 rounded-lg flex items-center justify-center ">
                           <Phone className="w-3 h-3" />
                         </a>
