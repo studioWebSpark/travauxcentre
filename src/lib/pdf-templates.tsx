@@ -148,7 +148,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
         {/* Étapes de paiement */}
         {etapesPaiement && etapesPaiement.length > 0 && (
           <View style={s.paymentSection}>
-            <Text style={s.paymentTitle}>💳 CONDITIONS DE PAIEMENT</Text>
+            <Text style={s.paymentTitle}>CONDITIONS DE PAIEMENT</Text>
             {etapesPaiement.map((etape, idx) => {
               const montantEtape = Math.round((etape.pourcentage / 100) * ttc * 100) / 100
               const dateEcheance = etape.dateEcheance ? fmtDate(etape.dateEcheance) : ""
@@ -156,7 +156,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
                 <View key={etape.id} style={s.paymentStage}>
                   <Text style={s.stagePercent}>{idx + 1}. {etape.pourcentage}% — {fmt(montantEtape)} TTC</Text>
                   {etape.description && <Text style={s.stageDesc}>{etape.description}</Text>}
-                  {dateEcheance && <Text style={s.stageDesc}>📅 Échéance : {dateEcheance}</Text>}
+                  {dateEcheance && <Text style={s.stageDesc}>Échéance : {dateEcheance}</Text>}
                 </View>
               )
             })}
@@ -166,7 +166,7 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
         {/* Avertissements de paiement */}
         {etapesPaiement && etapesPaiement.length > 0 && (
           <View style={s.paymentWarning}>
-            <Text style={[s.warningText, { fontFamily: "Helvetica-Bold", marginBottom: 6 }]}>⚠️ Points importants :</Text>
+            <Text style={[s.warningText, { fontFamily: "Helvetica-Bold", marginBottom: 6 }]}>POINTS IMPORTANTS :</Text>
             <Text style={s.warningText}>• Les travaux ne commenceront qu&apos;après réception du premier acompte</Text>
             <Text style={s.warningText}>• Le solde doit être réglé avant la fin des travaux</Text>
             <Text style={s.warningText}>• Tout retard de paiement entraînera l&apos;arrêt des travaux</Text>
