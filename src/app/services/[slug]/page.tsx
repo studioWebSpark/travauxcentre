@@ -26,7 +26,7 @@ const services: Record<string, {
     intro:    "Le gros œuvre est le squelette de votre bâtiment. Nos maçons expérimentés assurent la solidité et la durabilité de vos ouvrages. Travaux Centre est certifiée RGE pour les travaux d'amélioration énergétique.",
     items:    ["Murs porteurs et cloisons maçonnées", "Fondations superficielles et profondes", "Extensions de maison et surélévations", "Reprises en sous-œuvre", "Ravalement et enduits de façade", "Démolition et déconstruction sélective", "Dallages et planchers béton", "Réparation de fissures structurelles"],
     avantages: [
-      { titre: "Garantie décennale", desc: "Tous nos travaux de gros œuvre sont couverts par notre assurance décennale." },
+      { titre: "Garantie décennale", desc: "Tous nos travaux de maçonnerie et structure (N° 11) sont couverts par notre assurance décennale obligatoire." },
       { titre: "Société certifiée RGE", desc: "Travaux Centre est certifiée RGE pour les travaux d'isolation et rénovation énergétique. Accès à MaPrimeRénov'." },
       { titre: "Suivi de chantier", desc: "Un chef de chantier dédié assure la coordination et le suivi quotidien." },
       { titre: "Permis de construire", desc: "Nous vous accompagnons dans vos démarches administratives si nécessaire." },

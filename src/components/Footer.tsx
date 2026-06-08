@@ -19,6 +19,7 @@ const links = [
   { label: "Réalisations",     href: "/realisations" },
   { label: "À propos",         href: "/a-propos" },
   { label: "Contact",          href: "/contact" },
+  { label: "Garantie décennale", href: "/informations" },
   { label: "Mentions légales", href: "/mentions-legales" },
 ]
 

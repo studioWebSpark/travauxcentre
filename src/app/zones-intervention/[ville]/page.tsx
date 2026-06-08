@@ -188,7 +188,7 @@ export default async function VillePage({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     { icon: Calendar, titre: "Devis sous 48h",        desc: "Visite sur site et chiffrage détaillé offerts. Réponse garantie sous 48h." },
-                    { icon: Shield,   titre: "Garantie décennale",     desc: "Tous nos travaux sont couverts par notre assurance décennale sans exception." },
+                    { icon: Shield,   titre: "Garantie décennale",     desc: "Maçonnerie, menuiserie extérieure et isolation ITE couverts par notre assurance décennale obligatoire." },
                     { icon: Star,     titre: "Société certifiée RGE", desc: "Travaux Centre est certifiée RGE — travaux d'isolation et rénovation énergétique éligibles aux aides de l'État." },
                     { icon: MapPin,   titre: "Déplacement offert",     desc: `Nous venons chez vous à ${zone.nom} sans frais pour établir votre devis.` },
                   ].map((e) => {

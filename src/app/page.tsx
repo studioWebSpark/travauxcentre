@@ -32,7 +32,7 @@ const services = [
 const avantages = [
   { icon: <IconCheck />,    title: "Société certifiée RGE", desc: "Travaux Centre est certifiée RGE (Reconnu Garant de l'Environnement). Vos travaux d'isolation et rénovation énergétique sont garantis conformes. Accès à MaPrimeRénov'." },
   { icon: <IconCalendar />, title: "Devis gratuit sous 48h",        desc: "Nous nous engageons à vous répondre rapidement. Visite sur site et chiffrage entièrement offerts." },
-  { icon: <IconShield />,   title: "Garantie décennale",            desc: "Tous nos travaux sont couverts par notre assurance décennale pour votre tranquillité d'esprit." },
+  { icon: <IconShield />,   title: "Garantie décennale",            desc: "Maçonnerie, menuiserie extérieure et isolation ITE couverts par notre assurance décennale pour votre tranquillité d'esprit." },
   { icon: <IconTrophy />,   title: "+150 chantiers réalisés",       desc: "Des dizaines de clients satisfaits dans la région. Notre réputation se construit chantier après chantier." },
 ]
 
@@ -243,7 +243,7 @@ export default function Home() {
           >
             {[
               { icon: <IconCalendar />, label: "Devis sous 48h" },
-              { icon: <IconShield />,  label: "Garantie décennale" },
+              { icon: <IconShield />,  label: "Garantie décennale*" },
               { icon: <IconPhone />,   label: "Disponible 7j/7" },
             ].map(({ icon, label }) => (
               <motion.div

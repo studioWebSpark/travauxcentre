@@ -7,7 +7,7 @@ import { motion } from "framer-motion"
 const certifications = [
   { nom: "Qualibat", desc: "Certification qualité bâtiment", icon: "✓" },
   { nom: "RGE", desc: "Reconnu Garant de l'Environnement", icon: "🌱" },
-  { nom: "Décennale", desc: "Assurance garantie décennale", icon: "🛡️" },
+  { nom: "Décennale", desc: "Assurance décennale pour maçonnerie, menuiserie, isolation ITE", icon: "🛡️" },
   { nom: "KBIS", desc: "Entreprise immatriculée", icon: "📋" },
 ]
 
