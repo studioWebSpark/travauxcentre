@@ -45,14 +45,7 @@ const mobileLinkVariants = {
 
 export default function Header() {
   const pathname = usePathname()
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 300)
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [])
 
   if (
     pathname.startsWith("/crm") ||
@@ -65,15 +58,9 @@ export default function Header() {
 
   return (
     <motion.header
-      className="fixed inset-x-0 top-0 z-[9999]"
+      className="fixed inset-x-0 top-0 z-[9999] bg-transparent"
       initial={false}
-      animate={
-        scrolled
-          ? { backgroundColor: "rgba(15,44,94,0.95)" }
-          : { backgroundColor: "rgba(15,44,94,0)" }
-      }
       transition={{ duration: 0.3, ease: "easeOut" }}
-      style={{ backdropFilter: scrolled ? "blur(10px)" : "blur(0px)", WebkitBackdropFilter: scrolled ? "blur(10px)" : "blur(0px)", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between py-4">
         {/* Logo */}
@@ -84,8 +71,8 @@ export default function Header() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 21V12h6v9" />
             </svg>
           </div>
-          <span className="text-xl font-[800] text-white" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
-            Travaux<span className="text-[#F97316]">Centre</span>
+          <span className="text-xl font-[800]" style={{ fontFamily: "var(--font-montserrat), sans-serif" }}>
+            <span className="text-[#0F2C5E]">Travaux</span><span className="text-black">Centre</span>
           </span>
         </Link>
 
@@ -119,7 +106,7 @@ export default function Header() {
 
         {/* Mobile burger */}
         <button
-          className="md:hidden p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+          className="md:hidden p-2 rounded-lg text-black hover:bg-black/10 transition-colors"
           onClick={() => setOpen(!open)}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
         >
