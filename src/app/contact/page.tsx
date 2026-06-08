@@ -200,7 +200,7 @@ export default function ContactPage() {
                 {
                   icon: "🕐",
                   title: "Horaires",
-                  content: "Lun – Ven : 8h – 18h\nSamedi sur RDV",
+                  content: "Lun – Ven : 7h – 20h\nSamedi sur RDV",
                 },
               ].map((item) => (
                 <motion.div

@@ -121,7 +121,7 @@ const jsonLd = {
     { "@type": "City", name: "Doullens",               postalCode: "80600", addressCountry: "FR" },
   ],
   openingHoursSpecification: [
-    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "18:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "07:00", closes: "20:00" },
   ],
   priceRange: "€€",
   description:

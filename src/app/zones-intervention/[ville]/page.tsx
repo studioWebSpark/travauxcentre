@@ -241,7 +241,7 @@ export default async function VillePage({
 
                 <div className="bg-white border border-gray-200 rounded-2xl p-6">
                   <h3 className="font-semibold text-[#0F2C5E] mb-1 text-sm">Nous appeler</h3>
-                  <p className="text-gray-400 text-xs mb-4">Lun – Ven, 8h – 18h</p>
+                  <p className="text-gray-400 text-xs mb-4">Lun – Ven, 7h – 20h</p>
                   <a
                     href="tel:+33767175724"
                     className="flex items-center justify-center gap-2 w-full border border-gray-200 text-[#0F2C5E] font-medium py-2.5 rounded-xl hover:bg-[#F8F7F4] transition-colors text-sm"

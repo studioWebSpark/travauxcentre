@@ -96,7 +96,7 @@ export function ProfilForm({ user, artisan }: Props) {
               value={form.siret}
               onChange={(e) => setForm({ ...form, siret: e.target.value })}
               className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="XXX XXX XXX XXXXX"
+              placeholder="92995887400018"
             />
           </div>
         </div>

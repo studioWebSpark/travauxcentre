@@ -75,7 +75,7 @@ export default function RendezVousPage() {
           <h1 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]" style={{ fontFamily: "var(--font-playfair), serif" }}>
             Prendre Rendez-vous
           </h1>
-          <p className="mt-3 text-gray-600">Disponible du lundi au vendredi, 8h – 18h</p>
+          <p className="mt-3 text-gray-600">Disponible du lundi au vendredi, 7h – 20h</p>
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
@@ -120,7 +120,7 @@ export default function RendezVousPage() {
         </div>
 
         <p className="text-center text-xs text-gray-400 mt-6">
-          Créneaux disponibles : Lundi – Vendredi, 8h – 18h. Confirmation par email sous 24h.
+          Créneaux disponibles : Lundi – Vendredi, 7h – 20h. Confirmation par email sous 24h.
         </p>
       </div>
     </div>
