@@ -30,9 +30,10 @@ export default async function DevisListPage({
     },
     orderBy: { createdAt: "desc" },
     include: {
-      lignes:   true,
-      lead:     { select: { nom: true, email: true, ville: true } },
-      chantier: { select: { titre: true } },
+      lignes:           true,
+      etapesPaiement:   { orderBy: { ordre: "asc" } },
+      lead:             { select: { nom: true, email: true, ville: true } },
+      chantier:         { select: { titre: true } },
     },
   })
 
