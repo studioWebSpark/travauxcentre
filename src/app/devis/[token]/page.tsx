@@ -201,10 +201,10 @@ export default function DevisPublicPage() {
                 </div>
               )}
 
-              {/* Notes personnalisées */}
-              {data?.notes && (
+              {/* Notes additionnelles (seulement si pas de conditions de paiement) */}
+              {data?.notes && (!data?.etapesPaiement || data.etapesPaiement.length === 0) && (
                 <div className="bg-[#F8F7F4] rounded-2xl p-5">
-                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">📝 Notes additionnelles</p>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">Notes</p>
                   <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{data.notes}</div>
                 </div>
               )}

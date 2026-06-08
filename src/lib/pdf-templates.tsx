@@ -173,8 +173,8 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
           </View>
         )}
 
-        {/* Notes */}
-        {notes && (
+        {/* Notes (seulement si pas de conditions de paiement) */}
+        {notes && (!etapesPaiement || etapesPaiement.length === 0) && (
           <View style={s.notes}><Text style={s.notesText}>{notes}</Text></View>
         )}
 
