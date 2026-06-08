@@ -185,7 +185,7 @@ export default function ContactPage() {
                 {
                   icon: "📍",
                   title: "Adresse",
-                  content: "Longuenesse, 62219\nNord-Pas-de-Calais",
+                  content: "Longuenesse, 62219\nVilleneuve-d'Ascq, 59650",
                 },
                 {
                   icon: "📞",
