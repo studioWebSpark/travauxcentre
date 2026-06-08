@@ -9,27 +9,44 @@ export default function BookmarkletPage() {
 
   const siteUrl = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"
 
-  // Nouvelle approche : ouvre un onglet CRM avec les données en paramètres
-  // Pas de fetch() = pas de problème CORS/CSP
   const bookmarkletCode = `javascript:(function(){
-var t=document.title||'Sans titre';
-var d='';
-var u=window.location.href;
-var src='manuel';
+var u=window.location.href,src='manuel',t='',d='',v='',p='';
 if(u.includes('leboncoin'))src='leboncoin';
 else if(u.includes('vivastreet'))src='vivastreet';
 else if(u.includes('allovoisin'))src='allovoisin';
 else if(u.includes('facebook'))src='facebook';
-var og=document.querySelector('meta[property="og:description"]');
-var meta=document.querySelector('meta[name="description"]');
-var h1=document.querySelector('h1');
-if(og)d=og.getAttribute('content')||'';
-else if(meta)d=meta.getAttribute('content')||'';
-if(h1&&h1.textContent.trim().length>5)t=h1.textContent.trim();
-var body=document.querySelector('[class*="description"],[class*="body-text"],[data-qa-id="adview_body"]');
-if(body&&!d)d=body.textContent.slice(0,800).trim();
-var params=new URLSearchParams({titre:t.slice(0,200),description:d.slice(0,800),url:u,source:src});
-window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=600,height=700');
+function g(sel){var el=document.querySelector(sel);return el?el.textContent.trim():'';}
+function ga(sel,attr){var el=document.querySelector(sel);return el?el.getAttribute(attr)||'':'';}
+if(src==='leboncoin'){
+  t=g('[data-qa-id="adview_title"]')||g('h1')||document.title;
+  d=g('[data-qa-id="adview_body"]')||g('[class*="Description"]')||g('[class*="description"]');
+  v=g('[data-qa-id="adview_location_informations"]')||g('[class*="location"]')||g('[class*="Location"]');
+  p=g('[data-qa-id="adview_price"]')||ga('meta[property="og:price:amount"]','content');
+}else if(src==='facebook'){
+  t=g('h1')||g('[data-testid="marketplace-pdp-title"]')||document.title;
+  d=g('[data-testid="marketplace-pdp-description"]')||g('[class*="description"]');
+  v=g('[class*="location"]')||g('[data-testid="marketplace-pdp-location"]');
+}else if(src==='vivastreet'){
+  t=g('h1')||g('.listing-title')||document.title;
+  d=g('.listing-description')||g('[class*="description"]');
+  v=g('.listing-location')||g('[class*="location"]');
+  p=g('.listing-price')||g('[class*="price"]');
+}else{
+  t=ga('meta[property="og:title"]','content')||g('h1')||document.title;
+  d=ga('meta[property="og:description"]','content')||ga('meta[name="description"]','content');
+  v=g('[class*="location"],[class*="ville"],[class*="city"]');
+  p=g('[class*="price"],[class*="prix"]');
+}
+if(!t)t=document.title;
+if(!d)d=ga('meta[property="og:description"]','content')||ga('meta[name="description"]','content');
+var params=new URLSearchParams({
+  titre:t.slice(0,200),
+  description:d.slice(0,800),
+  url:u,source:src,
+  ville:v.slice(0,100),
+  prix:p.slice(0,50)
+});
+window.open('${siteUrl}/crm/veille/capture?'+params.toString(),'_blank','width=650,height=750');
 })();`.replace(/\n/g, "").replace(/  +/g, " ").trim()
 
   function copy() {
