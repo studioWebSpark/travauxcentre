@@ -9,9 +9,10 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   const devis  = await prisma.devisCrm.findUnique({
     where:   { id },
     include: {
-      lignes:   true,
-      lead:     { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } },
-      chantier: { select: { titre: true, adresse: true } },
+      lignes:           true,
+      etapesPaiement:   { orderBy: { ordre: "asc" } },
+      lead:             { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } },
+      chantier:         { select: { titre: true, adresse: true } },
     },
   })
   if (!devis) return NextResponse.json({ error: "Introuvable" }, { status: 404 })
@@ -25,6 +26,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
       chantierTitre:   devis.chantier?.titre ?? null,
       chantierAdresse: devis.chantier?.adresse ?? null,
       lignes:          devis.lignes,
+      etapesPaiement:  devis.etapesPaiement,
       tva:             devis.tva,
       notes:           devis.notes,
     }) as any
