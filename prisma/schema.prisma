@@ -524,6 +524,25 @@ model LigneFactureCrm {
   facture      FactureCrm @relation(fields: [factureId], references: [id], onDelete: Cascade)
 }
 
+// ─── Veille marché ───────────────────────────────────────────────────────────
+
+model VeilleAnnonce {
+  id           String   @id @default(cuid())
+  source       String   // "leboncoin" | "allovoisin" | "facebook" | "manuel"
+  titre        String
+  description  String
+  url          String?
+  ville        String?
+  prix         String?
+  score        Int      @default(0)
+  resume       String?
+  budgetEstime String?
+  typeTravaux  String?
+  statut       String   @default("NOUVEAU")
+  leadId       String?
+  createdAt    DateTime @default(now())
+}
+
 // ─── XP & Gamification ───────────────────────────────────────────────────────
 
 model XpEvent {

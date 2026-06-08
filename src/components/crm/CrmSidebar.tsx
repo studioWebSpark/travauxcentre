@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText } from "lucide-react"
+import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar } from "lucide-react"
 import type { getLevelInfo } from "@/lib/xp"
 
 type XpInfo = ReturnType<typeof getLevelInfo>
@@ -14,6 +14,7 @@ const nav = [
   { label: "Chantiers",  href: "/crm/chantiers",  icon: Wrench },
   { label: "Devis",      href: "/crm/devis",      icon: FileText },
   { label: "Factures",   href: "/crm/factures",   icon: FileText },
+  { label: "Veille",     href: "/crm/veille",      icon: Radar },
   { label: "Calendrier", href: "/crm/calendrier", icon: Calendar },
   { label: "Carte",      href: "/crm/carte",      icon: MapPin },
 ]
