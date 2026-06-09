@@ -11,7 +11,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/signin", request.url))
   }
 
-  // Protection CRM (cookie maison)
+  // Protection pages CRM (cookie maison)
   if (pathname.startsWith("/crm") && !pathname.startsWith("/crm/login")) {
     const crm = request.cookies.get("crm_session")?.value
     if (crm !== "authenticated") {
@@ -19,9 +19,17 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // Protection routes API CRM
+  if (pathname.startsWith("/api/crm") && pathname !== "/api/crm/auth") {
+    const crm = request.cookies.get("crm_session")?.value
+    if (crm !== "authenticated") {
+      return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
+    }
+  }
+
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/crm/:path*"],
+  matcher: ["/dashboard/:path*", "/crm/:path*", "/api/crm/:path*"],
 }

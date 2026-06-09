@@ -4,13 +4,13 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
-type Lead = { id: string; nom: string; ville: string; typeTravaux: string }
+type Lead = { id: string; nom: string; ville: string; typeTravaux: string; statut?: string }
 
 export default function NouveauChantierForm({ leads }: { leads: Lead[] }) {
   const router = useRouter()
   const [form, setForm] = useState({
     leadId: "", titre: "", description: "", adresse: "",
-    budget: "", dateDebut: "", dateFin: "",
+    dateDebut: "", dateFin: "",
   })
   const [loading, setLoading] = useState(false)
 
@@ -35,7 +35,7 @@ export default function NouveauChantierForm({ leads }: { leads: Lead[] }) {
     setLoading(true)
     const res = await fetch("/api/crm/chantiers", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, budget: form.budget ? Number(form.budget) : null }),
+      body: JSON.stringify({ ...form, budget: null }),
     })
     if (res.ok) {
       const data = await res.json()
@@ -53,7 +53,9 @@ export default function NouveauChantierForm({ leads }: { leads: Lead[] }) {
           className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] bg-white">
           <option value="">— Aucun lead —</option>
           {leads.map((l) => (
-            <option key={l.id} value={l.id}>{l.nom} — {l.typeTravaux} ({l.ville})</option>
+            <option key={l.id} value={l.id}>
+              {l.nom} — {l.typeTravaux} ({l.ville}){l.statut === "DEVIS_ENVOYE" ? " · Devis envoyé" : " · Gagné"}
+            </option>
           ))}
         </select>
       </div>
@@ -79,12 +81,7 @@ export default function NouveauChantierForm({ leads }: { leads: Lead[] }) {
           className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] resize-none" />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1.5">Budget estimé (€)</label>
-          <input type="number" value={form.budget} onChange={set("budget")} placeholder="5000"
-            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
-        </div>
+      <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-xs font-medium text-gray-500 mb-1.5">Date de début</label>
           <input type="date" value={form.dateDebut} onChange={set("dateDebut")}

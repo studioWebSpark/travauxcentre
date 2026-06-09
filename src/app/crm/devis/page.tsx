@@ -34,6 +34,7 @@ export default async function DevisListPage({
       etapesPaiement:   { orderBy: { ordre: "asc" } },
       lead:             { select: { nom: true, email: true, ville: true } },
       chantier:         { select: { titre: true } },
+      factures:         { select: { id: true } },
     },
   })
 
@@ -41,11 +42,16 @@ export default async function DevisListPage({
     .filter((d) => d.statut === "ACCEPTE")
     .reduce((s, d) => s + calcTotaux(d.lignes, d.tva).ttc, 0)
 
+  const totalFacture = devis
+    .filter((d) => d.statut === "FACTUREE")
+    .reduce((s, d) => s + calcTotaux(d.lignes, d.tva).ttc, 0)
+
   const stats = [
-    { label: "Total devis",  value: devis.length,                                           color: "text-[#0F2C5E]", bg: "bg-blue-50" },
-    { label: "Envoyés",      value: devis.filter((d) => d.statut === "ENVOYE").length,      color: "text-amber-600", bg: "bg-amber-50" },
-    { label: "Acceptés",     value: devis.filter((d) => d.statut === "ACCEPTE").length,     color: "text-green-600", bg: "bg-green-50" },
-    { label: "CA accepté",   value: formatEuro(totalAccepte),                               color: "text-[#F97316]", bg: "bg-orange-50" },
+    { label: "Total devis",   value: devis.length,                                            color: "text-[#0F2C5E]", bg: "bg-blue-50" },
+    { label: "Envoyés",       value: devis.filter((d) => d.statut === "ENVOYE").length,       color: "text-amber-600", bg: "bg-amber-50" },
+    { label: "Acceptés",      value: devis.filter((d) => d.statut === "ACCEPTE").length,      color: "text-green-600", bg: "bg-green-50" },
+    { label: "Facturés",      value: devis.filter((d) => d.statut === "FACTUREE").length,     color: "text-purple-600", bg: "bg-purple-50" },
+    { label: "CA facturé",    value: formatEuro(totalFacture),                                color: "text-[#F97316]", bg: "bg-orange-50" },
   ]
 
   return (
@@ -126,7 +132,9 @@ export default async function DevisListPage({
                   return (
                     <tr key={d.id} className="hover:bg-white/5 ">
                       <td className="px-5 py-4">
-                        <p className="font-bold text-[#F97316]">{d.numero}</p>
+                        <Link href={`/crm/devis/${d.id}`}>
+                          <p className="font-bold text-[#F97316] hover:underline">{d.numero}</p>
+                        </Link>
                         <p className="text-xs text-[#404040] mt-0.5">
                           {new Date(d.dateEmission).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" })}
                         </p>
@@ -158,6 +166,7 @@ export default async function DevisListPage({
                             statut={d.statut}
                             emailEnvoye={d.emailEnvoye}
                             hasEmail={!!d.lead?.email}
+                            factureId={d.factures?.[0]?.id}
                           />
                           <RelanceButton type="devis" id={d.id} statut={d.statut} hasEmail={!!d.lead?.email} />
                         </div>

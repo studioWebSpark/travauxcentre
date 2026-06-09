@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar, CalendarDays } from "lucide-react"
+import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar, CalendarDays, BookOpen } from "lucide-react"
 const nav = [
   { label: "Dashboard",  href: "/crm",           icon: LayoutDashboard },
   { label: "Leads",      href: "/crm/leads",      icon: Users },
@@ -13,6 +13,7 @@ const nav = [
   { label: "Calendrier", href: "/crm/calendrier",  icon: Calendar },
   { label: "Veille",     href: "/crm/veille",      icon: Radar },
   { label: "Carte",      href: "/crm/carte",      icon: MapPin },
+  { label: "Guide",      href: "/crm/guide",      icon: BookOpen },
 ]
 
 export default function CrmSidebar() {

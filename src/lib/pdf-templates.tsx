@@ -55,7 +55,11 @@ const s = StyleSheet.create({
   validText: { fontSize: 9, color: "#166534" },
 })
 
-function fmt(n: number) { return new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n) }
+function fmt(n: number): string {
+  const parts = Math.abs(n).toFixed(2).split(".")
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+  return (n < 0 ? "-" : "") + parts[0] + "," + parts[1] + " EUR"
+}
 function fmtDate(d: string | Date | null) {
   if (!d) return "—"
   return new Date(d).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })
@@ -189,11 +193,21 @@ export function DevisPDF({ numero, dateEmission, dateValidite, client, chantierT
   )
 }
 
-type FactureProps = DevisProps & {
-  type?: string; dateEcheance?: Date | string | null; statut?: string
+type PaiementHistorique = {
+  pourcentage: number
+  description: string | null
+  datePaiement: Date | string | null
+  montantTTC: number
 }
 
-export function FacturePDF({ numero, dateEmission, dateEcheance, client, chantierTitre, chantierAdresse, lignes, tva, notes, type = "FACTURE" }: FactureProps) {
+type FactureProps = DevisProps & {
+  type?: string
+  dateEcheance?: Date | string | null
+  statut?: string
+  historiquesPaiements?: PaiementHistorique[]
+}
+
+export function FacturePDF({ numero, dateEmission, dateEcheance, client, chantierTitre, chantierAdresse, lignes, tva, notes, type = "FACTURE", historiquesPaiements }: FactureProps) {
   const ht  = lignes.reduce((s, l) => s + l.quantite * l.prixUnitaire, 0)
   const tvaAmt = ht * tva
   const ttc = ht + tvaAmt
@@ -257,9 +271,35 @@ export function FacturePDF({ numero, dateEmission, dateEcheance, client, chantie
           <View style={s.totalTtc}><Text style={s.totalTtcL}>Total TTC</Text><Text style={s.totalTtcV}>{fmt(ttc)}</Text></View>
         </View>
 
-        <View style={[s.notes, { marginTop: 16, backgroundColor: "#eff6ff" }]}>
-          <Text style={[s.notesText, { color: "#1e40af" }]}>Règlement par virement bancaire · IBAN : FR76 XXXX XXXX XXXX XXXX XXXX XXX</Text>
-        </View>
+        {/* Historique des paiements reçus */}
+        {historiquesPaiements && historiquesPaiements.length > 0 && (
+          <View style={{ backgroundColor: "#f0fdf4", borderRadius: 6, padding: 14, marginTop: 16, borderLeft: "3px solid #16a34a" }}>
+            <Text style={{ fontSize: 10, fontFamily: "Helvetica-Bold", color: "#166534", marginBottom: 10 }}>
+              HISTORIQUE DES PAIEMENTS RECUS
+            </Text>
+            {historiquesPaiements.map((p, i) => (
+              <View key={i} style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 8, paddingBottom: 8 }}>
+                <View>
+                  <Text style={{ fontSize: 9, fontFamily: "Helvetica-Bold", color: "#15803d" }}>
+                    Acompte {i + 1} — {p.pourcentage}%{p.description ? ` (${p.description})` : ""}
+                  </Text>
+                  <Text style={{ fontSize: 8, color: "#166534", marginTop: 2 }}>
+                    Recu le : {p.datePaiement ? fmtDate(p.datePaiement) : "—"}
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 10, fontFamily: "Helvetica-Bold", color: "#15803d" }}>
+                  {fmt(p.montantTTC)}
+                </Text>
+              </View>
+            ))}
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 4, paddingTop: 8, borderTop: "1px solid #16a34a" }}>
+              <Text style={{ fontSize: 10, fontFamily: "Helvetica-Bold", color: "#166534" }}>TOTAL REGLE TTC</Text>
+              <Text style={{ fontSize: 10, fontFamily: "Helvetica-Bold", color: "#166534" }}>
+                {fmt(ttc)}
+              </Text>
+            </View>
+          </View>
+        )}
 
         {notes && <View style={s.notes}><Text style={s.notesText}>{notes}</Text></View>}
 

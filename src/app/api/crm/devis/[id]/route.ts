@@ -5,7 +5,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
   const { id } = await params
   const devis  = await prisma.devisCrm.findUnique({
     where:   { id },
-    include: { lignes: true, lead: { select: { nom: true, email: true, telephone: true, adresse: true, ville: true, codePostal: true } }, chantier: { select: { titre: true, adresse: true } } },
+    include: { lignes: true, lead: { select: { nom: true, email: true, telephone: true, ville: true, codePostal: true } }, chantier: { select: { titre: true, adresse: true } } },
   })
   if (!devis) return NextResponse.json({ error: "Introuvable" }, { status: 404 })
   return NextResponse.json(devis)

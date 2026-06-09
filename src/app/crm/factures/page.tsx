@@ -34,6 +34,9 @@ export default async function FacturesListPage({
       chantier: {
         include: { lead: { select: { nom: true, email: true } } },
       },
+      devis: {
+        include: { etapesPaiement: { where: { statut: "PAYEE" }, orderBy: { ordre: "asc" } }, lignes: true },
+      },
     },
   })
 
@@ -122,9 +125,13 @@ export default async function FacturesListPage({
               </thead>
               <tbody className="divide-y divide-white/8">
                 {factures.map((f) => {
-                  const st  = STATUTS_FACTURE[f.statut] ?? STATUTS_FACTURE.BROUILLON
-                  const tot = calcTotaux(f.lignes, f.tva)
+                  const st     = STATUTS_FACTURE[f.statut] ?? STATUTS_FACTURE.BROUILLON
+                  const tot    = calcTotaux(f.lignes, f.tva)
                   const client = f.chantier?.lead
+                  const ttcDevis = f.devis
+                    ? calcTotaux(f.devis.lignes, f.tva).ttc
+                    : tot.ttc
+                  const etapesPayees = f.devis?.etapesPaiement ?? []
                   return (
                     <tr key={f.id} className="hover:bg-white/5 ">
                       <td className="px-5 py-4">
@@ -136,6 +143,22 @@ export default async function FacturesListPage({
                           <p className={`text-xs mt-0.5 ${f.statut !== "PAYEE" && new Date(f.dateEcheance) < new Date() ? "text-red-400 font-semibold" : "text-[#404040]"}`}>
                             Échéance : {new Date(f.dateEcheance).toLocaleDateString("fr-FR", { day: "numeric", month: "short" })}
                           </p>
+                        )}
+                        {/* Historique paiements */}
+                        {etapesPayees.length > 0 && (
+                          <div className="mt-2 space-y-1">
+                            {etapesPayees.map(e => (
+                              <div key={e.id} className="flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+                                <span className="text-xs text-green-700 font-medium">
+                                  {e.pourcentage}% — {formatEuro(Math.round((e.pourcentage / 100) * ttcDevis * 100) / 100)}
+                                </span>
+                                <span className="text-xs text-[#404040]">
+                                  le {e.datePaiement ? new Date(e.datePaiement).toLocaleDateString("fr-FR", { day: "numeric", month: "short" }) : "—"}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
                         )}
                       </td>
                       <td className="px-5 py-4">

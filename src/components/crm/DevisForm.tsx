@@ -6,7 +6,7 @@ import { Plus, Trash2, Loader2, FileText } from "lucide-react"
 import { calcTotaux, formatEuro } from "@/lib/chantier"
 
 type Ligne = { description: string; quantite: number; unite: string; prixUnitaire: number }
-type EtapePaiement = { pourcentage: number; description: string; dateEcheance: string }
+type EtapePaiement = { pourcentage: number; description: string; dateEcheance: string; ordre?: number }
 type Props = {
   chantiers: { id: string; titre: string }[]
   leads:     { id: string; nom: string; ville: string }[]
@@ -46,7 +46,7 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
     let conditions = validiteText + "\n\n"
     conditions += "CONDITIONS DE PAIEMENT :\n"
 
-    const etapesTriees = [...etapes].sort((a, b) => a.ordre - b.ordre)
+    const etapesTriees = [...etapes].sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0))
 
     etapesTriees.forEach((etape, idx) => {
       const montant = Math.round((etape.pourcentage / 100) * montantTotal * 100) / 100
@@ -215,14 +215,20 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
               <input value={l.description} onChange={(e) => setLigne(i, "description", e.target.value)}
                 placeholder="Description de la prestation" required
                 className="col-span-12 sm:col-span-5 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
-              <input type="number" min={0.01} step={0.01} value={l.quantite} onChange={(e) => setLigne(i, "quantite", e.target.value)}
+              <input type="number" min={0.01} step={0.01}
+                value={l.quantite === 0 ? "" : l.quantite}
+                onChange={(e) => setLigne(i, "quantite", e.target.value === "" ? 0 : e.target.value)}
+                placeholder="Qté"
                 className="col-span-4 sm:col-span-2 border border-gray-200 rounded-xl px-3 py-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
               <select value={l.unite} onChange={(e) => setLigne(i, "unite", e.target.value)}
                 className="col-span-4 sm:col-span-2 border border-gray-200 rounded-xl px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] bg-white">
                 <option>forfait</option><option>m²</option><option>ml</option>
                 <option>heure</option><option>jour</option><option>unité</option>
               </select>
-              <input type="number" min={0} step={0.01} value={l.prixUnitaire} onChange={(e) => setLigne(i, "prixUnitaire", e.target.value)}
+              <input type="number" min={0} step={0.01}
+                value={l.prixUnitaire === 0 ? "" : l.prixUnitaire}
+                onChange={(e) => setLigne(i, "prixUnitaire", e.target.value === "" ? 0 : e.target.value)}
+                placeholder="Prix €"
                 className="col-span-3 sm:col-span-2 border border-gray-200 rounded-xl px-3 py-2 text-sm text-right focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
               <button type="button" onClick={() => removeLigne(i)}
                 className="col-span-1 text-gray-300 flex justify-center">
@@ -262,7 +268,9 @@ export default function DevisForm({ chantiers, leads, defaultChantierId, default
         <div className="space-y-3">
           {etapes.map((e, i) => (
             <div key={i} className="grid grid-cols-12 gap-2 items-center bg-gray-50 p-3 rounded-lg">
-              <input type="number" min={1} max={100} value={e.pourcentage} onChange={(ev) => setEtape(i, "pourcentage", Number(ev.target.value))}
+              <input type="number" min={1} max={100}
+                value={e.pourcentage === 0 ? "" : e.pourcentage}
+                onChange={(ev) => setEtape(i, "pourcentage", ev.target.value === "" ? 0 : Number(ev.target.value))}
                 placeholder="%"
                 className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm text-center focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
               <span className="col-span-1 text-center text-gray-400">%</span>

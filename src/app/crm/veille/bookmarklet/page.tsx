@@ -1,13 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Copy, CheckCircle, ExternalLink, Bookmark, ChevronRight } from "lucide-react"
 
 export default function BookmarkletPage() {
   const [copied, setCopied] = useState(false)
   const [step,   setStep]   = useState<"chrome"|"opera">("chrome")
 
-  const siteUrl = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000"
+  const [siteUrl, setSiteUrl] = useState("http://localhost:3000")
+  useEffect(() => { setSiteUrl(window.location.origin) }, [])
 
   const bookmarkletCode = `javascript:(function(){
 var u=window.location.href,src='manuel',t='',d='',v='',p='';

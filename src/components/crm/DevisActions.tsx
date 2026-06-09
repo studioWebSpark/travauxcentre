@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Send, Loader2, CheckCircle, ExternalLink, Copy } from "lucide-react"
 
@@ -12,8 +12,11 @@ export default function DevisActions({ devisId, statut, token, emailEnvoye }: Pr
   const [copied,  setCopied]    = useState(false)
   const router                  = useRouter()
 
-  const siteUrl  = typeof window !== "undefined" ? window.location.origin : ""
-  const devisUrl = `${siteUrl}/devis/${token}`
+  const [devisUrl, setDevisUrl] = useState(`/devis/${token}`)
+
+  useEffect(() => {
+    setDevisUrl(`${window.location.origin}/devis/${token}`)
+  }, [token])
 
   async function sendEmail() {
     setSending(true)

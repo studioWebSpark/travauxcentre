@@ -16,7 +16,11 @@ const TEMPLATES: Record<StatutLead, { sujet: string; html: (nom: string, typeTra
         <div style="padding:32px;border:1px solid #eee;border-top:none;border-radius:0 0 8px 8px">
           <h3 style="color:#0F2C5E">Bonjour ${nom},</h3>
           <p>Merci pour notre échange concernant votre projet de <strong>${type}</strong>.</p>
-          <p>Comme convenu, nous allons préparer votre devis et vous recontacter très prochainement pour planifier une visite sur site.</p>
+          <p>Nous allons vous recontacter très prochainement pour <strong>planifier une visite sur site</strong>. Cette visite nous permettra d'évaluer précisément vos besoins et d'établir votre devis détaillé.</p>
+          <div style="background:#F8F7F4;border-left:4px solid #F97316;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0">
+            <p style="margin:0 0 6px;font-weight:bold;color:#0F2C5E;font-size:14px">Votre prochaine étape</p>
+            <p style="margin:0;font-size:13px;color:#555">Visite gratuite et sans engagement → Devis détaillé → Démarrage des travaux</p>
+          </div>
           <p>En attendant, n'hésitez pas à nous contacter si vous avez des questions.</p>
           <div style="background:#F8F7F4;padding:16px;border-radius:8px;margin:24px 0">
             <p style="margin:0;font-size:13px;color:#555">
@@ -38,10 +42,11 @@ const TEMPLATES: Record<StatutLead, { sujet: string; html: (nom: string, typeTra
         </div>
         <div style="padding:32px;border:1px solid #eee;border-top:none;border-radius:0 0 8px 8px">
           <h3 style="color:#0F2C5E">Bonjour ${nom},</h3>
-          <p>Nous avons le plaisir de vous faire parvenir votre devis pour votre projet de <strong>${type}</strong>.</p>
-          <p>Ce devis est valable <strong>30 jours</strong>. N'hésitez pas à nous contacter pour toute question ou pour convenir d'un rendez-vous de validation.</p>
-          <div style="background:#F8F7F4;padding:16px;border-radius:8px;margin:24px 0;text-align:center">
-            <p style="font-weight:bold;color:#0F2C5E;margin:0">Devis sans engagement — Visite offerte</p>
+          <p>Suite à notre visite sur site, nous avons le plaisir de vous faire parvenir votre devis pour votre projet de <strong>${type}</strong>.</p>
+          <p>Ce devis est valable <strong>30 jours</strong>. Vous pouvez l'accepter directement depuis le lien ci-joint ou nous contacter pour toute question.</p>
+          <div style="background:#F8F7F4;border-left:4px solid #0F2C5E;padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0">
+            <p style="margin:0 0 6px;font-weight:bold;color:#0F2C5E;font-size:14px">Rappel du processus</p>
+            <p style="margin:0;font-size:13px;color:#555">✓ Visite effectuée → Devis envoyé → Acceptation → Démarrage des travaux</p>
           </div>
           <p style="color:#888;font-size:13px">Cordialement,<br/><strong>L'équipe Travaux Centre</strong></p>
         </div>

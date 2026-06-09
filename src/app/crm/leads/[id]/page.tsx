@@ -1,15 +1,14 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { prisma } from "@/lib/prisma"
-import { STATUTS, PRIORITES, formatDate, formatEuro } from "@/lib/crm"
+import { STATUTS, PRIORITES, formatDate } from "@/lib/crm"
 import LeadActions from "@/components/crm/LeadActions"
 import NoteForm from "@/components/crm/NoteForm"
-import EmailConfirmButton from "@/components/crm/EmailConfirmButton"
 import PlanningForm from "@/components/crm/PlanningForm"
 import ProjectDescriptionEditor from "@/components/crm/ProjectDescriptionEditor"
-import { Phone, Mail, MapPin, Calendar, Euro, FileText, Clock, ArrowLeft } from "lucide-react"
+import ChantierFromLeadForm from "@/components/crm/ChantierFromLeadForm"
+import { Phone, Mail, MapPin, Calendar, FileText, Clock, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import type { StatutLead } from "@/generated/prisma"
 
 export const metadata: Metadata = { title: "Fiche lead" }
 export const dynamic = "force-dynamic"
@@ -25,9 +24,6 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
   const st = STATUTS[lead.statut]
   const pr = PRIORITES[lead.priorite]
 
-  // Étapes pipeline
-  const mainSteps: StatutLead[] = ["NOUVEAU", "CONTACTE", "DEVIS_ENVOYE", "GAGNE"]
-  const currentIdx = mainSteps.indexOf(lead.statut as StatutLead)
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -49,41 +45,10 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
           <a href={`tel:${lead.telephone}`} className="inline-flex items-center gap-2 bg-[#0F2C5E] text-white text-sm font-semibold px-4 py-2.5 rounded-xl ">
             <Phone className="w-4 h-4" /> Appeler
           </a>
-          <a href={`mailto:${lead.email}`} className="inline-flex items-center gap-2 bg-white border border-gray-200 text-[#0F2C5E] text-sm font-semibold px-4 py-2.5 rounded-xl ">
-            <Mail className="w-4 h-4" /> Email libre
-          </a>
-          <EmailConfirmButton leadId={lead.id} statut={lead.statut} />
         </div>
       </div>
 
       {/* Pipeline étapes */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Progression</p>
-        <div className="flex items-center gap-2 flex-wrap">
-          {mainSteps.map((step, i) => {
-            const s     = STATUTS[step]
-            const done  = currentIdx > i
-            const active = lead.statut === step
-            return (
-              <div key={step} className="flex items-center gap-2">
-                <div className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold border ${
-                  active  ? `${s.bg} ${s.color} ring-2 ring-offset-1 ring-current` :
-                  done    ? "bg-green-50 border-green-200 text-green-700" :
-                            "bg-gray-50 border-gray-100 text-gray-400"
-                }`}>
-                  {done && !active && <span>✓</span>}
-                  {s.label}
-                </div>
-                {i < mainSteps.length - 1 && <span className="text-gray-200">→</span>}
-              </div>
-            )
-          })}
-          {(lead.statut === "PERDU" || lead.statut === "EN_ATTENTE") && (
-            <span className={`text-xs font-semibold px-3 py-1.5 rounded-xl border ${st.bg} ${st.color}`}>{st.label}</span>
-          )}
-        </div>
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Colonne gauche */}
         <div className="lg:col-span-2 space-y-6">
@@ -123,7 +88,6 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                 { label: "Surface",          value: lead.surface ? `${lead.surface} m²` : "—" },
                 { label: "Budget estimé",    value: lead.budget ?? "—" },
                 { label: "Date souhaitée",   value: lead.dateSouhaitee ? formatDate(lead.dateSouhaitee) : "—" },
-                { label: "Montant devis",    value: formatEuro(lead.montantDevis) },
               ].map(({ label, value }) => (
                 <div key={label} className="bg-[#F8F7F4] rounded-xl p-3">
                   <p className="text-xs text-gray-400 font-medium mb-0.5">{label}</p>
@@ -169,7 +133,6 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               id:                 lead.id,
               statut:             lead.statut,
               priorite:           lead.priorite,
-              montantDevis:       lead.montantDevis,
               dateContact:        lead.dateContact?.toISOString() ?? null,
               dateRdv:            lead.dateRdv?.toISOString() ?? null,
               commentaireInterne: lead.commentaireInterne,
@@ -182,7 +145,6 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
               { icon: Clock,    label: "Lead reçu",        value: formatDate(lead.createdAt) },
               { icon: Phone,    label: "Dernier contact",  value: formatDate(lead.dateContact) },
               { icon: Calendar, label: "RDV prévu",        value: formatDate(lead.dateRdv) },
-              { icon: Euro,     label: "Devis envoyé",     value: formatEuro(lead.montantDevis) },
             ].map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-center gap-3 text-sm">
                 <Icon className="w-4 h-4 text-gray-300 shrink-0" />
@@ -193,6 +155,21 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
           </div>
 
           <PlanningForm leadId={lead.id} leadNom={lead.nom} leadEmail={lead.email} />
+
+          {lead.statut === "DEVIS_ENVOYE" && (
+            <div className="bg-white rounded-2xl border border-[#F97316]/30 shadow-sm p-5">
+              <h2 className="font-bold text-[#0F2C5E] mb-1">Créer le chantier</h2>
+              <p className="text-xs text-gray-400 mb-4">Le devis a été envoyé — préparez le chantier.</p>
+              <ChantierFromLeadForm lead={{
+                id:          lead.id,
+                nom:         lead.nom,
+                ville:       lead.ville,
+                codePostal:  lead.codePostal,
+                typeTravaux: lead.typeTravaux,
+                description: lead.description,
+              }} />
+            </div>
+          )}
         </div>
       </div>
     </div>

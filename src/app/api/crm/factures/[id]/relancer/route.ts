@@ -42,7 +42,6 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
             <p style="margin:0;font-size:28px;font-weight:bold;color:#dc2626">${formatEuro(ttc)}</p>
             ${echeance ? `<p style="margin:8px 0 0;color:#dc2626;font-size:13px">⚠️ Échéance : ${echeance}</p>` : ""}
           </div>
-          <p>Règlement par virement bancaire :<br/><strong>IBAN : FR76 XXXX XXXX XXXX XXXX XXXX XXX</strong></p>
           <p>En cas de difficulté, n'hésitez pas à nous contacter pour convenir d'un arrangement.</p>
           <hr style="border:none;border-top:1px solid #eee;margin:20px 0"/>
           <p style="color:#aaa;font-size:12px;text-align:center">Travaux Centre — Longuenesse (62219)</p>

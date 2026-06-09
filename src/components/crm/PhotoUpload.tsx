@@ -27,7 +27,7 @@ export default function PhotoUpload({ chantierId, categorie }: Props) {
       <input ref={inputRef} type="text" value={desc} onChange={(e) => setDesc(e.target.value)}
         placeholder="Description (optionnel)"
         className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
-      <button onClick={() => inputRef.current && (document.createElement("input"), inputRef.current?.click())}
+      <button
         disabled={loading}
         className="flex items-center gap-2 border border-dashed border-gray-200 text-gray-400 px-3 py-2 rounded-xl text-xs disabled:opacity-50"
         onClick={(e) => { e.preventDefault(); document.getElementById(`upload-${categorie}-${chantierId}`)?.click() }}

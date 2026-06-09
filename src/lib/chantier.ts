@@ -15,17 +15,19 @@ export const STATUTS_ETAPE: Record<string, { label: string; color: string; icon:
 }
 
 export const STATUTS_DEVIS: Record<string, { label: string; color: string; bg: string }> = {
-  BROUILLON: { label: "Brouillon", color: "text-gray-600",  bg: "bg-gray-50 border-gray-200" },
-  ENVOYE:    { label: "Envoyé",    color: "text-blue-600",  bg: "bg-blue-50 border-blue-200" },
-  ACCEPTE:   { label: "Accepté ✓", color: "text-green-600", bg: "bg-green-50 border-green-200" },
-  REFUSE:    { label: "Refusé",    color: "text-red-600",   bg: "bg-red-50 border-red-200" },
+  BROUILLON: { label: "Brouillon",   color: "text-gray-600",    bg: "bg-gray-50 border-gray-200" },
+  ENVOYE:    { label: "Envoyé",      color: "text-blue-600",    bg: "bg-blue-50 border-blue-200" },
+  ACCEPTE:   { label: "Accepté ✓",   color: "text-green-600",   bg: "bg-green-50 border-green-200" },
+  FACTUREE:  { label: "Facturé ✓",   color: "text-purple-600",  bg: "bg-purple-50 border-purple-200" },
+  REFUSE:    { label: "Refusé",      color: "text-red-600",     bg: "bg-red-50 border-red-200" },
 }
 
 export const STATUTS_FACTURE: Record<string, { label: string; color: string; bg: string }> = {
-  BROUILLON: { label: "Brouillon", color: "text-gray-600",  bg: "bg-gray-50 border-gray-200" },
-  ENVOYEE:   { label: "Envoyée",   color: "text-blue-600",  bg: "bg-blue-50 border-blue-200" },
-  PAYEE:     { label: "Payée ✓",   color: "text-green-600", bg: "bg-green-50 border-green-200" },
-  RETARD:    { label: "En retard", color: "text-red-600",   bg: "bg-red-50 border-red-200" },
+  BROUILLON: { label: "Brouillon", color: "text-gray-600",   bg: "bg-gray-50 border-gray-200" },
+  EMISE:     { label: "Émise",     color: "text-blue-600",   bg: "bg-blue-50 border-blue-200" },
+  ENVOYEE:   { label: "Envoyée",   color: "text-blue-600",   bg: "bg-blue-50 border-blue-200" },
+  PAYEE:     { label: "Payée ✓",   color: "text-green-600",  bg: "bg-green-50 border-green-200" },
+  RETARD:    { label: "En retard", color: "text-red-600",    bg: "bg-red-50 border-red-200" },
 }
 
 export function calcTotaux(lignes: { quantite: number; prixUnitaire: number }[], tva: number) {

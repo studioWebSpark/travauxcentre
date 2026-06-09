@@ -79,8 +79,8 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             </div>
             <div className="grid grid-cols-4 gap-3 text-center">
               {[
-                { label: "Budget estimé", value: formatEuro(c.budget) },
-                { label: "Coût réel",     value: formatEuro(c.budgetReel) },
+                { label: "Budget estimé", value: formatEuro(c.budget ?? 0) },
+                { label: "Coût réel",     value: formatEuro(c.budgetReel ?? 0) },
                 { label: "Début",         value: fmtDate(c.dateDebut) },
                 { label: "Fin prévue",    value: fmtDate(c.dateFin) },
               ].map(({ label, value }) => (
@@ -133,10 +133,16 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-bold text-[#0F2C5E]">Devis & Factures</h2>
-              <Link href={`/crm/devis/new?chantierId=${c.id}`}
-                className="text-xs text-[#0F2C5E] flex items-center gap-1">
-                <Plus className="w-3 h-3" /> Nouveau devis
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link href={`/crm/devis/new?chantierId=${c.id}`}
+                  className="text-xs text-[#0F2C5E] flex items-center gap-1">
+                  <Plus className="w-3 h-3" /> Nouveau devis
+                </Link>
+                <Link href={`/crm/factures/new?chantierId=${c.id}`}
+                  className="text-xs text-[#F97316] flex items-center gap-1 font-semibold">
+                  <Plus className="w-3 h-3" /> Nouvelle facture
+                </Link>
+              </div>
             </div>
 
             {c.devis.length === 0 && c.factures.length === 0 ? (
@@ -174,7 +180,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
                   )
                 })}
                 {c.factures.map((f) => {
-                  const st  = STATUTS_FACTURE[f.statut]
+                  const st  = STATUTS_FACTURE[f.statut] ?? STATUTS_FACTURE.EMISE
                   const tot = calcTotaux(f.lignes, f.tva)
                   return (
                     <div key={f.id} className="flex items-center justify-between p-3 bg-green-50/50 rounded-xl border border-green-100">
@@ -227,7 +233,6 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             <DepensesChantier
               chantierId={c.id}
               budget={c.budget}
-              initialDepenses={c.depenses.map(d => ({ id: d.id, type: d.type, description: d.description, montant: d.montant, fournisseur: d.fournisseur, date: d.date.toISOString() }))}
             />
           </div>
 
@@ -237,7 +242,6 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
             <RapportJournalierForm
               chantierId={c.id}
               clientEmail={c.lead?.email ?? null}
-              initialRapports={c.rapports.map(r => ({ id: r.id, date: r.date.toISOString(), heures: r.heures, description: r.description, meteo: r.meteo, envoye: r.envoye }))}
             />
           </div>
         </div>

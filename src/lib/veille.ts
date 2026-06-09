@@ -64,7 +64,7 @@ export async function fetchLeBonCoin(): Promise<RawAnnonce[]> {
               const ads  = data?.props?.pageProps?.searchData?.ads
                         || data?.props?.pageProps?.initialProps?.searchData?.ads
                         || []
-              if (ads.length) return ads.map((a: Record<string, string>) => ({
+              if (ads.length) return ads.map((a: any) => ({
                 titre:       a.subject  || a.title || "",
                 description: a.body     || a.description || a.subject || "",
                 url:         a.url      || `https://www.leboncoin.fr${a.relative_url || ""}`,

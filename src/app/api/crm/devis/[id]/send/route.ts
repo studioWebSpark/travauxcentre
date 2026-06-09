@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma"
 import { renderToBuffer } from "@react-pdf/renderer"
 import { DevisPDF } from "@/lib/pdf-templates"
 import nodemailer from "nodemailer"
-import React from "react"
+import { createElement } from "react"
 
 function transporter() {
   return nodemailer.createTransport({
@@ -33,7 +33,7 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
 
   // Générer le PDF
   const pdfBuffer = await renderToBuffer(
-    React.createElement(DevisPDF, {
+    createElement(DevisPDF, {
       numero:          devis.numero,
       dateEmission:    devis.dateEmission,
       dateValidite:    devis.dateValidite,
@@ -41,9 +41,10 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
       chantierTitre:   devis.chantier?.titre   ?? null,
       chantierAdresse: devis.chantier?.adresse ?? null,
       lignes:          devis.lignes,
+      etapesPaiement:  devis.etapesPaiement,
       tva:             devis.tva,
       notes:           devis.notes,
-    })
+    }) as any
   )
 
   const ht  = devis.lignes.reduce((s, l) => s + l.quantite * l.prixUnitaire, 0)

@@ -128,8 +128,8 @@ export default function ChantiersClient({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredChantiers.map((c) => {
-            const st         = STATUTS_CHANTIER[c.statut]
-            const etapesDone = c.etapes.filter((e) => e.statut === "TERMINEE").length
+            const st         = STATUTS_CHANTIER[c.statut as keyof typeof STATUTS_CHANTIER]
+            const etapesDone = c.etapes.filter((e: any) => e.statut === "TERMINEE").length
             return (
               <Link key={c.id} href={`/crm/chantiers/${c.id}`} className="group">
                 <div className="glass rounded-[0.875rem] border border-white/8 shadow-sm h-full overflow-hidden">

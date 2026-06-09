@@ -10,7 +10,6 @@ type Props = {
     id: string
     statut: StatutLead
     priorite: PrioriteLead
-    montantDevis: number | null
     dateContact: string | null
     dateRdv: string | null
     commentaireInterne: string | null
@@ -22,7 +21,6 @@ export default function LeadActions({ lead }: Props) {
   const [form, setForm] = useState({
     statut:             lead.statut,
     priorite:           lead.priorite,
-    montantDevis:       lead.montantDevis?.toString() ?? "",
     dateContact:        lead.dateContact ? lead.dateContact.slice(0, 10) : "",
     dateRdv:            lead.dateRdv     ? lead.dateRdv.slice(0, 10)     : "",
     commentaireInterne: lead.commentaireInterne ?? "",
@@ -41,7 +39,6 @@ export default function LeadActions({ lead }: Props) {
       body:    JSON.stringify({
         statut:             form.statut,
         priorite:           form.priorite,
-        montantDevis:       form.montantDevis ? Number(form.montantDevis) : null,
         dateContact:        form.dateContact || null,
         dateRdv:            form.dateRdv     || null,
         commentaireInterne: form.commentaireInterne || null,
@@ -69,12 +66,6 @@ export default function LeadActions({ lead }: Props) {
           className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E] bg-white">
           {Object.entries(PRIORITES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
         </select>
-      </div>
-
-      <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">Montant devis (€)</label>
-        <input type="number" value={form.montantDevis} onChange={set("montantDevis")} placeholder="Ex : 4500"
-          className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0F2C5E]" />
       </div>
 
       <div>

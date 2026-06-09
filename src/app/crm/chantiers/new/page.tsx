@@ -6,9 +6,9 @@ export const metadata: Metadata = { title: "Nouveau chantier" }
 
 export default async function NouveauChantierPage() {
   const leads = await prisma.lead.findMany({
-    where:   { statut: "GAGNE" },
+    where:   { statut: { in: ["DEVIS_ENVOYE", "GAGNE"] } },
     orderBy: { createdAt: "desc" },
-    select:  { id: true, nom: true, ville: true, typeTravaux: true },
+    select:  { id: true, nom: true, ville: true, typeTravaux: true, statut: true },
   })
 
   const devis = await prisma.devisCrm.findMany({
@@ -21,9 +21,9 @@ export default async function NouveauChantierPage() {
     <div className="max-w-2xl mx-auto">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-[#0F2C5E]">Nouveau chantier</h1>
-        <p className="text-gray-500 text-sm mt-0.5">Créer un chantier et le lier à un lead gagné</p>
+        <p className="text-gray-500 text-sm mt-0.5">Créer un chantier et le lier à un lead</p>
       </div>
-      <NouveauChantierForm leads={leads} devis={devis} />
+      <NouveauChantierForm leads={leads} />
     </div>
   )
 }

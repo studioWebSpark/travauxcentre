@@ -202,16 +202,16 @@ export default function ContactPage() {
                   title: "Horaires",
                   content: "Lun – Sam : 7h – 20h",
                 },
-              ].map((item) => (
+              ].map((contactItem) => (
                 <motion.div
-                  key={item.title}
+                  key={contactItem.title}
                   variants={item}
                   className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-[#F97316] transition-colors flex gap-4"
                 >
-                  <div className="text-3xl shrink-0">{item.icon}</div>
+                  <div className="text-3xl shrink-0">{contactItem.icon}</div>
                   <div>
-                    <h3 className="font-bold text-[#0F2C5E] mb-1">{item.title}</h3>
-                    <p className="text-gray-600 text-sm whitespace-pre-line">{item.content}</p>
+                    <h3 className="font-bold text-[#0F2C5E] mb-1">{contactItem.title}</h3>
+                    <p className="text-gray-600 text-sm whitespace-pre-line">{contactItem.content}</p>
                   </div>
                 </motion.div>
               ))}

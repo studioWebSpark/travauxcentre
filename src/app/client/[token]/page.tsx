@@ -12,6 +12,7 @@ export default async function PortailClientPage({ params }: { params: Promise<{ 
       lead:     { select: { nom: true, email: true } },
       etapes:   { orderBy: { ordre: "asc" } },
       photos:   { orderBy: { createdAt: "asc" } },
+      notes:    { orderBy: { createdAt: "desc" } },
       devis:    { include: { lignes: true }, orderBy: { createdAt: "desc" } },
       factures: { include: { lignes: true }, orderBy: { createdAt: "desc" } },
       rapports: { orderBy: { date: "desc" }, take: 5 },
@@ -83,6 +84,26 @@ export default async function PortailClientPage({ params }: { params: Promise<{ 
                     </p>
                     {e.description && <p className="text-xs text-gray-400">{e.description}</p>}
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Notes */}
+        {chantier.notes.length > 0 && (
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <h2 className="font-bold text-[#0F2C5E] mb-4">Notes de chantier</h2>
+            <div className="space-y-3">
+              {chantier.notes.map(n => (
+                <div key={n.id} className="p-4 bg-[#F8F7F4] rounded-xl">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-semibold text-[#0F2C5E]">{n.auteur}</span>
+                    <span className="text-xs text-gray-400">
+                      {new Date(n.createdAt).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap">{n.contenu}</p>
                 </div>
               ))}
             </div>
