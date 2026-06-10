@@ -16,9 +16,9 @@ export default function CrmLogin() {
 
   useEffect(() => {
     fetch("/api/crm/auth/needs-setup")
-      .then(r => r.json())
+      .then(r => r.ok ? r.json() : { needsSetup: false })
       .then(d => {
-        setNeedsSetup(d.needsSetup)
+        setNeedsSetup(d.needsSetup ?? false)
         if (d.needsSetup) setTab("setup")
       })
       .catch(() => setNeedsSetup(false))
