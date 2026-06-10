@@ -17,8 +17,9 @@ export async function POST(request: Request) {
     data:  { resetToken: token, resetExpiry: expiry },
   })
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-  const link    = `${siteUrl}/crm/setup-password/${token}`
+  // Utilise l'origine de la requête pour fonctionner sur n'importe quel domaine
+  const origin  = new URL(request.url).origin
+  const link    = `${origin}/crm/setup-password/${token}`
 
   const t = nodemailer.createTransport({
     host: process.env.SMTP_HOST, port: Number(process.env.SMTP_PORT ?? 587), secure: false,

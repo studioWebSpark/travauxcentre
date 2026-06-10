@@ -22,7 +22,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // Protection routes API CRM
-  if (pathname.startsWith("/api/crm") && pathname !== "/api/crm/auth") {
+  if (pathname.startsWith("/api/crm") && !pathname.startsWith("/api/crm/auth")) {
     const crm = request.cookies.get("crm_session")?.value
     if (crm !== "authenticated") {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 })
