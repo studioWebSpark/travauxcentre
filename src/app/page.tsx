@@ -36,10 +36,10 @@ const avantages = [
 ]
 
 const etapes = [
-  { num: "01", title: "Prise de contact",        desc: "Contactez-nous par téléphone, email ou formulaire. On échange sur votre projet en moins de 24h." },
-  { num: "02", title: "Visite & devis gratuit",  desc: "On se déplace chez vous pour évaluer vos besoins et vous remettre un devis détaillé sans engagement." },
-  { num: "03", title: "Réalisation des travaux", desc: "Nos artisans interviennent dans les délais convenus avec un suivi rigoureux de l'avancement du chantier." },
-  { num: "04", title: "Réception & garantie",    desc: "On finalise ensemble la réception du chantier. Vos travaux sont garantis décennale et SAV réactif." },
+  { num: "01", title: "Prise de contact",        desc: "Appelez-nous, écrivez-nous ou remplissez notre formulaire. Nous revenons vers vous sous 24h pour définir ensemble votre projet." },
+  { num: "02", title: "Visite & devis gratuit",  desc: "Nous nous déplaçons chez vous sans frais. Vous recevez un devis clair et détaillé — transparent sur les prix, sans mauvaises surprises." },
+  { num: "03", title: "Réalisation des travaux", desc: "Nos artisans qualifiés interviennent avec rigueur dans les délais annoncés. Vous êtes informé de l'avancement à chaque étape." },
+  { num: "04", title: "Réception & garantie",    desc: "Vous validez les travaux à la réception. Profitez d'une garantie décennale et d'un service après-vente réactif pour votre tranquillité." },
 ]
 
 const villes = [
@@ -336,8 +336,8 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos avantages</h2>
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir ?</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Notre expertise</h2>
           </motion.div>
 
           <motion.div
@@ -372,7 +372,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche</p>
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche ?</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Notre process</h2>
           </motion.div>
 

@@ -13,6 +13,11 @@ const nav = [
   { label: "Contact",      href: "/contact" },
 ]
 
+const mobileNav = [
+  { label: "Accueil",      href: "/" },
+  ...nav,
+]
+
 const navVariants = {
   hidden: {},
   visible: {
@@ -152,11 +157,11 @@ export default function Header() {
               initial="hidden"
               animate="visible"
             >
-              {nav.map((item) => (
+              {mobileNav.map((item) => (
                 <motion.div key={item.href} variants={mobileLinkVariants}>
                   <Link
                     href={item.href}
-                    className="block text-black font-[500] px-3 py-3 rounded-xl hover:bg-white/10 hover:text-[#F97316] transition-colors text-sm"
+                    className="block text-white font-[500] px-3 py-3 rounded-xl hover:bg-white/10 hover:text-[#F97316] transition-colors text-sm"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
