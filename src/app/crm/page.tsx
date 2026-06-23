@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { prisma } from "@/lib/prisma"
+import { getCrmStats } from "@/lib/crmStats"
 import { AlertTriangle, Plus, TrendingUp } from "lucide-react"
 
 export const metadata: Metadata = { title: "Dashboard" }
@@ -9,34 +10,8 @@ export const dynamic = "force-dynamic"
 const formatEuro = (n: number) =>
   new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR" }).format(n)
 
-interface StatsData {
-  kpis: {
-    caTotal: number
-    caEnAttente: number
-    caAnnuel: number
-    caMois: number
-    caDevisSigne: number
-    tauxConversion: number
-    totalLeads: number
-    leadsMonth: number
-    leadsGagne: number
-    leadsPerdu: number
-    chantiers: number
-    chantiersEnCours: number
-    chantiersTermines: number
-  }
-  caMoisGlissant: { mois: string; ca: number }[]
-  sources: { source: string; count: number }[]
-  villes: { ville: string; count: number }[]
-  funnel: { label: string; count: number; color: string }[]
-}
-
 export default async function CrmDashboard() {
-  // Fetch stats from API
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-  const statsRes = await fetch(`${baseUrl}/api/crm/stats`, { cache: "no-store" })
-  const stats: StatsData = await statsRes.json()
-
+  const stats = await getCrmStats()
   const { kpis, caMoisGlissant, sources, villes, funnel } = stats
 
   // Alertes: fetch direct via Prisma
