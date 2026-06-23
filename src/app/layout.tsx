@@ -146,6 +146,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <meta name="google-site-verification" content="GJY5uV8e0-GwDZaop1yda3ePfMcNSPMH-xdVCBYkMPU" />
       </head>
       <body className="min-h-screen flex flex-col">
         <Header />
