@@ -37,33 +37,28 @@ export default function ZonesPage() {
   const groups = groupByDistance(sorted)
 
   return (
-    <div className="pt-24 pb-20">
+    <div className="bg-white min-h-screen pb-20">
       {/* Hero */}
-      <div className="bg-[#0F2C5E] py-20 mb-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]"
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%23fff'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%23fff'/%3E%3C/svg%3E")` }}
-        />
-        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-white text-center">
-          <p className="text-slate-400 text-sm font-medium tracking-widest uppercase mb-5">
-            Hauts de France
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-5 leading-tight">
-            Nos zones d&apos;intervention
+      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em]">Hauts de France</p>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0F2C5E]">
+            Nos zones d&apos;<span className="text-[#F97316]">intervention</span>
           </h1>
-          <p className="text-slate-300 text-lg leading-relaxed mb-6">
-            Basés à <strong className="text-white">Longuenesse (62219)</strong>, nous
-            intervenons dans un rayon de <strong className="text-white">80 km</strong> pour
+          <p className="text-gray-600 text-lg leading-relaxed max-w-2xl mx-auto">
+            Basés à <strong className="text-[#0F2C5E]">Longuenesse (62219)</strong>, nous
+            intervenons dans un rayon de <strong className="text-[#0F2C5E]">80 km</strong> pour
             tous vos projets de rénovation, maçonnerie et aménagement extérieur.
           </p>
-          <div className="flex flex-wrap justify-center gap-3 text-sm">
-            <span className="bg-white/10 border border-white/20 rounded-full px-3 py-1">{zones.length} communes couvertes</span>
-            <span className="bg-white/10 border border-white/20 rounded-full px-3 py-1">80 km de rayon</span>
-            <span className="bg-white/10 border border-white/20 rounded-full px-3 py-1">Devis sous 48h</span>
+          <div className="flex flex-wrap justify-center gap-3 text-sm pt-2">
+            <span className="bg-gray-50 border border-gray-200 text-gray-600 rounded-full px-3 py-1">{zones.length} communes couvertes</span>
+            <span className="bg-gray-50 border border-gray-200 text-gray-600 rounded-full px-3 py-1">80 km de rayon</span>
+            <span className="bg-gray-50 border border-gray-200 text-gray-600 rounded-full px-3 py-1">Devis sous 48h</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
 
         {/* Engagements */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">

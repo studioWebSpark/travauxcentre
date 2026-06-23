@@ -94,34 +94,31 @@ export default async function VillePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="pt-24 pb-20">
+      <div className="bg-white min-h-screen pb-20">
         {/* Hero */}
-        <div className="bg-[#0F2C5E] py-16 mb-16 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect x='0' y='0' width='1' height='40' fill='%23fff'/%3E%3Crect x='0' y='0' width='40' height='1' fill='%23fff'/%3E%3C/svg%3E")` }}
-          />
-          <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-white">
+        <section className="pt-32 pb-16 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+          <div className="max-w-4xl mx-auto">
             <Link
               href="/zones-intervention"
-              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-sm mb-8 transition-colors"
+              className="inline-flex items-center gap-1.5 text-gray-400 hover:text-[#F97316] text-sm mb-8 transition-colors"
             >
               ← Toutes les zones
             </Link>
-            <p className="text-slate-400 text-xs font-semibold tracking-widest uppercase mb-4 flex items-center gap-2">
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
               <MapPin className="w-3.5 h-3.5" />
               {zone.codePostal} — {zone.departement}
             </p>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F2C5E] mb-4 leading-tight">
               Travaux &amp; Rénovation<br className="hidden sm:block" />
-              {" "}à {zone.nom}
+              {" "}à <span className="text-[#F97316]">{zone.nom}</span>
             </h1>
-            <p className="text-slate-300 text-lg max-w-2xl leading-relaxed">
+            <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">
               {zone.intro}
             </p>
           </div>
-        </div>
+        </section>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
             {/* Main content */}
