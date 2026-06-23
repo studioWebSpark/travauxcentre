@@ -20,12 +20,12 @@ const valeurs = [
   {
     icon: "🤝",
     titre: "Transparence",
-    desc: "Devis détaillé, communication claire, pas de mauvaises surprises. Vous savez exactement ce que vous payez et pourquoi.",
+    desc: "Devis détaillé, communication claire : vous ne vous retrouvez jamais à payer sans savoir ce pour quoi vous avez payé.",
   },
   {
     icon: "⏱",
     titre: "Ponctualité",
-    desc: "Nous respectons les délais annoncés. Votre temps est précieux, et les engagements pris sont tenus.",
+    desc: "Une rigueur stricte sur le respect des délais annoncés. Votre temps est précieux, et les engagements pris sont tenus.",
   },
   {
     icon: "🌱",
@@ -68,7 +68,7 @@ export default function AProposPage() {
               À Propos de <span className="text-[#F97316]">Travaux Centre</span>
             </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
-              Une entreprise familiale fondée à Longuenesse, au service des habitants du Nord-Pas-de-Calais.
+              Une entreprise familiale fondée à Longuenesse, au service des habitants des Hauts de France.
             </p>
           </motion.div>
         </div>
@@ -99,7 +99,9 @@ export default function AProposPage() {
                   et d&apos;affiner notre savoir-faire.
                 </p>
                 <p>
-                  Aujourd&apos;hui, notre équipe de professionnels qualifiés intervient dans un rayon de 80km autour de Longuenesse, couvrant l&apos;ensemble du Nord-Pas-de-Calais. Travaux Centre est certifiée RGE (Reconnu Garant de l&apos;Environnement) pour les travaux d&apos;isolation et rénovation énergétique.
+                  Aujourd&apos;hui, notre équipe de professionnels qualifiés intervient dans un rayon de 80km autour de Longuenesse, couvrant l&apos;ensemble des Hauts de France.
+                  <br /><br />
+                  Travaux Centre est certifiée RGE (Reconnu Garant de l&apos;Environnement) pour les travaux d&apos;isolation et rénovation énergétique.
                 </p>
               </div>
             </div>
@@ -149,8 +151,8 @@ export default function AProposPage() {
             viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-16"
           >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Nos principes</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Nos valeurs fondamentales</h2>
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Nos valeurs</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Nos valeurs</h2>
           </motion.div>
 
           <motion.div

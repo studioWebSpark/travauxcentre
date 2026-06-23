@@ -36,10 +36,10 @@ const avantages = [
 ]
 
 const etapes = [
-  { num: "01", title: "Prise de contact",        desc: "Contactez-nous par téléphone, email ou formulaire. On échange sur votre projet en moins de 24h." },
-  { num: "02", title: "Visite & devis gratuit",  desc: "On se déplace chez vous pour évaluer vos besoins et vous remettre un devis détaillé sans engagement." },
-  { num: "03", title: "Réalisation des travaux", desc: "Nos artisans interviennent dans les délais convenus avec un suivi rigoureux de l'avancement du chantier." },
-  { num: "04", title: "Réception & garantie",    desc: "On finalise ensemble la réception du chantier. Vos travaux sont garantis décennale et SAV réactif." },
+  { num: "01", title: "Prise de contact",        desc: "Décrivez-nous votre projet par téléphone, email ou formulaire. Un membre de notre équipe vous répond en moins de 24h." },
+  { num: "02", title: "Visite & devis gratuit",  desc: "Nous nous déplaçons chez vous pour évaluer précisément vos besoins, puis vous recevez un devis détaillé et chiffré, sans engagement." },
+  { num: "03", title: "Réalisation des travaux", desc: "Nos artisans qualifiés interviennent aux dates convenues. Vous suivez l'avancement du chantier en toute transparence, du début à la fin." },
+  { num: "04", title: "Réception & garantie",    desc: "Nous faisons ensemble le tour du chantier terminé. Vos travaux restent couverts par notre garantie décennale et un service après-vente réactif." },
 ]
 
 const villes = [
@@ -111,7 +111,7 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-white via-white to-gray-50">
+      <section className="relative min-h-screen flex items-start sm:items-center justify-center overflow-hidden bg-gradient-to-b from-white via-white to-gray-50 pt-28 sm:pt-0">
         {/* Animated background shapes */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Floating circles */}
@@ -336,8 +336,8 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos avantages</h2>
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir ?</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Notre expertise</h2>
           </motion.div>
 
           <motion.div
@@ -372,7 +372,7 @@ export default function Home() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche</p>
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche ?</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Notre process</h2>
           </motion.div>
 
@@ -399,6 +399,21 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+
+          <motion.div
+            className="text-center mt-14"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2 border-2 border-[#F97316] text-[#F97316] font-[600] px-8 py-3 rounded-full hover:bg-[#F97316]/5 transition-colors"
+            >
+              Nous contacter
+            </Link>
           </motion.div>
         </div>
       </section>

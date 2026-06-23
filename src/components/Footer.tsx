@@ -159,7 +159,7 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { icon: MapPin, content: <>Longuenesse, 62219<br />Nord-Pas-de-Calais</> },
+                { icon: MapPin, content: <>Longuenesse, 62219<br />Hauts de France</> },
                 {
                   icon: Phone,
                   content: (

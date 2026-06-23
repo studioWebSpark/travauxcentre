@@ -16,7 +16,7 @@ export default function MentionsLegalesPage() {
           <h2 className="text-lg font-bold text-[#0F2C5E] mb-2">Éditeur du site</h2>
           <p><strong>Travaux Centre</strong><br/>
           Entreprise individuelle / SARL [à compléter]<br/>
-          Siège social : Longuenesse, 62219 — Nord-Pas-de-Calais<br/>
+          Siège social : Longuenesse, 62219 — Hauts de France<br/>
           SIRET : [à compléter]<br/>
           Email : contact.travauxcentre@gmail.com<br/>
           Tél : 07 67 17 57 24</p>

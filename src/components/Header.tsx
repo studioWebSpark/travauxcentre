@@ -13,6 +13,11 @@ const nav = [
   { label: "Contact",      href: "/contact" },
 ]
 
+const mobileNav = [
+  { label: "Accueil", href: "/" },
+  ...nav,
+]
+
 const navVariants = {
   hidden: {},
   visible: {
@@ -144,7 +149,7 @@ export default function Header() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="md:hidden bg-[#0F2C5E] border-t border-white/10 px-4 pb-5 pt-3"
+            className="md:hidden bg-white border-t border-gray-100 shadow-lg px-4 pb-5 pt-3"
           >
             <motion.div
               className="flex flex-col gap-1"
@@ -152,18 +157,18 @@ export default function Header() {
               initial="hidden"
               animate="visible"
             >
-              {nav.map((item) => (
+              {mobileNav.map((item) => (
                 <motion.div key={item.href} variants={mobileLinkVariants}>
                   <Link
                     href={item.href}
-                    className="block text-black font-[500] px-3 py-3 rounded-xl hover:bg-white/10 hover:text-[#F97316] transition-colors text-sm"
+                    className="block text-[#0F2C5E] font-[500] px-3 py-3 rounded-xl hover:bg-gray-50 hover:text-[#F97316] transition-colors text-sm"
                     onClick={() => setOpen(false)}
                   >
                     {item.label}
                   </Link>
                 </motion.div>
               ))}
-              <motion.div variants={mobileLinkVariants} className="pt-2 mt-1 border-t border-white/10">
+              <motion.div variants={mobileLinkVariants} className="pt-2 mt-1 border-t border-gray-100">
                 <Link
                   href="/devis"
                   className="btn-shine block w-full text-center rounded-full py-3 text-sm font-[600] text-white"

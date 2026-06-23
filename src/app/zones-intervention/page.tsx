@@ -7,7 +7,7 @@ import ZoneMapLoader from "@/components/ZoneMapLoader"
 export const metadata: Metadata = {
   title: "Zones d'intervention — 80 km autour de Longuenesse",
   description:
-    "Travaux Centre intervient dans un rayon de 80 km autour de Longuenesse : Saint-Omer, Calais, Boulogne-sur-Mer, Béthune, Arras, Lille, Lens, Dunkerque et 20 autres communes du Nord-Pas-de-Calais.",
+    "Travaux Centre intervient dans un rayon de 80 km autour de Longuenesse : Saint-Omer, Calais, Boulogne-sur-Mer, Béthune, Arras, Lille, Lens, Dunkerque et 20 autres communes des Hauts de France.",
   keywords: [
     "travaux saint-omer", "rénovation calais", "artisan boulogne-sur-mer",
     "travaux béthune", "entreprise travaux arras", "artisan lille",
@@ -45,7 +45,7 @@ export default function ZonesPage() {
         />
         <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 text-white text-center">
           <p className="text-slate-400 text-sm font-medium tracking-widest uppercase mb-5">
-            Nord-Pas-de-Calais &amp; Hauts-de-France
+            Hauts de France
           </p>
           <h1 className="text-4xl sm:text-5xl font-bold mb-5 leading-tight">
             Nos zones d&apos;intervention
