@@ -8,6 +8,10 @@ Disallow: /api/
 Disallow: /dashboard/
 Disallow: /auth/
 Disallow: /onboarding/
+Disallow: /crm/
+Disallow: /client/
+Disallow: /devis/
+Disallow: /planning/
 
 # Host
 Host: https://travauxcentre.fr

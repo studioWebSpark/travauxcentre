@@ -5,6 +5,17 @@ module.exports = {
   sitemapSize: 1000,
   changefreq: "weekly",
   priority: 0.7,
+  exclude: [
+    "/crm", "/crm/*",
+    "/dashboard", "/dashboard/*",
+    "/auth", "/auth/*",
+    "/onboarding", "/onboarding/*",
+    "/api/*",
+    "/client/*",
+    "/devis/*",
+    "/planning/*",
+    "/mentions-legales",
+  ],
   additionalPaths: async () => [
     { loc: "/",                                  priority: 1.0,  changefreq: "weekly" },
     { loc: "/services",                          priority: 0.9,  changefreq: "monthly" },
@@ -51,7 +62,7 @@ module.exports = {
   robotsTxtOptions: {
     policies: [
       { userAgent: "*", allow: "/" },
-      { userAgent: "*", disallow: ["/api/", "/dashboard/", "/auth/", "/onboarding/"] },
+      { userAgent: "*", disallow: ["/api/", "/dashboard/", "/auth/", "/onboarding/", "/crm/", "/client/", "/devis/", "/planning/"] },
     ],
   },
 }
