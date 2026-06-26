@@ -2,21 +2,9 @@
 
 import { motion } from "framer-motion"
 
-const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
-
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
-}
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-}
-
-const item = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 }
 
 export default function MentionsLegalesPage() {
@@ -95,36 +83,31 @@ export default function MentionsLegalesPage() {
 
       {/* Sections */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            className="space-y-8"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {sections.map((section, idx) => (
-              <motion.div
-                key={section.title}
-                variants={item}
-                className={`rounded-2xl p-8 border border-gray-100 ${
-                  idx % 2 === 0 ? "bg-white hover:border-[#F97316]" : "bg-gray-50 hover:border-[#F97316]"
-                } transition-colors`}
-              >
-                <h2 className="text-2xl font-bold text-[#0F2C5E] mb-4 flex items-center gap-3">
-                  <span className="w-10 h-10 rounded-full bg-[#F97316] text-white flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    {idx + 1}
-                  </span>
-                  {section.title}
-                </h2>
-                <div className="space-y-3 text-gray-700 leading-relaxed">
-                  {section.content.map((line, i) => (
-                    <p key={i}>{line}</p>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+        <div className="max-w-4xl mx-auto space-y-8">
+          {sections.map((section, idx) => (
+            <motion.div
+              key={section.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3 }}
+              className={`rounded-2xl p-8 border border-gray-100 ${
+                idx % 2 === 0 ? "bg-white hover:border-[#F97316]" : "bg-gray-50 hover:border-[#F97316]"
+              } transition-colors`}
+            >
+              <h2 className="text-2xl font-bold text-[#0F2C5E] mb-4 flex items-center gap-3">
+                <span className="w-10 h-10 rounded-full bg-[#F97316] text-white flex items-center justify-center text-lg font-bold shrink-0">
+                  {idx + 1}
+                </span>
+                {section.title}
+              </h2>
+              <div className="space-y-3 text-gray-700 leading-relaxed">
+                {section.content.map((line, i) => (
+                  <p key={i}>{line}</p>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 

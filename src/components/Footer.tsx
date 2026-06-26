@@ -31,8 +31,6 @@ const socials = [
   },
 ]
 
-const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
-
 export default function Footer() {
   const pathname = usePathname()
 
@@ -51,10 +49,10 @@ export default function Footer() {
         {/* SEO zones */}
         <motion.div
           className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: easeOut }}
+          transition={{ duration: 0.3 }}
         >
           <div className="flex items-center justify-between mb-4">
             <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70">
@@ -83,10 +81,10 @@ export default function Footer() {
         {/* Main columns */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-10"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
+          transition={{ duration: 0.3 }}
         >
           {/* Brand */}
           <div className="md:col-span-1">
