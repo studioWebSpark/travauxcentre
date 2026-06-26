@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npx prisma generate && npm run build",
+  "env": {
+    "NEXT_TELEMETRY_DISABLED": "1"
+  }
+}
