@@ -21,6 +21,7 @@ const links = [
   { label: "Contact",          href: "/contact" },
   { label: "Garantie décennale", href: "/informations" },
   { label: "Mentions légales", href: "/mentions-legales" },
+  { label: "Confidentialité",  href: "/politique-confidentialite" },
 ]
 
 const socials = [
