@@ -20,6 +20,13 @@ export const metadata: Metadata = {
     default: "Travaux Centre | Entreprise de Travaux à Longuenesse et région (80km)",
     template: "%s | Travaux Centre",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   description:
     "Travaux Centre, votre entreprise de rénovation et travaux à Longuenesse. Devis gratuit sous 48h. Rénovation intérieure, maçonnerie, aménagement extérieur. Intervention dans un rayon de 80km.",
   keywords: [
