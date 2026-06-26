@@ -130,6 +130,23 @@ export default function ZoneMap() {
         ...zones.map((z): [number, number] => [z.lat, z.lng]),
       ]
       map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] })
+
+      // Add ARIA labels to marker icons for accessibility
+      setTimeout(() => {
+        const markers = mapRef.current?.querySelectorAll(".leaflet-marker-icon[role='button']")
+        if (markers) {
+          let markerIndex = 0
+          markers.forEach((marker) => {
+            if (markerIndex === 0) {
+              marker.setAttribute("aria-label", "Notre siège à Longuenesse")
+            } else if (markerIndex <= zones.length) {
+              const zone = zones[markerIndex - 1]
+              marker.setAttribute("aria-label", `${zone.nom}, ${zone.codePostal}`)
+            }
+            markerIndex++
+          })
+        }
+      }, 100)
     }
 
     init().catch(console.error)
