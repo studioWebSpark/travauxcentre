@@ -154,7 +154,7 @@ export default async function VillePage({
                       <span className="w-4 h-4 rounded-full bg-[#0F2C5E]/10 flex items-center justify-center shrink-0 mt-0.5">
                         <Check className="w-2.5 h-2.5 text-[#0F2C5E]" />
                       </span>
-                      <span className="text-sm text-gray-700">{projet}</span>
+                      <span className="text-sm text-gray-900">{projet}</span>
                     </li>
                   ))}
                 </ul>
