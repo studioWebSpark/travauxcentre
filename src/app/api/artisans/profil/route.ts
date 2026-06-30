@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { ok, err, requireAuth } from "@/lib/api"
+import { ok, requireAuth } from "@/lib/api"
 import type { Categorie } from "@/generated/prisma"
 
 export async function PATCH(request: Request) {
@@ -9,15 +9,16 @@ export async function PATCH(request: Request) {
   const body = await request.json()
   const { telephone, adresse, ville, codePostal, siret, description, rayon, disponible, specialites } = body
 
-  const artisan = await prisma.artisanProfile.findUnique({
-    where: { userId: userId! },
-  })
-  if (!artisan) return err("Profil artisan introuvable", 404)
-
   await prisma.$transaction(async (tx) => {
-    await tx.artisanProfile.update({
-      where: { id: artisan.id },
-      data: {
+    const artisan = await tx.artisanProfile.upsert({
+      where: { userId: userId! },
+      create: {
+        userId: userId!,
+        telephone, adresse, ville, codePostal, siret, description,
+        rayon:      Number(rayon ?? 30),
+        disponible: Boolean(disponible),
+      },
+      update: {
         telephone, adresse, ville, codePostal, siret, description,
         rayon:      Number(rayon),
         disponible: Boolean(disponible),
