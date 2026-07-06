@@ -77,7 +77,7 @@ export default async function ChantierDetailPage({ params }: { params: Promise<{
               <div className="h-full rounded-full bg-gradient-to-r from-[#0F2C5E] to-[#F97316]"
                 style={{ width: `${c.progression}%` }} />
             </div>
-            <div className="grid grid-cols-4 gap-3 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
               {[
                 { label: "Budget estimé", value: formatEuro(c.budget ?? 0) },
                 { label: "Coût réel",     value: formatEuro(c.budgetReel ?? 0) },

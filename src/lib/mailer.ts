@@ -89,6 +89,20 @@ export async function sendDevisNotification(data: {
   })
 }
 
+export function renderTemplate(html: string, vars: Record<string, string>) {
+  return html.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, key: string) => vars[key] ?? "")
+}
+
+export async function sendMarketingEmail(to: string, subject: string, html: string) {
+  const t = transporter()
+  await t.sendMail({
+    from: `Travaux Centre <${process.env.EMAIL_FROM}>`,
+    to,
+    subject,
+    html,
+  })
+}
+
 export async function sendContactNotification(data: {
   nom: string
   email: string

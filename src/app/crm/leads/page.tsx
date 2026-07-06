@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma"
 import { STATUTS, PRIORITES, formatDate, formatEuro } from "@/lib/crm"
 import LeadStatusSelect from "@/components/crm/LeadStatusSelect"
 import NouveauLeadModal from "@/components/crm/NouveauLeadModal"
+import NouveauLeadFacebookModal from "@/components/crm/NouveauLeadFacebookModal"
 import { Phone, Mail } from "lucide-react"
 
 export const metadata: Metadata = { title: "Leads" }
@@ -44,7 +45,10 @@ export default async function LeadsPage({
           <h1 className="text-2xl font-bold text-[#1a1a1a] font-montserrat">Leads</h1>
           <p className="text-[#404040] text-sm mt-0.5">{leads.length} résultat{leads.length > 1 ? "s" : ""}</p>
         </div>
-        <NouveauLeadModal />
+        <div className="flex gap-2">
+          <NouveauLeadFacebookModal />
+          <NouveauLeadModal />
+        </div>
       </div>
 
       {/* Filtres */}

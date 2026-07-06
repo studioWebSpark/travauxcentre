@@ -19,7 +19,7 @@ const TYPES_TRAVAUX = [
   "Autre",
 ]
 
-const SOURCES = ["Appel téléphonique", "Visite directe", "Site web", "Bouche à oreille", "Réseaux sociaux", "Email", "Autre"]
+const SOURCES = ["Appel téléphonique", "Visite directe", "Site web", "Bouche à oreille", "Réseaux sociaux", "Facebook", "Email", "Autre"]
 
 const BUDGETS = ["Moins de 1 000 €", "1 000 – 5 000 €", "5 000 – 15 000 €", "15 000 – 50 000 €", "Plus de 50 000 €"]
 

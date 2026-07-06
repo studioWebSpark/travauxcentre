@@ -51,7 +51,7 @@ export default async function DevisDetailPage({ params }: { params: Promise<{ id
 
       {/* Montant */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-        <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
           <div className="bg-[#F8F7F4] rounded-xl p-4">
             <p className="text-xs text-gray-400 mb-1">Total HT</p>
             <p className="font-bold text-[#0F2C5E]">{formatEuro(tot.ht)}</p>

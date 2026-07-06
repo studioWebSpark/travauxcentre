@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar, CalendarDays, BookOpen } from "lucide-react"
-const nav = [
+import { LayoutDashboard, Users, Kanban, LogOut, HardHat, MapPin, Calendar, Wrench, FileText, Radar, CalendarDays, BookOpen, Megaphone } from "lucide-react"
+export const nav = [
   { label: "Dashboard",  href: "/crm",           icon: LayoutDashboard },
   { label: "Leads",      href: "/crm/leads",      icon: Users },
+  { label: "Marketing",  href: "/crm/marketing",  icon: Megaphone },
   { label: "Chantiers",  href: "/crm/chantiers",  icon: Wrench },
   { label: "Devis",      href: "/crm/devis",      icon: FileText },
   { label: "Factures",   href: "/crm/factures",   icon: FileText },

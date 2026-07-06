@@ -332,6 +332,7 @@ model Lead {
   budget           String?
   dateSouhaitee    String?
   source           String?
+  facebookUrl      String?
 
   // CRM
   statut           StatutLead   @default(NOUVEAU)
@@ -350,6 +351,39 @@ model Lead {
   plannings        Planning[]
   chantiers        ChantierCrm[]
   devis            DevisCrm[]
+  envoisCampagne   EnvoiCampagne[]
+}
+
+model EmailTemplate {
+  id        String   @id @default(cuid())
+  nom       String
+  sujet     String
+  corpsHtml String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CampagneMarketing {
+  id        String          @id @default(cuid())
+  nom       String
+  sujet     String
+  corpsHtml String
+  createdAt DateTime        @default(now())
+
+  envois    EnvoiCampagne[]
+}
+
+model EnvoiCampagne {
+  id         String            @id @default(cuid())
+  campagneId String
+  leadId     String
+  email      String
+  statut     String            @default("ENVOYE") // ENVOYE | ECHEC
+  erreur     String?
+  envoyeAt   DateTime          @default(now())
+
+  campagne   CampagneMarketing @relation(fields: [campagneId], references: [id], onDelete: Cascade)
+  lead       Lead              @relation(fields: [leadId], references: [id], onDelete: Cascade)
 }
 
 model NoteLead {

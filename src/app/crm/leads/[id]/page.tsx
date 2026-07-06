@@ -7,7 +7,7 @@ import NoteForm from "@/components/crm/NoteForm"
 import PlanningForm from "@/components/crm/PlanningForm"
 import ProjectDescriptionEditor from "@/components/crm/ProjectDescriptionEditor"
 import ChantierFromLeadForm from "@/components/crm/ChantierFromLeadForm"
-import { Phone, Mail, MapPin, Calendar, FileText, Clock, ArrowLeft } from "lucide-react"
+import { Phone, Mail, MapPin, Calendar, FileText, Clock, ArrowLeft, MessageCircle } from "lucide-react"
 import Link from "next/link"
 
 export const metadata: Metadata = { title: "Fiche lead" }
@@ -61,6 +61,9 @@ export default async function LeadDetail({ params }: { params: Promise<{ id: str
                 { icon: Phone,    label: "Téléphone", value: lead.telephone,               href: `tel:${lead.telephone}` },
                 { icon: MapPin,   label: "Ville",     value: `${lead.ville} (${lead.codePostal})`, href: null },
                 { icon: FileText, label: "Source",    value: lead.source ?? "—",           href: null },
+                ...(lead.facebookUrl
+                  ? [{ icon: MessageCircle, label: "Profil Facebook", value: lead.facebookUrl, href: lead.facebookUrl }]
+                  : []),
               ].map(({ icon: Icon, label, value, href }) => (
                 <div key={label} className="flex items-start gap-3">
                   <div className="w-8 h-8 bg-[#F8F7F4] rounded-lg flex items-center justify-center shrink-0">
