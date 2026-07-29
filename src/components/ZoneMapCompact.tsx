@@ -64,7 +64,7 @@ export default function ZoneMapCompact() {
         popupAnchor: [0, -36],
       })
 
-      L.marker([LONGUENESSE.lat, LONGUENESSE.lng], { icon: baseIcon })
+      L.marker([LONGUENESSE.lat, LONGUENESSE.lng], { icon: baseIcon, title: "Travaux Centre — Longuenesse", alt: "Travaux Centre — Longuenesse" })
         .addTo(map)
         .bindPopup(`<strong style="color:#0F2C5E">Travaux Centre</strong><br/><span style="font-size:12px;color:#F97316">Longuenesse — 62219</span>`)
 
@@ -76,7 +76,7 @@ export default function ZoneMapCompact() {
           iconSize:   [10, 10],
           iconAnchor: [5, 5],
         })
-        L.marker([z.lat, z.lng], { icon })
+        L.marker([z.lat, z.lng], { icon, title: `${z.nom}, ${z.distanceKm} km de Longuenesse`, alt: z.nom })
           .addTo(map)
           .bindPopup(`<a href="/zones-intervention/${z.slug}" style="color:#0F2C5E;font-weight:600;font-size:13px;text-decoration:none">${z.nom}</a><br/><span style="font-size:11px;color:#888">${z.distanceKm} km</span>`)
       })

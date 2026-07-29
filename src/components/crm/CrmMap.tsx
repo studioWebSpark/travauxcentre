@@ -63,7 +63,7 @@ export default function CrmMap({ markers }: { markers: Marker[] }) {
         html: `<div style="width:36px;height:36px;background:#0F2C5E;border:3px solid #F97316;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.35)"><span style="color:#F97316;font-size:15px;font-weight:bold">★</span></div>`,
         className: "", iconSize: [36, 36], iconAnchor: [18, 36], popupAnchor: [0, -38],
       })
-      L.marker([50.7336, 2.2621], { icon: hqIcon })
+      L.marker([50.7336, 2.2621], { icon: hqIcon, title: "Travaux Centre — Siège Longuenesse", alt: "Travaux Centre — Siège Longuenesse" })
         .addTo(map)
         .bindPopup("<strong style='color:#0F2C5E'>🏠 Travaux Centre</strong><br><small style='color:#888'>Longuenesse — Siège</small>")
 
@@ -95,7 +95,7 @@ export default function CrmMap({ markers }: { markers: Marker[] }) {
           ? `<p style="font-size:12px;color:#22c55e;font-weight:bold;margin:0 0 8px">${new Intl.NumberFormat("fr-FR", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(m.montantDevis)}</p>`
           : ""
 
-        L.marker([lat, lng], { icon })
+        L.marker([lat, lng], { icon, title: `${m.nom} — ${m.ville}`, alt: m.nom })
           .addTo(map)
           .bindPopup(`
             <div style="font-family:sans-serif;min-width:210px">

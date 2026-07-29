@@ -55,9 +55,9 @@ export default function Footer() {
           transition={{ duration: 0.3 }}
         >
           <div className="flex items-center justify-between mb-4">
-            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70">
+            <p className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70">
               Zones d&apos;intervention — 80 km autour de Longuenesse
-            </h4>
+            </p>
             <Link href="/zones-intervention" className="text-xs text-white/70 hover:text-[#F97316] transition-colors underline underline-offset-2">
               Voir la carte →
             </Link>
@@ -121,9 +121,9 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
+            <p className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
               Nos services
-            </h4>
+            </p>
             <ul className="space-y-2.5">
               {services.map((s) => (
                 <li key={s.href}>
@@ -137,9 +137,9 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
+            <p className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
               Navigation
-            </h4>
+            </p>
             <ul className="space-y-2.5">
               {links.map((l) => (
                 <li key={l.href}>
@@ -153,9 +153,9 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
+            <p className="font-[600] text-xs uppercase tracking-[0.18em] text-white/70 mb-5">
               Contact
-            </h4>
+            </p>
             <ul className="space-y-3">
               {[
                 { icon: MapPin, content: <>Longuenesse, 62219<br />Hauts de France</> },

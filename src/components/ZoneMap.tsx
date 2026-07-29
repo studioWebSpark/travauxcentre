@@ -72,7 +72,7 @@ export default function ZoneMap() {
         popupAnchor: [0, -40],
       })
 
-      L.marker([LONGUENESSE.lat, LONGUENESSE.lng], { icon: baseIcon })
+      L.marker([LONGUENESSE.lat, LONGUENESSE.lng], { icon: baseIcon, title: "Notre siège à Longuenesse", alt: "Notre siège à Longuenesse" })
         .addTo(map)
         .bindPopup(
           `<div style="font-family:sans-serif;min-width:160px">
@@ -109,7 +109,11 @@ export default function ZoneMap() {
           popupAnchor: [0, -30],
         })
 
-        L.marker([zone.lat, zone.lng], { icon: zoneIcon })
+        L.marker([zone.lat, zone.lng], {
+          icon: zoneIcon,
+          title: `${zone.nom}, ${zone.codePostal}`,
+          alt: zone.nom,
+        })
           .addTo(map)
           .bindPopup(
             `<div style="font-family:sans-serif;min-width:180px">
@@ -130,23 +134,6 @@ export default function ZoneMap() {
         ...zones.map((z): [number, number] => [z.lat, z.lng]),
       ]
       map.fitBounds(L.latLngBounds(allCoords), { padding: [40, 40] })
-
-      // Add ARIA labels to marker icons for accessibility
-      setTimeout(() => {
-        const markers = mapRef.current?.querySelectorAll(".leaflet-marker-icon[role='button']")
-        if (markers) {
-          let markerIndex = 0
-          markers.forEach((marker) => {
-            if (markerIndex === 0) {
-              marker.setAttribute("aria-label", "Notre siège à Longuenesse")
-            } else if (markerIndex <= zones.length) {
-              const zone = zones[markerIndex - 1]
-              marker.setAttribute("aria-label", `${zone.nom}, ${zone.codePostal}`)
-            }
-            markerIndex++
-          })
-        }
-      }, 100)
     }
 
     init().catch(console.error)
