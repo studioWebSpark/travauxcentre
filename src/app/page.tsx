@@ -1,10 +1,7 @@
-"use client"
-
-import { useState, useRef, MouseEvent } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion, AnimatePresence } from "framer-motion"
 import ZoneMapCompactLoader from "@/components/ZoneMapCompactLoader"
+import TiltCard from "@/components/TiltCard"
 
 // ─── Icon components ──────────────────────────────────────────────────────────
 
@@ -48,435 +45,244 @@ const villes = [
   "Aire-sur-la-Lys", "Fruges", "Lumbres",
 ]
 
-// ─── Animation variants ────────────────────────────────────────────────────────
-
-const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number]
-
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
-}
-
-const item = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
-}
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
-}
-
-// ─── 3D tilt card component ────────────────────────────────────────────────────
-
-function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  const [rotateX, setRotateX] = useState(0)
-  const [rotateY, setRotateY] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
-    const rect = ref.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    setRotateX((e.clientY - centerY) / 12)
-    setRotateY(-(e.clientX - centerX) / 12)
-  }
-
-  const handleMouseLeave = () => {
-    setRotateX(0)
-    setRotateY(0)
-  }
-
-  return (
-    <motion.div
-      ref={ref}
-      className={className}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      animate={{ rotateX, rotateY }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      style={{ transformStyle: "preserve-3d", perspective: 800 }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const titleWords = ["Vos", "Travaux,"]
-
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-start sm:items-center justify-center overflow-hidden bg-gradient-to-b from-white via-white to-gray-50 pt-28 sm:pt-0">
-        {/* Animated background shapes */}
+        {/* Animated background shapes (decorative, pure CSS) */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Floating circles */}
-          <motion.div
-            className="absolute w-80 h-80 rounded-full"
+          <div
+            className="absolute w-80 h-80 rounded-full float-a"
             style={{ background: "radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0) 70%)" }}
-            animate={{ x: [0, 30, 0], y: [0, 50, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="w-full h-full" />
-          </motion.div>
-          <motion.div
-            className="absolute w-96 h-96 rounded-full"
+          />
+          <div
+            className="absolute w-96 h-96 rounded-full float-b"
             style={{ background: "radial-gradient(circle, rgba(15,44,94,0.1) 0%, rgba(15,44,94,0) 70%)" }}
-            animate={{ x: [50, 0, 50], y: [30, -20, 30] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="w-full h-full" />
-          </motion.div>
-
-          {/* Floating card shapes */}
-          <motion.div
-            className="absolute top-20 right-10 w-40 h-48 rounded-3xl border-2 border-[#F97316]/20"
-            animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <div
+            className="absolute top-20 right-10 w-40 h-48 rounded-3xl border-2 border-[#F97316]/20 float-c"
             style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.02))" }}
           />
-          <motion.div
-            className="absolute bottom-32 left-10 w-32 h-40 rounded-2xl border-2 border-[#0F2C5E]/20"
-            animate={{ y: [0, 25, 0], rotate: [0, -4, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          <div
+            className="absolute bottom-32 left-10 w-32 h-40 rounded-2xl border-2 border-[#0F2C5E]/20 float-d"
             style={{ background: "linear-gradient(135deg, rgba(15,44,94,0.08), rgba(15,44,94,0.02))" }}
           />
-          <motion.div
-            className="absolute top-1/3 left-1/4 w-24 h-32 rounded-xl border-2 border-[#F97316]/15"
-            animate={{ y: [0, 30, 0], x: [0, 15, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          <div
+            className="absolute top-1/3 left-1/4 w-24 h-32 rounded-xl border-2 border-[#F97316]/15 float-e"
             style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.06), transparent)" }}
           />
         </div>
 
         <div className="relative z-10 text-center text-[#0F2C5E] px-4 sm:px-6 max-w-4xl mx-auto">
           {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: easeOut }}
-            className="inline-flex items-center gap-2 bg-white/90 backdrop-blur rounded-full px-4 py-2 text-sm font-[500] mb-8 border border-gray-200"
-          >
+          <div className="hero-fade-up inline-flex items-center gap-2 bg-white/90 backdrop-blur rounded-full px-4 py-2 text-sm font-[500] mb-8 border border-gray-200">
             <span className="w-2 h-2 rounded-full bg-[#F97316] animate-pulse" />
             Société certifiée RGE — Garantie décennale
-          </motion.div>
+          </div>
 
-          {/* Title */}
+          {/* Title — rendered visible immediately (no entrance animation) so it isn't delayed as the LCP element */}
           <h1 className="text-4xl sm:text-5xl lg:text-7xl leading-[1.05] mb-4 font-bold">
             <span className="flex flex-wrap justify-center gap-x-4 mb-2">
-              {titleWords.map((word, i) => (
-                <motion.span
-                  key={word}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.3 + i * 0.15, ease: easeOut }}
-                  className="inline-block"
-                >
-                  {word}
-                </motion.span>
-              ))}
+              <span className="inline-block">Vos</span>
+              <span className="inline-block">Travaux,</span>
             </span>
-            <motion.span
-              className="text-[#F97316]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6, ease: easeOut }}
-            >
-              Notre Expertise
-            </motion.span>
+            <span className="text-[#F97316] inline-block">Notre Expertise</span>
           </h1>
 
           {/* Subtitle */}
-          <motion.p
-            className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed font-[400]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.85 }}
-          >
+          <p className="hero-fade-up text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto mb-10 leading-relaxed font-[400]" style={{ animationDelay: "0.15s" }}>
             Entreprise de travaux ancrée à Longuenesse, nous intervenons dans un rayon de 80km pour
             tous vos projets de rénovation, maçonnerie et aménagement.
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-14"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.0 }}
-          >
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
-              <Link
-                href="/devis"
-                className="btn-shine inline-flex items-center justify-center gap-2 text-white font-[600] px-8 py-4 rounded-full text-lg shadow-lg shadow-orange-500/30 transition-shadow hover:shadow-xl hover:shadow-orange-500/40"
-                style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
-              >
-                Demander un Devis Gratuit
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }} transition={{ type: "spring", stiffness: 400, damping: 20 }}>
-              <Link
-                href="/services"
-                className="glass inline-flex items-center justify-center gap-2 text-[#0F2C5E] font-[600] px-8 py-4 rounded-full text-lg hover:bg-white/20 transition-colors border border-white/50"
-              >
-                Nos Services
-              </Link>
-            </motion.div>
-          </motion.div>
+          <div className="hero-fade-up flex flex-col sm:flex-row gap-4 justify-center mb-14" style={{ animationDelay: "0.25s" }}>
+            <Link
+              href="/devis"
+              className="btn-shine inline-flex items-center justify-center gap-2 text-white font-[600] px-8 py-4 rounded-full text-lg shadow-lg shadow-orange-500/30 transition-shadow hover:shadow-xl hover:shadow-orange-500/40 hover:scale-[1.03] active:scale-[0.98] transition-transform"
+              style={{ background: "linear-gradient(135deg, #F97316 0%, #EA6B0E 100%)" }}
+            >
+              Demander un Devis Gratuit
+            </Link>
+            <Link
+              href="/services"
+              className="glass inline-flex items-center justify-center gap-2 text-[#0F2C5E] font-[600] px-8 py-4 rounded-full text-lg hover:bg-white/20 transition-colors border border-white/50 hover:scale-[1.03] active:scale-[0.98] transition-transform"
+            >
+              Nos Services
+            </Link>
+          </div>
 
           {/* Stats row */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-6 sm:gap-10"
-            variants={container}
-            initial="hidden"
-            animate="visible"
-          >
+          <div className="hero-fade-up flex flex-wrap justify-center gap-6 sm:gap-10" style={{ animationDelay: "0.35s" }}>
             {[
               { icon: <IconCalendar />, label: "Devis sous 48h" },
               { icon: <IconShield />,  label: "Garantie décennale*" },
               { icon: <IconPhone />,   label: "Disponible 7j/7" },
             ].map(({ icon, label }) => (
-              <motion.div
+              <div
                 key={label}
-                variants={item}
                 className="flex items-center gap-2 text-[#0F2C5E] text-sm font-[500] bg-white/80 px-4 py-2 rounded-full"
               >
                 <span className="text-[#F97316]">{icon}</span>
                 {label}
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
 
         {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#0F2C5E]/40"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#0F2C5E]/40 scroll-bounce">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
-        </motion.div>
+        </div>
       </section>
 
       {/* ── SERVICES ─────────────────────────────────────────────────────── */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section header */}
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div className="reveal text-center mb-16">
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Ce que nous faisons</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nos domaines d&apos;expertise</h2>
             <p className="text-gray-600 max-w-xl mx-auto text-sm leading-relaxed">
               De la rénovation intérieure au gros œuvre, nous couvrons l&apos;ensemble des corps de métier du bâtiment.
             </p>
-          </motion.div>
+          </div>
 
           {/* Cards */}
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
+          <div className="reveal-children grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s) => (
-              <motion.div key={s.title} variants={item}>
-                <TiltCard className="h-full">
-                  <Link
-                    href={s.href}
-                    className="group bg-white h-full flex flex-col rounded-2xl overflow-hidden hover:shadow-lg hover:border-[#F97316] transition-all border border-gray-100"
-                  >
-                    {/* Image */}
-                    <div className="relative h-44 overflow-hidden flex-shrink-0">
-                      <Image
-                        src={s.img}
-                        alt={s.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      />
-                      <div className="absolute inset-0 bg-[#0F2C5E]/10 group-hover:bg-[#0F2C5E]/5 transition-colors" />
-                      <div className="absolute top-3 left-3 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#F97316] shadow-sm">
-                        {s.icon}
-                      </div>
+              <TiltCard key={s.title} className="h-full">
+                <Link
+                  href={s.href}
+                  className="group bg-white h-full flex flex-col rounded-2xl overflow-hidden hover:shadow-lg hover:border-[#F97316] transition-all border border-gray-100"
+                >
+                  {/* Image */}
+                  <div className="relative h-44 overflow-hidden flex-shrink-0">
+                    <Image
+                      src={s.img}
+                      alt={s.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    />
+                    <div className="absolute inset-0 bg-[#0F2C5E]/10 group-hover:bg-[#0F2C5E]/5 transition-colors" />
+                    <div className="absolute top-3 left-3 w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#F97316] shadow-sm">
+                      {s.icon}
                     </div>
-                    {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
-                      <h3 className="font-[700] text-[#0F2C5E] text-base mb-2">{s.title}</h3>
-                      <p className="text-gray-600 text-sm leading-relaxed flex-1">{s.desc}</p>
-                      <div className="mt-4 flex items-center gap-1 text-[#F97316] text-sm font-[600] group-hover:gap-2 transition-all">
-                        Découvrir <IconArrow />
-                      </div>
+                  </div>
+                  {/* Content */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-[700] text-[#0F2C5E] text-base mb-2">{s.title}</h3>
+                    <p className="text-gray-600 text-sm leading-relaxed flex-1">{s.desc}</p>
+                    <div className="mt-4 flex items-center gap-1 text-[#F97316] text-sm font-[600] group-hover:gap-2 transition-all">
+                      Découvrir <IconArrow />
                     </div>
-                  </Link>
-                </TiltCard>
-              </motion.div>
+                  </div>
+                </Link>
+              </TiltCard>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── AVANTAGES ────────────────────────────────────────────────────── */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div className="reveal text-center mb-16">
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Pourquoi nous choisir ?</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Notre expertise</h2>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
+          <div className="reveal-children grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {avantages.map((a) => (
-              <motion.div key={a.title} variants={item}>
-                <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center group hover:shadow-lg hover:border-[#F97316] transition-all">
-                  <div className="flex justify-center mb-4 text-[#F97316]">
-                    {a.icon}
-                  </div>
-                  <h3 className="font-bold text-[#0F2C5E] mb-2">{a.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{a.desc}</p>
+              <div key={a.title} className="bg-white rounded-2xl border border-gray-100 p-6 text-center group hover:shadow-lg hover:border-[#F97316] transition-all">
+                <div className="flex justify-center mb-4 text-[#F97316]">
+                  {a.icon}
                 </div>
-              </motion.div>
+                <h3 className="font-bold text-[#0F2C5E] mb-2">{a.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{a.desc}</p>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── ÉTAPES ───────────────────────────────────────────────────────– */}
       <section className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-16"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
+          <div className="reveal text-center mb-16">
             <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Comment ça marche ?</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">Notre process</h2>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-            variants={container}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-          >
+          <div className="reveal-children grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {etapes.map((e, i) => (
-              <motion.div key={e.num} variants={item}>
-                <div className="relative">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 rounded-full bg-[#F97316] text-white font-bold flex items-center justify-center flex-shrink-0">
-                      {e.num}
-                    </div>
-                    {i < etapes.length - 1 && (
-                      <div className="hidden lg:block absolute left-14 top-0 w-[calc(100%+2rem)] h-0.5 bg-gradient-to-r from-[#F97316] to-transparent" style={{ width: "calc(100% + 2rem)" }} />
-                    )}
+              <div key={e.num} className="relative">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-[#F97316] text-white font-bold flex items-center justify-center flex-shrink-0">
+                    {e.num}
                   </div>
-                  <h3 className="font-bold text-[#0F2C5E] mb-2">{e.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{e.desc}</p>
+                  {i < etapes.length - 1 && (
+                    <div className="hidden lg:block absolute left-14 top-0 w-[calc(100%+2rem)] h-0.5 bg-gradient-to-r from-[#F97316] to-transparent" style={{ width: "calc(100% + 2rem)" }} />
+                  )}
                 </div>
-              </motion.div>
+                <h3 className="font-bold text-[#0F2C5E] mb-2">{e.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{e.desc}</p>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="text-center mt-14"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <div className="reveal text-center mt-14">
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2 border-2 border-[#F97316] text-[#F97316] font-[600] px-8 py-3 rounded-full hover:bg-[#F97316]/5 transition-colors"
             >
               Nous contacter
             </Link>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── ZONES ────────────────────────────────────────────────────────– */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Zone d'intervention</p>
+          <div className="reveal text-center mb-12">
+            <p className="text-[#F97316] font-[600] text-xs uppercase tracking-[0.2em] mb-3">Zone d&apos;intervention</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E] mb-4">Nous intervenons dans la région</h2>
             <p className="text-gray-600 max-w-xl mx-auto">
               Basés à Longuenesse, nous couvrons un rayon de 80km autour de nos locaux.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <motion.div
-              className="lg:col-span-2 bg-gray-100 rounded-2xl overflow-hidden h-96 border border-gray-200"
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
+            <div className="reveal lg:col-span-2 bg-gray-100 rounded-2xl overflow-hidden h-96 border border-gray-200">
               <ZoneMapCompactLoader />
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="flex flex-col gap-4"
-              variants={container}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
+            <div className="reveal flex flex-col gap-4">
               <p className="text-sm text-gray-600 mb-2 font-semibold text-[#0F2C5E]">Principales villes couvertes :</p>
               {villes.map((ville) => (
-                <motion.div key={ville} variants={item} className="flex items-center gap-3">
+                <div key={ville} className="flex items-center gap-3">
                   <span className="w-2 h-2 bg-[#F97316] rounded-full" />
                   <span className="text-gray-700">{ville}</span>
-                </motion.div>
+                </div>
               ))}
               <Link href="/zones-intervention" className="mt-4 inline-flex text-[#F97316] font-semibold text-sm gap-1 hover:gap-2 transition-all">
                 Voir toutes les villes <IconArrow />
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── CTA FINAL ────────────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30 px-4"
-        >
+        <div className="reveal max-w-3xl mx-auto text-center space-y-6 bg-gradient-to-r from-[#F97316]/10 to-orange-500/10 rounded-2xl p-12 border border-[#F97316]/30 px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-[#0F2C5E]">
             Prêt à démarrer votre projet ?
           </h2>
@@ -497,7 +303,7 @@ export default function Home() {
               Nous contacter
             </Link>
           </div>
-        </motion.div>
+        </div>
       </section>
     </>
   )
