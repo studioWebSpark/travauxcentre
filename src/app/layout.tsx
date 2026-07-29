@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
+import Script from "next/script"
 import "./globals.css"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -154,23 +155,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <meta name="google-site-verification" content="GJY5uV8e0-GwDZaop1yda3ePfMcNSPMH-xdVCBYkMPU" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-85TF8B6ES6"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-85TF8B6ES6');
-            `,
-          }}
-        />
       </head>
       <body className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
         <ScrollReveal />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-85TF8B6ES6"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-85TF8B6ES6');
+          `}
+        </Script>
       </body>
     </html>
   )
